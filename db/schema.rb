@@ -27,15 +27,10 @@ ActiveRecord::Schema.define(version: 2019_11_11_055825) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "remember_me_token"
     t.datetime "remember_me_token_expires_at"
-    t.string "reset_password_token"
-    t.datetime "reset_password_token_expires_at"
-    t.datetime "reset_password_email_sent_at"
-    t.integer "access_count_to_reset_password_page", default: 0
-    t.bigint "company_id", null: false
+    t.bigint "company_id"
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["login_name"], name: "index_users_on_login_name", unique: true
     t.index ["remember_me_token"], name: "index_users_on_remember_me_token"
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token"
   end
 
   add_foreign_key "users", "companies"

@@ -4,7 +4,7 @@
 # Available submodules are: :user_activation, :http_basic_auth, :remember_me,
 # :reset_password, :session_timeout, :brute_force_protection, :activity_logging,
 # :magic_login, :external
-Rails.application.config.sorcery.submodules = [:remember_me, :reset_password]
+Rails.application.config.sorcery.submodules = [:remember_me]
 
 # Here you can configure each submodule's features.
 Rails.application.config.sorcery.configure do |config|
@@ -223,6 +223,8 @@ Rails.application.config.sorcery.configure do |config|
     #
     # user.username_attribute_names =
 
+    user.username_attribute_names = [:login_name]
+
     # Change *virtual* password attribute, the one which is used until an encrypted one is generated.
     # Default: `:password`
     #
@@ -278,6 +280,7 @@ Rails.application.config.sorcery.configure do |config|
     # Default: `false`
     #
     # user.subclasses_inherit_config =
+    user.subclasses_inherit_config = true
 
     # -- remember_me --
     # How long in seconds the session length will be
