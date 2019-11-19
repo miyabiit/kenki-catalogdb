@@ -1,0 +1,16 @@
+<header class="navbar navbar-expand navbar-dark flex-column flex-md-row kenki-navbar">
+  <a class="navbar-brand mr-0 mr-md-2" href="/" aria-label="建機カタログDB">建機カタログDB</a>
+  <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+    <li class="nav-item">
+      <% if current_user %>
+        <% if current_user.is_a? Administrator %>
+          <a class="nav-link" href="/admin_sessions/sign_out">ログアウト</a>
+        <% else %>
+          <a class="nav-link" href="/sessions/sign_out">ログアウト</a>
+        <% end %>
+      <% else %>
+        <a class="nav-link">ログイン</a>
+      <% end %>
+    </li>
+  </ul>
+</header>

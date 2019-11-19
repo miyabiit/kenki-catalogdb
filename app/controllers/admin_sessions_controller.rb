@@ -1,4 +1,6 @@
 class AdminSessionsController < ApplicationController
+  layout 'plane'
+
   def new
   end
 

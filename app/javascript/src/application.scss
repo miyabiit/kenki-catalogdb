@@ -1,2 +1,51 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~@fortawesome/fontawesome-free/scss/fontawesome';
+
+
+$base-color: #736666;
+$accent-color: #fe8c3e;
+$font-color: #343b3e;
+$sub-color: #dbd8d3;
+
+$font-size-l: 1.4rem;
+
+main {
+  color: $font-color;
+}
+
+.kenki-navbar {
+  min-height: 4rem;
+  background-color: $font-color;
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,.05), inset 0 -1px 0 rgba(0,0,0,.1);
+}
+
+.kenki-sidebar {
+  position: sticky;
+  top: 4rem;
+  z-index: 1000;
+  background-color: $base-color;
+  @media (min-width: 768px) {
+    height: calc(100vh - 4rem);
+  }
+  a:hover {
+    color: white;
+  }
+}
+
+.kenki-content {
+}
+
+.kenki-links {
+  display: block!important;
+}
+
+.kenki-toc-item {
+}
+
+.kenki-toc-link {
+  display: block;
+  padding: .25rem 1.5rem;
+  font-weight: 600;
+  font-size: $font-size-l;
+  color: $sub-color;
+}
