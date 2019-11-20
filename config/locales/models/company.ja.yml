@@ -1,0 +1,12 @@
+ja:
+  activerecord:
+    models:
+      company: "会社"
+    attributes:
+      company:
+        id: "会社ID"
+        uid: "会社コード"
+        name: "会社名"
+        created_at: "作成日時"
+        updated_at: "更新日時"
+

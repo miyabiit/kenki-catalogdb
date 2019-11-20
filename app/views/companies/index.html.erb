@@ -1,0 +1,36 @@
+<%= render 'shared/notice' %>
+
+<%= link_to "新規#{Company.model_name.human}", new_company_path, class: 'float-right btn btn-primary' %>
+<h1><%= Company.model_name.human %></h1>
+
+<%= paginate @companies %>
+<table class="table">
+  <thead>
+    <tr>
+      <th><%= Company.human_attribute_name :id %></th>
+      <th><%= Company.human_attribute_name :uid %></th>
+      <th><%= Company.human_attribute_name :name %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @companies.each do |company| %>
+      <tr>
+        <td><%= company.id %></td>
+        <td><%= company.uid %></td>
+        <td><%= company.name %></td>
+        <td>
+          <%= link_to edit_company_path(company) do %>
+            編集
+          <% end %>
+          &nbsp;
+          <%= link_to company, method: :delete, data: { confirm: '削除してもよろしいですか？' } do %>
+            削除
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @companies %>

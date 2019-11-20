@@ -1,0 +1,20 @@
+<%= link_to '<戻る', companies_path %>
+<h2><%= Company.model_name.human %>詳細</h2>
+<%= render 'shared/notice' %>
+<table class="table">
+  <tr>
+    <th><%= Company.human_attribute_name :id %></th>
+    <td><%= @company.id %></td>
+  </tr>
+  <tr>
+    <th><%= Company.human_attribute_name :uid %></th>
+    <td><%= @company.uid %></td>
+  </tr>
+  <tr>
+    <th><%= Company.human_attribute_name :name %></th>
+    <td><%= @company.name %></td>
+  </tr>
+</table>
+
+<br/>
+<%= link_to '編集', edit_company_path(@company), class: 'btn btn-primary' %>

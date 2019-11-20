@@ -1,0 +1,7 @@
+{
+  id: @company.id,
+  uid: @company.uid,
+  name: @company.name,
+  created_at: @company.created_at,
+  updated_at: @company.updated_at
+}

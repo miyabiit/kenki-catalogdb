@@ -17,5 +17,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :companies
+
   root to: 'tests#test'
 end

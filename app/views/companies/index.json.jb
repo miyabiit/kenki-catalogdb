@@ -1,0 +1,8 @@
+@companies.map do |company|
+  {
+    id: company.id,
+    uid: company.uid,
+    name: company.name,
+    url: company_url(company, format: :json)
+  }
+end

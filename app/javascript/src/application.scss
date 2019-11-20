@@ -1,13 +1,25 @@
-@import '~bootstrap/scss/bootstrap';
-@import '~@fortawesome/fontawesome-free/scss/fontawesome';
-
 
 $base-color: #736666;
-$accent-color: #fe8c3e;
+$accent-color: #ee7c1e;
 $font-color: #343b3e;
 $sub-color: #dbd8d3;
 
 $font-size-l: 1.4rem;
+
+$theme-colors: (
+  "primary": $accent-color,
+);
+
+@import '~bootstrap/scss/bootstrap';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+
+abbr[title] {
+  text-decoration: none !important;
+}
+
+*:focus {
+    outline: none;
+}
 
 main {
   color: $font-color;
