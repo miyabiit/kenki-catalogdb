@@ -1,4 +1,6 @@
 class CompaniesController < ApplicationController
+  before_action :require_login
+
   before_action :fetch_company, only: [:show, :edit, :update, :destroy]
   before_action :fetch_companies, only: [:index]
 
