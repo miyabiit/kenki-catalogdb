@@ -23,6 +23,10 @@ test:
   <<: *default
   database: kenki_catalogdb_test
 
+staging:
+  <<: *default
+  database: kenki_catalogdb_staging
+
 production:
   <<: *default
   database: kenki_catalogdb_production
