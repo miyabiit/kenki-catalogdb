@@ -32,6 +32,7 @@ gem 'seed-fu'
 gem 'enumerize'
 gem 'simple_form'
 gem 'cocoon'
+gem 'dotenv-rails'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
