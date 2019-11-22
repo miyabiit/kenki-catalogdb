@@ -5,11 +5,9 @@ Rails.application.routes.draw do
   post 'sessions/sign_in', to: 'sessions#create'
   delete 'sessions/sign_out', to: 'sessions#destroy'
 
-  namespace :admin_sessions do
-    get :sign_in, to: 'admin_sessions#new'
-    post :sign_in, to: 'admin_sessions#create'
-    delete :sign_out, to: 'admin_sessions#destroy'
-  end
+  get 'admin_sessions/sign_in', to: 'admin_sessions#new'
+  post 'admin_sessions/sign_in', to: 'admin_sessions#create'
+  delete 'admin_sessions/sign_out', to: 'admin_sessions#destroy'
 
   resources :tests, only: [] do
     collection do
