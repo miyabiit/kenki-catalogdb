@@ -6,12 +6,12 @@ class AdminSessionsController < ApplicationController
 
   def create
     @user = login(params[:login_name], params[:password])
-    unless @user.is_a? Administrator
+    unless @user && @user.is_a?(Administrator)
       head :not_found
       logout
       return
     end
-    redirect_to root_path
+    redirect_back_or_to(:companies, notice: 'ログインしました')
   end
 
   def destroy
