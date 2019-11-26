@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :companies
   resources :categories
   resources :sub_categories
+  resources :products
 
   root to: 'tests#test'
 end

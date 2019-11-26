@@ -1,0 +1,110 @@
+<%= render 'shared/notice' %>
+
+<%= link_to "新規#{Product.model_name.human}", new_product_path, class: 'float-right btn btn-primary' %>
+<h1><%= Product.model_name.human %></h1>
+
+<%= paginate @products %>
+<table class="table">
+  <thead>
+    <tr>
+      <th><%= Product.human_attribute_name :id %></th>
+    
+      <th><%= Product.human_attribute_name :product_code %></th>
+    
+      <th><%= Product.human_attribute_name :category_id %></th>
+    
+      <th><%= Product.human_attribute_name :title %></th>
+    
+      <th><%= Product.human_attribute_name :netis %></th>
+    
+      <th><%= Product.human_attribute_name :netis_limit_date %></th>
+    
+      <th><%= Product.human_attribute_name :qualification_sp_teach %></th>
+    
+      <th><%= Product.human_attribute_name :qualification_skill %></th>
+    
+      <th><%= Product.human_attribute_name :qualification_comment %></th>
+    
+      <th><%= Product.human_attribute_name :driver_license %></th>
+    
+      <th><%= Product.human_attribute_name :checking_teiji %></th>
+    
+      <th><%= Product.human_attribute_name :checking_tokujiken %></th>
+    
+      <th><%= Product.human_attribute_name :checking_shaken %></th>
+    
+      <th><%= Product.human_attribute_name :checking_denhou %></th>
+    
+      <th><%= Product.human_attribute_name :checking_souken %></th>
+    
+      <th><%= Product.human_attribute_name :description_a %></th>
+    
+      <th><%= Product.human_attribute_name :description_b %></th>
+    
+      <th><%= Product.human_attribute_name :video_url %></th>
+    
+      <th><%= Product.human_attribute_name :video_comment %></th>
+    
+      <th><%= Product.human_attribute_name :video_license_memo %></th>
+    
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= product.id %></td>
+      
+        <td><%= product.product_code %></td>
+      
+        <td><%= product.category_id %></td>
+      
+        <td><%= product.title %></td>
+      
+        <td><%= product.netis %></td>
+      
+        <td><%= product.netis_limit_date %></td>
+      
+        <td><%= product.qualification_sp_teach %></td>
+      
+        <td><%= product.qualification_skill %></td>
+      
+        <td><%= product.qualification_comment %></td>
+      
+        <td><%= product.driver_license %></td>
+      
+        <td><%= product.checking_teiji %></td>
+      
+        <td><%= product.checking_tokujiken %></td>
+      
+        <td><%= product.checking_shaken %></td>
+      
+        <td><%= product.checking_denhou %></td>
+      
+        <td><%= product.checking_souken %></td>
+      
+        <td><%= product.description_a %></td>
+      
+        <td><%= product.description_b %></td>
+      
+        <td><%= product.video_url %></td>
+      
+        <td><%= product.video_comment %></td>
+      
+        <td><%= product.video_license_memo %></td>
+      
+        <td>
+          <%= link_to edit_product_path(product) do %>
+            編集
+          <% end %>
+          &nbsp;
+          <%= link_to product, method: :delete, data: { confirm: '削除してもよろしいですか？' } do %>
+            削除
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @products %>

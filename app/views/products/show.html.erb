@@ -1,0 +1,88 @@
+<%= link_to '<戻る', products_path %>
+<h2><%= .model_name.human %>詳細</h2>
+<%= render 'shared/notice' %>
+<table class="table">
+  <tr>
+    <th><%= .human_attribute_name :id %></th>
+    <td><%= @product.id %></td>
+  </tr>
+  <tr>
+    <th><%= .human_attribute_name :product_code %></th>
+    <td><%= @product.product_code %></td>
+  </tr>
+  <tr>
+    <th><%= .human_attribute_name :category_id %></th>
+    <td><%= @product.category_id %></td>
+  </tr>
+  <tr>
+    <th><%= .human_attribute_name :title %></th>
+    <td><%= @product.title %></td>
+  </tr>
+  <tr>
+    <th><%= .human_attribute_name :netis %></th>
+    <td><%= @product.netis %></td>
+  </tr>
+  <tr>
+    <th><%= .human_attribute_name :netis_limit_date %></th>
+    <td><%= @product.netis_limit_date %></td>
+  </tr>
+  <tr>
+    <th><%= .human_attribute_name :qualification_sp_teach %></th>
+    <td><%= @product.qualification_sp_teach %></td>
+  </tr>
+  <tr>
+    <th><%= .human_attribute_name :qualification_skill %></th>
+    <td><%= @product.qualification_skill %></td>
+  </tr>
+  <tr>
+    <th><%= .human_attribute_name :qualification_comment %></th>
+    <td><%= @product.qualification_comment %></td>
+  </tr>
+  <tr>
+    <th><%= .human_attribute_name :driver_license %></th>
+    <td><%= @product.driver_license %></td>
+  </tr>
+  <tr>
+    <th><%= .human_attribute_name :checking_teiji %></th>
+    <td><%= @product.checking_teiji %></td>
+  </tr>
+  <tr>
+    <th><%= .human_attribute_name :checking_tokujiken %></th>
+    <td><%= @product.checking_tokujiken %></td>
+  </tr>
+  <tr>
+    <th><%= .human_attribute_name :checking_shaken %></th>
+    <td><%= @product.checking_shaken %></td>
+  </tr>
+  <tr>
+    <th><%= .human_attribute_name :checking_denhou %></th>
+    <td><%= @product.checking_denhou %></td>
+  </tr>
+  <tr>
+    <th><%= .human_attribute_name :checking_souken %></th>
+    <td><%= @product.checking_souken %></td>
+  </tr>
+  <tr>
+    <th><%= .human_attribute_name :description_a %></th>
+    <td><%= @product.description_a %></td>
+  </tr>
+  <tr>
+    <th><%= .human_attribute_name :description_b %></th>
+    <td><%= @product.description_b %></td>
+  </tr>
+  <tr>
+    <th><%= .human_attribute_name :video_url %></th>
+    <td><%= @product.video_url %></td>
+  </tr>
+  <tr>
+    <th><%= .human_attribute_name :video_comment %></th>
+    <td><%= @product.video_comment %></td>
+  </tr>
+  <tr>
+    <th><%= .human_attribute_name :video_license_memo %></th>
+    <td><%= @product.video_license_memo %></td>
+  </tr>
+</table>
+
+<br/>
+<%= link_to '編集', edit_product_path(@product), class: 'btn btn-primary' %>

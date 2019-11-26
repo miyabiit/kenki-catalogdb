@@ -1,0 +1,25 @@
+@products.map do |product|
+  {
+    id: product.id,
+    uid: product.product_code,
+    uid: product.category_id,
+    uid: product.title,
+    uid: product.netis,
+    uid: product.netis_limit_date,
+    uid: product.qualification_sp_teach,
+    uid: product.qualification_skill,
+    uid: product.qualification_comment,
+    uid: product.driver_license,
+    uid: product.checking_teiji,
+    uid: product.checking_tokujiken,
+    uid: product.checking_shaken,
+    uid: product.checking_denhou,
+    uid: product.checking_souken,
+    uid: product.description_a,
+    uid: product.description_b,
+    uid: product.video_url,
+    uid: product.video_comment,
+    uid: product.video_license_memo,
+    url: product_url(product, format: :json)
+  }
+end

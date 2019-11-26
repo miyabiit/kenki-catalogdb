@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_26_070951) do
+ActiveRecord::Schema.define(version: 2019_11_26_081232) do
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "category_id"
@@ -29,6 +29,42 @@ ActiveRecord::Schema.define(version: 2019_11_26_070951) do
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "product_sub_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.bigint "sub_category_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id", "sub_category_id"], name: "index_product_sub_categories_on_product_id_and_sub_category_id", unique: true
+    t.index ["product_id"], name: "index_product_sub_categories_on_product_id"
+    t.index ["sub_category_id"], name: "index_product_sub_categories_on_sub_category_id"
+  end
+
+  create_table "products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "product_code", null: false
+    t.bigint "category_id", null: false
+    t.string "title", null: false
+    t.boolean "netis", default: false
+    t.date "netis_limit_date"
+    t.boolean "qualification_sp_teach", default: false
+    t.boolean "qualification_skill", default: false
+    t.text "qualification_comment"
+    t.boolean "driver_license", default: false
+    t.boolean "checking_teiji", default: false
+    t.boolean "checking_tokujiken", default: false
+    t.boolean "checking_shaken", default: false
+    t.boolean "checking_denhou", default: false
+    t.boolean "checking_souken", default: false
+    t.text "description_a"
+    t.text "description_b"
+    t.string "video_url"
+    t.text "video_comment"
+    t.text "video_license_memo"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_products_on_category_id"
+    t.index ["product_code"], name: "index_products_on_product_code", unique: true
   end
 
   create_table "sub_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -51,5 +87,8 @@ ActiveRecord::Schema.define(version: 2019_11_26_070951) do
   end
 
   add_foreign_key "categories", "companies"
+  add_foreign_key "product_sub_categories", "products"
+  add_foreign_key "product_sub_categories", "sub_categories"
+  add_foreign_key "products", "categories"
   add_foreign_key "users", "companies"
 end

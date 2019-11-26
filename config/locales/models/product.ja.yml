@@ -1,0 +1,31 @@
+ja:
+  activerecord:
+    models:
+      product: "商品"
+    attributes:
+      product:
+        id: "商品ID"
+        product_code: "商品コード"
+        category: "最終カテゴリ"
+        category_id: "最終カテゴリID"
+        title: "ページタイトル"
+        netis: "NETIS"
+        netis_limit_date: "NETIS使用期限"
+        sub_categories: "サブカテゴリ"
+        qualification_sp_teach: "資格アイコン 特教"
+        qualification_skill: "資格アイコン 技"
+        qualification_comment: "資格コメント"
+        driver_license: "公道運転免許"
+        checking_teiji: "法定点検 定自"
+        checking_tokujiken: "法定点検 特自検"
+        checking_shaken: "法定点検 車検"
+        checking_denhou: "法定点検 電訪"
+        checking_souken: "法定点検 掃検"
+        description_a: "商品説明A"
+        description_b: "商品説明B"
+        video_url: "動画URL"
+        video_comment: "動画コメント"
+        video_license_memo: "動画使用許諾メモ"
+        created_at: "作成日時"
+        updated_at: "更新日時"
+
