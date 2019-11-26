@@ -1,0 +1,54 @@
+<%= render 'shared/notice' %>
+
+<%= link_to "新規#{Category.model_name.human}", new_category_path, class: 'float-right btn btn-primary' %>
+<h1><%= Category.model_name.human %></h1>
+
+<%= paginate @categories %>
+<table class="table">
+  <thead>
+    <tr>
+      <th><%= Category.human_attribute_name :id %></th>
+    
+      <th><%= Category.human_attribute_name :category_id %></th>
+    
+      <th><%= Category.human_attribute_name :company_id %></th>
+    
+      <th><%= Category.human_attribute_name :name %></th>
+    
+      <th><%= Category.human_attribute_name :position %></th>
+    
+      <th><%= Category.human_attribute_name :last %></th>
+    
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @categories.each do |category| %>
+      <tr>
+        <td><%= category.id %></td>
+      
+        <td><%= category.category_id %></td>
+      
+        <td><%= category.company_id %></td>
+      
+        <td><%= category.name %></td>
+      
+        <td><%= category.position %></td>
+      
+        <td><%= category.last %></td>
+      
+        <td>
+          <%= link_to edit_category_path(category) do %>
+            編集
+          <% end %>
+          &nbsp;
+          <%= link_to category, method: :delete, data: { confirm: '削除してもよろしいですか？' } do %>
+            削除
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @categories %>

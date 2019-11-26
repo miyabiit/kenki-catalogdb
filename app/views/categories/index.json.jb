@@ -1,0 +1,11 @@
+@categories.map do |category|
+  {
+    id: category.id,
+    uid: category.category_id,
+    uid: category.company_id,
+    uid: category.name,
+    uid: category.position,
+    uid: category.last,
+    url: category_url(category, format: :json)
+  }
+end

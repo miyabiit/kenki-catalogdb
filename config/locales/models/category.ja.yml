@@ -1,0 +1,17 @@
+ja:
+  activerecord:
+    models:
+      category: "分類"
+    attributes:
+      category:
+        id: "分類ID"
+        category: "親分類"
+        category_id: "親分類ID"
+        company: "会社"
+        company_id: "会社ID"
+        name: "分類名"
+        position: "並び順"
+        last: "最終カテゴリ"
+        created_at: "作成日時"
+        updated_at: "更新日時"
+

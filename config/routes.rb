@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   end
 
   resources :companies
+  resources :categories
 
   root to: 'tests#test'
 end

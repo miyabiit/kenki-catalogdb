@@ -1,0 +1,32 @@
+<%= link_to '<戻る', categories_path %>
+<h2><%= .model_name.human %>詳細</h2>
+<%= render 'shared/notice' %>
+<table class="table">
+  <tr>
+    <th><%= .human_attribute_name :id %></th>
+    <td><%= @category.id %></td>
+  </tr>
+  <tr>
+    <th><%= .human_attribute_name :category_id %></th>
+    <td><%= @category.category_id %></td>
+  </tr>
+  <tr>
+    <th><%= .human_attribute_name :company_id %></th>
+    <td><%= @category.company_id %></td>
+  </tr>
+  <tr>
+    <th><%= .human_attribute_name :name %></th>
+    <td><%= @category.name %></td>
+  </tr>
+  <tr>
+    <th><%= .human_attribute_name :position %></th>
+    <td><%= @category.position %></td>
+  </tr>
+  <tr>
+    <th><%= .human_attribute_name :last %></th>
+    <td><%= @category.last %></td>
+  </tr>
+</table>
+
+<br/>
+<%= link_to '編集', edit_category_path(@category), class: 'btn btn-primary' %>

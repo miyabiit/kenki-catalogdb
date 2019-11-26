@@ -1,0 +1,20 @@
+<%= simple_form_for category do |f| %>
+  <%= f.button :submit, class: 'float-right btn btn-primary' %>
+  <%= link_to '<戻る', categories_path, class: 'btn btn-outline-primary', style: 'margin-bottom: 10px' %>
+    <h3><%= title %></h3>
+  <div class="clearfix">
+    <%= render('shared/validation_alert', model: category) if category.errors.any? %>
+    <%= f.input :id, wrapper: :horizontal_plaintext unless f.object.new_record? %>
+    
+      <%= f.association :category %>
+    
+      <%= f.association :company %>
+    
+      <%= f.input :name %>
+    
+      <%= f.input :position %>
+    
+      <%= f.input :last %>
+    
+  </div>
+<% end %>
