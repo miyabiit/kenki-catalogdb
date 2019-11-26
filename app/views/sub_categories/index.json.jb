@@ -1,0 +1,7 @@
+@sub_categories.map do |sub_category|
+  {
+    id: sub_category.id,
+    uid: sub_category.name,
+    url: sub_category_url(sub_category, format: :json)
+  }
+end

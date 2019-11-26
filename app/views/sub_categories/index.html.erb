@@ -1,0 +1,38 @@
+<%= render 'shared/notice' %>
+
+<%= link_to "新規#{SubCategory.model_name.human}", new_sub_category_path, class: 'float-right btn btn-primary' %>
+<h1><%= SubCategory.model_name.human %></h1>
+
+<%= paginate @sub_categories %>
+<table class="table">
+  <thead>
+    <tr>
+      <th><%= SubCategory.human_attribute_name :id %></th>
+    
+      <th><%= SubCategory.human_attribute_name :name %></th>
+    
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sub_categories.each do |sub_category| %>
+      <tr>
+        <td><%= sub_category.id %></td>
+      
+        <td><%= sub_category.name %></td>
+      
+        <td>
+          <%= link_to edit_sub_category_path(sub_category) do %>
+            編集
+          <% end %>
+          &nbsp;
+          <%= link_to sub_category, method: :delete, data: { confirm: '削除してもよろしいですか？' } do %>
+            削除
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @sub_categories %>

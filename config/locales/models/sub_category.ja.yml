@@ -1,0 +1,11 @@
+ja:
+  activerecord:
+    models:
+      sub_category: "サブカテゴリ"
+    attributes:
+      sub_category:
+        id: "サブカテゴリID"
+        name: "サブカテゴリ名"
+        created_at: "作成日時"
+        updated_at: "更新日時"
+

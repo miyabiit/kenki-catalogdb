@@ -1,0 +1,6 @@
+{
+  id: @sub_category.id,
+  uid: @sub_category.uid,
+  created_at: @sub_category.created_at,
+  updated_at: @sub_category.updated_at
+}
