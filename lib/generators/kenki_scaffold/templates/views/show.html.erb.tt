@@ -1,0 +1,18 @@
+<%%= link_to '<戻る', <%= @resource_name.pluralize %>_path %>
+<h2><%%= <% @resource_name.camelize %>.model_name.human %>詳細</h2>
+<%%= render 'shared/notice' %>
+<table class="table">
+  <tr>
+    <th><%%= <% @resource_name.camelize %>.human_attribute_name :id %></th>
+    <td><%%= @<%= @resource_name %>.id %></td>
+  </tr>
+<% @attribute_names.each do |attr_name| -%>
+  <tr>
+    <th><%%= <% @resource_name.camelize %>.human_attribute_name :<%= attr_name %> %></th>
+    <td><%%= @<%= @resource_name %>.<%= attr_name %> %></td>
+  </tr>
+<% end -%>
+</table>
+
+<br/>
+<%%= link_to '編集', edit_<%= @resource_name %>_path(@<%= @resource_name %>), class: 'btn btn-primary' %>

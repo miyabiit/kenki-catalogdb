@@ -1,0 +1,71 @@
+class <%= @resource_name.pluralize.camelize %>Controller < ApplicationController
+  before_action :require_login
+
+  before_action :fetch_resource, only: [:show, :edit, :update, :destroy]
+  before_action :fetch_resources, only: [:index]
+
+  def index
+  end
+
+  def show
+  end
+
+  def new
+    @<%= @resource_name %> = <%= @resource_name.camelize %>.new
+  end
+
+  def edit
+  end
+
+  def create
+    @<%= @resource_name %> = <%= @resource_name.camelize %>.new(form_params)
+
+    respond_to do |format|
+      if @<%= @resource_name %>.save
+        format.html { redirect_to <%= @resource_name.pluralize %>_url, notice: "#{<%= @resource_name.camelize %>.model_name.human}##{@<%= @resource_name %>.id} を作成しました" }
+        format.json { render :show, status: :created, location: @<%= @resource_name %> }
+      else
+        format.html { render :new }
+        format.json { render json: @<%= @resource_name %>.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def update
+    respond_to do |format|
+      if @<%= @resource_name %>.update(form_params)
+        format.html { redirect_to <%= @resource_name.pluralize %>_url, notice: "#{<%= @resource_name.camelize %>.model_name.human}##{@<%= @resource_name %>.id} を更新しました" }
+        format.json { render :show, status: :ok, location: @<%= @resource_name %> }
+      else
+        format.html { render :edit }
+        format.json { render json: @<%= @resource_name %>.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def destroy
+    @<%= @resource_name %>.destroy
+    respond_to do |format|
+      format.html { redirect_to <%= @resource_name.pluralize %>_url, notice: "#{<%= @resource_name.camelize %>.model_name.human}##{@<%= @resource_name %>.id} を削除しました" }
+      format.json { head :no_content }
+    end
+  end
+
+  private
+
+  def form_params
+    params.require(:<%= @resource_name %>).permit(<%= @resource_name.camelize %>.form_attribute_names)
+  end
+
+  def search_params
+    params.permit(<%= @resource_name.camelize %>.search_attribute_names)
+  end
+
+  def fetch_resources
+    @<%= @resource_name.pluralize %> = <%= @resource_name.camelize %>.search(search_params).pagination_by_params(params)
+  end
+
+  def fetch_resource
+    @<%= @resource_name %> = <%= @resource_name.camelize %>.find(params[:id])
+  end
+end

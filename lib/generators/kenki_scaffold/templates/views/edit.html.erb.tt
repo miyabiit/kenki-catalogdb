@@ -1,0 +1,1 @@
+<%%= render 'form', <%= @resource_name %>: @<%= @resource_name %>, title: "#{<%= @resource_name.camelize %>.model_name.human}編集" %>

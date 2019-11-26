@@ -1,0 +1,38 @@
+<%%= render 'shared/notice' %>
+
+<%%= link_to "新規#{<%= @resource_name.camelize %>.model_name.human}", new_<%= @resource_name %>_path, class: 'float-right btn btn-primary' %>
+<h1><%%= <%= @resource_name.camelize %>.model_name.human %></h1>
+
+<%%= paginate @<%= @resource_name.pluralize %> %>
+<table class="table">
+  <thead>
+    <tr>
+      <th><%%= <%= @resource_name.camelize %>.human_attribute_name :id %></th>
+    <% @attribute_names.each do |attr_name| %>
+      <th><%%= <%= @resource_name.camelize %>.human_attribute_name :<%= attr_name %> %></th>
+    <% end %>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%% @<%= @resource_name.pluralize %>.each do |<%= @resource_name %>| %>
+      <tr>
+        <td><%%= <%= @resource_name %>.id %></td>
+      <% @attribute_names.each do |attr_name| %>
+        <td><%%= <%= @resource_name %>.<%= attr_name %> %></td>
+      <% end %>
+        <td>
+          <%%= link_to edit_<%= @resource_name %>_path(<%= @resource_name %>) do %>
+            編集
+          <%% end %>
+          &nbsp;
+          <%%= link_to <%= @resource_name %>, method: :delete, data: { confirm: '削除してもよろしいですか？' } do %>
+            削除
+          <%% end %>
+        </td>
+      </tr>
+    <%% end %>
+  </tbody>
+</table>
+<%%= paginate @<%= @resource_name.pluralize %> %>

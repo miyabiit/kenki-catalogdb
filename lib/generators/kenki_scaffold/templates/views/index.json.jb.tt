@@ -1,0 +1,9 @@
+@<%= @resource_name.pluralize %>.map do |<%= @resource_name %>|
+  {
+    id: <%= @resource_name %>.id,
+<% @attribute_names.each do |attr_name| -%>
+    uid: <%= @resource_name %>.<%= attr_name %>,
+<% end -%>
+    url: <%= @resource_name %>_url(<%= @resource_name %>, format: :json)
+  }
+end
