@@ -1,0 +1,36 @@
+<%= render 'shared/notice' %>
+
+<%= link_to "新規#{TextProp.model_name.human}", new_text_prop_path, class: 'float-right btn btn-primary' %>
+<h1><%= TextProp.model_name.human %></h1>
+
+<%= paginate @text_props %>
+<table class="table">
+  <thead>
+    <tr>
+      <th><%= TextProp.human_attribute_name :id %></th>
+      <th><%= TextProp.human_attribute_name :name %></th>
+      <th><%= TextProp.human_attribute_name :text_content %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @text_props.each do |text_prop| %>
+      <tr>
+        <td><%= text_prop.id %></td>
+        <td><%= text_prop.name %></td>
+        <td><%= text_prop.text_content %></td>
+        <td>
+          <%= link_to edit_text_prop_path(text_prop) do %>
+            編集
+          <% end %>
+          &nbsp;
+          <%= link_to text_prop, method: :delete, data: { confirm: '削除してもよろしいですか？' } do %>
+            削除
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @text_props %>

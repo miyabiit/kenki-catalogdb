@@ -1,0 +1,39 @@
+<%= render 'shared/notice' %>
+
+<%= link_to "新規#{FileProp.model_name.human}", new_file_prop_path, class: 'float-right btn btn-primary' %>
+<h1><%= FileProp.model_name.human %></h1>
+
+<%= paginate @file_props %>
+<table class="table">
+  <thead>
+    <tr>
+      <th><%= FileProp.human_attribute_name :id %></th>
+    
+      <th><%= FileProp.human_attribute_name :name %></th>
+
+      <th><%= FileProp.human_attribute_name :file %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @file_props.each do |file_prop| %>
+      <tr>
+        <td><%= file_prop.id %></td>
+      
+        <td><%= file_prop.name %></td>
+        <td><%= link_to file_prop.file.attachment.blob.filename.to_s, rails_blob_path(file_prop.file) if file_prop.file.attachment %></td>
+        <td>
+          <%= link_to edit_file_prop_path(file_prop) do %>
+            編集
+          <% end %>
+          &nbsp;
+          <%= link_to file_prop, method: :delete, data: { confirm: '削除してもよろしいですか？' } do %>
+            削除
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @file_props %>

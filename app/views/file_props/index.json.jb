@@ -1,0 +1,8 @@
+@file_props.map do |file_prop|
+  {
+    id: file_prop.id,
+    name: file_prop.name,
+    type: file_prop.type,
+    url: file_prop_url(file_prop, format: :json)
+  }
+end

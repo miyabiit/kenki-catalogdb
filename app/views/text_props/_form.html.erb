@@ -1,0 +1,11 @@
+<%= simple_form_for text_prop do |f| %>
+  <%= f.button :submit, class: 'float-right btn btn-primary' %>
+  <%= link_to '<戻る', text_props_path, class: 'btn btn-outline-primary', style: 'margin-bottom: 10px' %>
+    <h3><%= title %></h3>
+  <div class="clearfix">
+    <%= render('shared/validation_alert', model: text_prop) if text_prop.errors.any? %>
+    <%= f.input :id, wrapper: :horizontal_plaintext unless f.object.new_record? %>
+    <%= f.input :name %>
+    <%= f.input :text_content %>
+  </div>
+<% end %>

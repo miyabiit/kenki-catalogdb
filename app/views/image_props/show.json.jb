@@ -1,0 +1,6 @@
+{
+  id: @image_prop.id,
+  name: @image_prop.name,
+  created_at: @image_prop.created_at,
+  updated_at: @image_prop.updated_at
+}

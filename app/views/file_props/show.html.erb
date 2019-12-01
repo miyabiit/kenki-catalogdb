@@ -1,0 +1,20 @@
+<%= link_to '<戻る', file_props_path %>
+<h2><%= FileProp.model_name.human %>詳細</h2>
+<%= render 'shared/notice' %>
+<table class="table">
+  <tr>
+    <th><%= FileProp.human_attribute_name :id %></th>
+    <td><%= @file_prop.id %></td>
+  </tr>
+  <tr>
+    <th><%= FileProp.human_attribute_name :name %></th>
+    <td><%= @file_prop.name %></td>
+  </tr>
+  <tr>
+    <th><%= FileProp.human_attribute_name :file %></th>
+    <td><%= link_to file_prop.file.attachment.blob.filename.to_s, rails_blob_path(file_prop.file) if file_prop.file.attachment %></td>
+  </tr>
+</table>
+
+<br/>
+<%= link_to '編集', edit_file_prop_path(@file_prop), class: 'btn btn-primary' %>

@@ -55,8 +55,29 @@ main {
 }
 
 .kenki-toc-link {
+  padding: .25rem;
   display: block;
+  font-weight: 600;
+  font-size: $font-size-l;
+  color: $sub-color;
+}
+
+.kenki-sub-nav {
+  .kenki-toc-link {
+    padding: .25rem 1.5rem;
+  }
+}
+
+
+.kenki-sidenav {
   padding: .25rem 1.5rem;
+}
+
+.kenki-sub-nav {
+}
+
+.kenki-toc-text {
+  display: block;
   font-weight: 600;
   font-size: $font-size-l;
   color: $sub-color;

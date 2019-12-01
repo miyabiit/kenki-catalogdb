@@ -1,0 +1,7 @@
+@text_props.map do |text_prop|
+  {
+    id: text_prop.id,
+    name: text_prop.name,
+    url: text_prop_url(text_prop, format: :json)
+  }
+end

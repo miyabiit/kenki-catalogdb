@@ -1,0 +1,12 @@
+ja:
+  activerecord:
+    models:
+      image_prop: "画像属性"
+    attributes:
+      image_prop:
+        id: "画像属性ID"
+        name: "タイトル"
+        image: "画像"
+        created_at: "作成日時"
+        updated_at: "更新日時"
+

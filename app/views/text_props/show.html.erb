@@ -1,0 +1,16 @@
+<%= link_to '<戻る', text_props_path %>
+<h2><%= TextProp.model_name.human %>詳細</h2>
+<%= render 'shared/notice' %>
+<table class="table">
+  <tr>
+    <th><%= TextProp.human_attribute_name :id %></th>
+    <td><%= @text_prop.id %></td>
+  </tr>
+  <tr>
+    <th><%= TextProp.human_attribute_name :name %></th>
+    <td><%= @text_prop.name %></td>
+  </tr>
+</table>
+
+<br/>
+<%= link_to '編集', edit_text_prop_path(@text_prop), class: 'btn btn-primary' %>

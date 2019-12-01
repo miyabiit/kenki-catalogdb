@@ -1,0 +1,7 @@
+@image_props.map do |image_prop|
+  {
+    id: image_prop.id,
+    name: image_prop.name,
+    url: image_prop_url(image_prop, format: :json)
+  }
+end

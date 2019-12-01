@@ -1,0 +1,11 @@
+ja:
+  activerecord:
+    models:
+      stored_prop: "属性"
+    attributes:
+      stored_prop:
+        id: "属性ID"
+        name: "タイトル"
+        created_at: "作成日時"
+        updated_at: "更新日時"
+

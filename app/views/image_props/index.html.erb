@@ -1,0 +1,38 @@
+<%= render 'shared/notice' %>
+
+<%= link_to "新規#{ImageProp.model_name.human}", new_image_prop_path, class: 'float-right btn btn-primary' %>
+<h1><%= ImageProp.model_name.human %></h1>
+
+<%= paginate @image_props %>
+<table class="table">
+  <thead>
+    <tr>
+      <th><%= ImageProp.human_attribute_name :id %></th>
+    
+      <th><%= ImageProp.human_attribute_name :name %></th>
+      <th><%= ImageProp.human_attribute_name :image %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @image_props.each do |image_prop| %>
+      <tr>
+        <td><%= image_prop.id %></td>
+      
+        <td><%= image_prop.name %></td>
+        <td><%= link_to image_prop.image.attachment.blob.filename.to_s, rails_blob_path(image_prop.image) if image_prop.image.attachment %></td>
+        <td>
+          <%= link_to edit_image_prop_path(image_prop) do %>
+            編集
+          <% end %>
+          &nbsp;
+          <%= link_to image_prop, method: :delete, data: { confirm: '削除してもよろしいですか？' } do %>
+            削除
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @image_props %>

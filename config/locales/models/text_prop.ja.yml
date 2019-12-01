@@ -1,0 +1,12 @@
+ja:
+  activerecord:
+    models:
+      text_prop: "URL属性"
+    attributes:
+      text_prop:
+        id: "URL属性ID"
+        name: "タイトル"
+        text_content: "URL"
+        created_at: "作成日時"
+        updated_at: "更新日時"
+

@@ -10,7 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_01_105726) do
+ActiveRecord::Schema.define(version: 2019_12_01_123225) do
+
+  create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "category_id"
@@ -67,6 +88,24 @@ ActiveRecord::Schema.define(version: 2019_12_01_105726) do
     t.index ["product_code"], name: "index_products_on_product_code", unique: true
   end
 
+  create_table "stored_prop_sub_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "stored_prop_id", null: false
+    t.bigint "sub_category_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["stored_prop_id", "sub_category_id"], name: "idx_uniq_stored_prop_sub_categories", unique: true
+    t.index ["stored_prop_id"], name: "index_stored_prop_sub_categories_on_stored_prop_id"
+    t.index ["sub_category_id"], name: "index_stored_prop_sub_categories_on_sub_category_id"
+  end
+
+  create_table "stored_props", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "type", default: "TextProp"
+    t.text "text_content"
+  end
+
   create_table "sub_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
   end
@@ -88,9 +127,12 @@ ActiveRecord::Schema.define(version: 2019_12_01_105726) do
     t.index ["remember_me_token"], name: "index_users_on_remember_me_token"
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "categories", "companies"
   add_foreign_key "product_sub_categories", "products"
   add_foreign_key "product_sub_categories", "sub_categories"
   add_foreign_key "products", "categories"
+  add_foreign_key "stored_prop_sub_categories", "stored_props"
+  add_foreign_key "stored_prop_sub_categories", "sub_categories"
   add_foreign_key "users", "companies"
 end

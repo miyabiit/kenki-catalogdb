@@ -1,0 +1,6 @@
+{
+  id: @file_prop.id,
+  name: @file_prop.name,
+  created_at: @file_prop.created_at,
+  updated_at: @file_prop.updated_at
+}

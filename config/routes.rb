@@ -21,5 +21,9 @@ Rails.application.routes.draw do
   resources :products
   resources :staffs
 
+  resources :text_props
+  resources :image_props
+  resources :file_props
+
   root to: 'tests#test'
 end

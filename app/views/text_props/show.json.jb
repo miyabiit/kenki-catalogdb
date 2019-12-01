@@ -1,0 +1,6 @@
+{
+  id: @text_prop.id,
+  name: @text_prop.name,
+  created_at: @text_prop.created_at,
+  updated_at: @text_prop.updated_at
+}
