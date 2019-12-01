@@ -5,8 +5,8 @@
   <div class="clearfix">
     <%%= render('shared/validation_alert', model: <%= @resource_name %>) if <%= @resource_name %>.errors.any? %>
     <%%= f.input :id, wrapper: :horizontal_plaintext unless f.object.new_record? %>
-    <% @attribute_names.each do |attr_name| %>
-      <%%= f.input :<%= attr_name %> %>
-    <% end %>
+  <% @attribute_names.each do |attr_name| %>
+    <%%= f.input :<%= attr_name %> %>
+  <% end %>
   </div>
 <%% end %>
