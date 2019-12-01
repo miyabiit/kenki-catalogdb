@@ -3,6 +3,26 @@
 <%= link_to "新規#{Product.model_name.human}", new_product_path, class: 'float-right btn btn-primary' %>
 <h1><%= Product.model_name.human %></h1>
 
+
+<br>
+<%= form_for :product, method: :get do |f| %>
+  <%= f.submit '検索', class: 'float-right btn btn-primary'  %>
+  <div class="row col-md-10">
+    <div class="col">
+      <%= f.text_field :product_code, placeholder: '商品コード', class: 'form-control' %>
+    </div>
+    <div class="col">
+      <%= f.text_field :title, placeholder: 'ページタイトル', class: 'form-control' %>
+    </div>
+    <div class="col">
+      <div class="form-group row">
+        <%= f.select :category, Category.where(last: true).all.map { |c| [c.name, c.id] }, {}, class: 'form-control' %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<br>
+
 <%= paginate @products %>
 <table class="table">
   <thead>

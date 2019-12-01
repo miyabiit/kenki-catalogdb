@@ -8,7 +8,7 @@
     
       <%= f.input :product_code %>
     
-      <%= f.association :category %>
+      <%= f.association :category, collection: Category.where(last: true).map { |c| [c.name, c.id] }, prompt: '最終カテゴリを選択' %>
     
       <%= f.input :title %>
     
