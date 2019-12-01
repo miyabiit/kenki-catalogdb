@@ -9,6 +9,18 @@
       <%= f.input :product_code %>
     
       <%= f.association :category, collection: Category.where(last: true).map { |c| [c.name, c.id] }, prompt: '最終カテゴリを選択' %>
+
+      <h5>サブカテゴリ</h5>
+      <div id="product_sub_categories">
+        <%= f.simple_fields_for :product_sub_categories do |product_sub_category| %>
+          <%= render 'product_sub_category_fields', f: product_sub_category %>
+        <% end %>
+        <div class="links">
+          <%= link_to_add_association 'サブカテゴリ追加', f, :product_sub_categories, class: 'btn btn-secondary' %>
+        </div>
+      </div>
+      <br>
+
     
       <%= f.input :title %>
     
