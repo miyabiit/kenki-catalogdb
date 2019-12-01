@@ -1,29 +1,29 @@
 <%= link_to '<戻る', categories_path %>
-<h2><%= .model_name.human %>詳細</h2>
+<h2><%= Category.model_name.human %>詳細</h2>
 <%= render 'shared/notice' %>
 <table class="table">
   <tr>
-    <th><%= .human_attribute_name :id %></th>
+    <th><%= Category.human_attribute_name :id %></th>
     <td><%= @category.id %></td>
   </tr>
   <tr>
-    <th><%= .human_attribute_name :category_id %></th>
-    <td><%= @category.category_id %></td>
+    <th><%= Category.human_attribute_name :category %></th>
+    <td><%= link_to @category.category.name, @category.category if @category.category %></td>
   </tr>
   <tr>
-    <th><%= .human_attribute_name :company_id %></th>
-    <td><%= @category.company_id %></td>
+    <th><%= Category.human_attribute_name :company_id %></th>
+    <td><%= link_to @category.company.name, @category.company %></td>
   </tr>
   <tr>
-    <th><%= .human_attribute_name :name %></th>
+    <th><%= Category.human_attribute_name :name %></th>
     <td><%= @category.name %></td>
   </tr>
   <tr>
-    <th><%= .human_attribute_name :position %></th>
+    <th><%= Category.human_attribute_name :position %></th>
     <td><%= @category.position %></td>
   </tr>
   <tr>
-    <th><%= .human_attribute_name :last %></th>
+    <th><%= Category.human_attribute_name :last %></th>
     <td><%= @category.last %></td>
   </tr>
 </table>

@@ -1,0 +1,13 @@
+ja:
+  activerecord:
+    models:
+      staff: "ユーザー"
+    attributes:
+      staff:
+        id: "ユーザーID"
+        login_name: "ログインID"
+        company: "会社"
+        company_id: "会社ID"
+        name: "名前"
+        staff_role: "権限"
+        password: "パスワード"

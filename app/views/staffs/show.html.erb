@@ -1,0 +1,28 @@
+<%= link_to '<戻る', staffs_path %>
+<h2><%= Staff.model_name.human %>詳細</h2>
+<%= render 'shared/notice' %>
+<table class="table">
+  <tr>
+    <th><%= Staff.human_attribute_name :id %></th>
+    <td><%= @staff.id %></td>
+  </tr>
+  <tr>
+    <th><%= Staff.human_attribute_name :company_id %></th>
+    <td><%= @staff.company_id %></td>
+  </tr>
+  <tr>
+    <th><%= Staff.human_attribute_name :login_name %></th>
+    <td><%= @staff.login_name %></td>
+  </tr>
+  <tr>
+    <th><%= Staff.human_attribute_name :name %></th>
+    <td><%= @staff.name %></td>
+  </tr>
+  <tr>
+    <th><%= Staff.human_attribute_name :staff_role %></th>
+    <td><%= @staff.staff_role %></td>
+  </tr>
+</table>
+
+<br/>
+<%= link_to '編集', edit_staff_path(@staff), class: 'btn btn-primary' %>

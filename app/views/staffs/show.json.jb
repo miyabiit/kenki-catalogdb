@@ -1,0 +1,14 @@
+{
+  id: @staff.id,
+  type: @staff.type,
+  login_name: @staff.login_name,
+  crypted_password: @staff.crypted_password,
+  salt: @staff.salt,
+  remember_me_token: @staff.remember_me_token,
+  remember_me_token_expires_at: @staff.remember_me_token_expires_at,
+  company_id: @staff.company_id,
+  staff_role: @staff.staff_role,
+  name: @staff.name,
+  created_at: @staff.created_at,
+  updated_at: @staff.updated_at
+}

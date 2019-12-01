@@ -11,7 +11,7 @@
     
       <th><%= Category.human_attribute_name :category_id %></th>
     
-      <th><%= Category.human_attribute_name :company_id %></th>
+      <th><%= Category.human_attribute_name :company %></th>
     
       <th><%= Category.human_attribute_name :name %></th>
     
@@ -30,7 +30,7 @@
       
         <td><%= category.category_id %></td>
       
-        <td><%= category.company_id %></td>
+        <td><%= link_to category.company.name, category.company if category.company %></td>
       
         <td><%= category.name %></td>
       

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_26_081232) do
+ActiveRecord::Schema.define(version: 2019_12_01_105726) do
 
   create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "category_id"
@@ -81,6 +81,8 @@ ActiveRecord::Schema.define(version: 2019_11_26_081232) do
     t.string "remember_me_token"
     t.datetime "remember_me_token_expires_at"
     t.bigint "company_id"
+    t.string "staff_role", default: "read"
+    t.string "name"
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["login_name"], name: "index_users_on_login_name", unique: true
     t.index ["remember_me_token"], name: "index_users_on_remember_me_token"

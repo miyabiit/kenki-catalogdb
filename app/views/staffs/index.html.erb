@@ -1,0 +1,40 @@
+<%= render 'shared/notice' %>
+
+<%= link_to "新規#{Staff.model_name.human}", new_staff_path, class: 'float-right btn btn-primary' %>
+<h1><%= Staff.model_name.human %></h1>
+
+<%= paginate @staffs %>
+<table class="table">
+  <thead>
+    <tr>
+      <th><%= Staff.human_attribute_name :id %></th>
+      <th><%= Staff.human_attribute_name :company %></th>
+      <th><%= Staff.human_attribute_name :login_name %></th>
+      <th><%= Staff.human_attribute_name :name %></th>
+      <th><%= Staff.human_attribute_name :staff_role %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @staffs.each do |staff| %>
+      <tr>
+        <td><%= staff.id %></td>
+        <td><%= staff.company.name %></td>
+        <td><%= staff.login_name %></td>
+        <td><%= staff.name %></td>
+        <td><%= staff.staff_role %></td>
+        <td>
+          <%= link_to edit_staff_path(staff) do %>
+            編集
+          <% end %>
+          &nbsp;
+          <%= link_to staff, method: :delete, data: { confirm: '削除してもよろしいですか？' } do %>
+            削除
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @staffs %>

@@ -1,13 +1,13 @@
 <%= link_to '<戻る', sub_categories_path %>
-<h2><%= .model_name.human %>詳細</h2>
+<h2><%= SubCategory.model_name.human %>詳細</h2>
 <%= render 'shared/notice' %>
 <table class="table">
   <tr>
-    <th><%= .human_attribute_name :id %></th>
+    <th><%= SubCategory.human_attribute_name :id %></th>
     <td><%= @sub_category.id %></td>
   </tr>
   <tr>
-    <th><%= .human_attribute_name :name %></th>
+    <th><%= SubCategory.human_attribute_name :name %></th>
     <td><%= @sub_category.name %></td>
   </tr>
 </table>
