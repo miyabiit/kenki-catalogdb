@@ -26,4 +26,7 @@ Rails.application.routes.draw do
   resources :file_props
 
   root to: 'tests#test'
+
+  # suppress routing error
+  get '*any', to: redirect('/404.html')
 end
