@@ -29,7 +29,7 @@ set :bundle_binstubs, nil
 set :linked_files, fetch(:linked_files, []).push('.env')
 append :linked_files, "config/puma.rb"
 append :linked_files, "config/master.key"
-set :linked_dirs, %w{log tmp/backup tmp/pids tmp/cache tmp/sockets vendor/bundle node_modules storage public/.well-known}
+set :linked_dirs, %w{log tmp/backup tmp/pids tmp/cache tmp/sockets vendor/bundle node_modules public/.well-known}
 
 set :ssh_options, {
   user: 'ec2-user',
