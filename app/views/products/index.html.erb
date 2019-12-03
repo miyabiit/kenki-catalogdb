@@ -16,7 +16,7 @@
     </div>
     <div class="col">
       <div class="form-group row">
-        <%= f.select :category_id, Category.where(last: true).all.map { |c| [c.name, c.id] }, {include_blank: '-全ての最終カテゴリ-'}, class: 'form-control' %>
+        <%= f.select :category_id, Category.where(last: true).all.map { |c| [c.name, c.id] }, {include_blank: '-全最終カテゴリ-'}, class: 'form-control' %>
       </div>
     </div>
   </div>

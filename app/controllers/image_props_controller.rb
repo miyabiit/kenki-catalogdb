@@ -5,6 +5,7 @@ class ImagePropsController < ApplicationController
   before_action :fetch_resources, only: [:index]
 
   def index
+    @image_prop = ImageProp.new(search_params[:image_prop])
   end
 
   def show
@@ -58,11 +59,11 @@ class ImagePropsController < ApplicationController
   end
 
   def search_params
-    params.permit(ImageProp.search_attribute_names)
+    params.permit(image_prop: ImageProp.search_attribute_names)
   end
 
   def fetch_resources
-    @image_props = ImageProp.search(search_params).pagination_by_params(params)
+    @image_props = ImageProp.search(search_params[:image_prop]).pagination_by_params(params)
   end
 
   def fetch_resource

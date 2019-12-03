@@ -5,6 +5,7 @@ class SubCategoriesController < ApplicationController
   before_action :fetch_resources, only: [:index]
 
   def index
+    @sub_category = SubCategory.new(search_params[:sub_category])
   end
 
   def show
@@ -58,11 +59,11 @@ class SubCategoriesController < ApplicationController
   end
 
   def search_params
-    params.permit(SubCategory.search_attribute_names)
+    params.permit(sub_category: SubCategory.search_attribute_names)
   end
 
   def fetch_resources
-    @sub_categories = SubCategory.search(search_params).pagination_by_params(params)
+    @sub_categories = SubCategory.search(search_params[:sub_category]).pagination_by_params(params)
   end
 
   def fetch_resource

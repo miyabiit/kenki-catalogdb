@@ -3,6 +3,17 @@
 <%= link_to "新規#{SubCategory.model_name.human}", new_sub_category_path, class: 'float-right btn btn-primary' %>
 <h1><%= SubCategory.model_name.human %></h1>
 
+<br>
+<%= form_for @sub_category, method: :get do |f| %>
+  <%= f.submit '検索', class: 'float-right btn btn-primary'  %>
+  <div class="row col-md-11">
+    <div class="col">
+      <%= f.text_field :name, placeholder: 'サブカテゴリ名', class: 'form-control' %>
+    </div>
+  </div>
+<% end %>
+<br>
+
 <%= paginate @sub_categories %>
 <table class="table">
   <thead>

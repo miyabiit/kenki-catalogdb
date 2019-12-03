@@ -5,6 +5,7 @@ class FilePropsController < ApplicationController
   before_action :fetch_resources, only: [:index]
 
   def index
+    @file_prop = FileProp.new(search_params[:file_prop])
   end
 
   def show
@@ -58,11 +59,11 @@ class FilePropsController < ApplicationController
   end
 
   def search_params
-    params.permit(FileProp.search_attribute_names)
+    params.permit(file_prop: FileProp.search_attribute_names)
   end
 
   def fetch_resources
-    @file_props = FileProp.search(search_params).pagination_by_params(params)
+    @file_props = FileProp.search(search_params[:file_prop]).pagination_by_params(params)
   end
 
   def fetch_resource

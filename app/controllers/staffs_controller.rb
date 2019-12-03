@@ -5,6 +5,7 @@ class StaffsController < ApplicationController
   before_action :fetch_resources, only: [:index]
 
   def index
+    @staff = Staff.new(search_params[:staff])
   end
 
   def show
@@ -58,11 +59,11 @@ class StaffsController < ApplicationController
   end
 
   def search_params
-    params.permit(Staff.search_attribute_names)
+    params.permit(staff: Staff.search_attribute_names)
   end
 
   def fetch_resources
-    @staffs = Staff.search(search_params).pagination_by_params(params)
+    @staffs = Staff.search(search_params[:staff]).pagination_by_params(params)
   end
 
   def fetch_resource

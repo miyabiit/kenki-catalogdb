@@ -5,6 +5,10 @@ class CategoriesController < ApplicationController
   before_action :fetch_resources, only: [:index]
 
   def index
+    @category = Category.new(search_params[:category])
+    if search_params.dig(:category, :last).nil?
+      @category.last = nil
+    end
   end
 
   def show
@@ -58,11 +62,11 @@ class CategoriesController < ApplicationController
   end
 
   def search_params
-    params.permit(Category.search_attribute_names)
+    params.permit(category: Category.search_attribute_names)
   end
 
   def fetch_resources
-    @categories = Category.search(search_params).pagination_by_params(params)
+    @categories = Category.search(search_params[:category]).pagination_by_params(params)
   end
 
   def fetch_resource

@@ -5,6 +5,7 @@ class TextPropsController < ApplicationController
   before_action :fetch_resources, only: [:index]
 
   def index
+    @text_prop = TextProp.new(search_params[:text_prop])
   end
 
   def show
@@ -58,11 +59,11 @@ class TextPropsController < ApplicationController
   end
 
   def search_params
-    params.permit(TextProp.search_attribute_names)
+    params.permit(text_prop: TextProp.search_attribute_names)
   end
 
   def fetch_resources
-    @text_props = TextProp.search(search_params).pagination_by_params(params)
+    @text_props = TextProp.search(search_params[:text_prop]).pagination_by_params(params)
   end
 
   def fetch_resource

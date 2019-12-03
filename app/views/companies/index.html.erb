@@ -3,6 +3,20 @@
 <%= link_to "新規#{Company.model_name.human}", new_company_path, class: 'float-right btn btn-primary' %>
 <h1><%= Company.model_name.human %></h1>
 
+<br>
+<%= form_for @company, method: :get do |f| %>
+  <%= f.submit '検索', class: 'float-right btn btn-primary'  %>
+  <div class="row col-md-10">
+    <div class="col">
+      <%= f.text_field :uid, placeholder: '会社コード', class: 'form-control' %>
+    </div>
+    <div class="col">
+      <%= f.text_field :name, placeholder: '会社名', class: 'form-control' %>
+    </div>
+  </div>
+<% end %>
+<br>
+
 <%= paginate @companies %>
 <table class="table">
   <thead>

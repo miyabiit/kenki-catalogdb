@@ -7,6 +7,7 @@ class CompaniesController < ApplicationController
   # GET /companies
   # GET /companies.json
   def index
+    @company = Company.new(search_params[:company])
   end
 
   # GET /companies/1
@@ -26,7 +27,7 @@ class CompaniesController < ApplicationController
   # POST /companies
   # POST /companies.json
   def create
-    @company = Company.new(company_params)
+    @company = Company.new(form_params)
 
     respond_to do |format|
       if @company.save
@@ -43,7 +44,7 @@ class CompaniesController < ApplicationController
   # PATCH/PUT /companies/1.json
   def update
     respond_to do |format|
-      if @company.update(company_params)
+      if @company.update(form_params)
         format.html { redirect_to companies_url, notice: "#{Company.model_name.human}##{@company.id} を更新しました" }
         format.json { render :show, status: :ok, location: @company }
       else
@@ -64,15 +65,20 @@ class CompaniesController < ApplicationController
   end
 
   private
-    def fetch_company
-      @company = Company.find(params[:id])
-    end
 
-    def fetch_companies
-      @companies = Company.all.page(params[:page])
-    end
+  def form_params
+    params.require(:company).permit(Company.form_attribute_names)
+  end
 
-    def company_params
-      params.require(:company).permit(:uid, :name)
-    end
+  def search_params
+    params.permit(company: Company.search_attribute_names)
+  end
+
+  def fetch_company
+    @company = Company.find(params[:id])
+  end
+
+  def fetch_companies
+    @companies = Company.search(search_params[:company]).pagination_by_params(params)
+  end
 end

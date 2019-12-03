@@ -3,6 +3,17 @@
 <%= link_to "新規#{TextProp.model_name.human}", new_text_prop_path, class: 'float-right btn btn-primary' %>
 <h1><%= TextProp.model_name.human %></h1>
 
+<br>
+<%= form_for @text_prop, method: :get do |f| %>
+  <%= f.submit '検索', class: 'float-right btn btn-primary'  %>
+  <div class="row col-md-11">
+    <div class="col">
+      <%= f.text_field :name, placeholder: 'タイトル', class: 'form-control' %>
+    </div>
+  </div>
+<% end %>
+<br>
+
 <%= paginate @text_props %>
 <table class="table">
   <thead>

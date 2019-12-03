@@ -3,6 +3,17 @@
 <%= link_to "新規#{FileProp.model_name.human}", new_file_prop_path, class: 'float-right btn btn-primary' %>
 <h1><%= FileProp.model_name.human %></h1>
 
+<br>
+<%= form_for @file_prop, method: :get do |f| %>
+  <%= f.submit '検索', class: 'float-right btn btn-primary'  %>
+  <div class="row col-md-11">
+    <div class="col">
+      <%= f.text_field :name, placeholder: 'タイトル', class: 'form-control' %>
+    </div>
+  </div>
+<% end %>
+<br>
+
 <%= paginate @file_props %>
 <table class="table">
   <thead>
