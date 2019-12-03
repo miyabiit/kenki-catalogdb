@@ -5,6 +5,7 @@ class ProductsController < ApplicationController
   before_action :fetch_resources, only: [:index]
 
   def index
+    @product = Product.new(search_params[:product])
   end
 
   def show
@@ -58,11 +59,11 @@ class ProductsController < ApplicationController
   end
 
   def search_params
-    params.permit(Product.search_attribute_names)
+    params.permit(product: Product.search_attribute_names)
   end
 
   def fetch_resources
-    @products = Product.search(search_params).pagination_by_params(params)
+    @products = Product.search(search_params[:product]).pagination_by_params(params)
   end
 
   def fetch_resource

@@ -29,6 +29,7 @@ class ApplicationRecord < ActiveRecord::Base
     end
 
     def search(params)
+      params ||= {}
       q = all
       params = params.select do |key, value|
         if value.is_a? Hash
