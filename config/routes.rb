@@ -28,5 +28,5 @@ Rails.application.routes.draw do
   root to: 'tests#test'
 
   # suppress routing error
-  get '*any', to: redirect('/404.html')
+  get '*path', to: 'not_found#not_found', constraints: InvalidRequestConstraint.new
 end
