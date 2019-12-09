@@ -6,9 +6,9 @@
     <%= render('shared/validation_alert', model: category) if category.errors.any? %>
     <%= f.input :id, wrapper: :horizontal_plaintext unless f.object.new_record? %>
     
-      <%= f.association :category %>
+      <%= f.association :category, collection: Category.accessible_by(current_ability) %>
     
-      <%= f.association :company %>
+      <%= f.association :company, collection: Company.accessible_by(current_ability) %>
     
       <%= f.input :name %>
     

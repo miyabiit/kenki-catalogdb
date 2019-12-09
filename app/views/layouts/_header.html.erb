@@ -1,7 +1,10 @@
 <header class="navbar sticky-top navbar-expand navbar-dark flex-column flex-md-row kenki-navbar">
   <a class="navbar-brand mr-0 mr-md-2" href="/" aria-label="建機カタログDB">建機カタログDB</a>
-  <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+  <ul class="nav navbar-nav justify-content-end ml-md-auto d-none d-md-flex">
     <li class="nav-item">
+      <span style="color: white; margin-right: 10px;">
+        <%= current_user.display_name %>
+      </span>
       <% if current_user %>
         <% if current_user.is_a? Administrator %>
           <%= link_to 'ログアウト', "/admin_sessions/sign_out", method: :delete %>

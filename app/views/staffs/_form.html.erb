@@ -5,7 +5,7 @@
   <div class="clearfix">
     <%= render('shared/validation_alert', model: staff) if staff.errors.any? %>
       <%= f.input :id, wrapper: :horizontal_plaintext unless f.object.new_record? %>
-      <%= f.association :company %>
+      <%= f.association :company, collection: Company.accessible_by(current_ability)  %>
       <%= f.input :login_name %>
       <%= f.input :name %>
       <%= f.input :staff_role %>
