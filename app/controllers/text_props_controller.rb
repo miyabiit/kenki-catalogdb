@@ -1,5 +1,6 @@
 class TextPropsController < ApplicationController
   before_action :require_login
+  authorize_resource
 
   before_action :fetch_resource, only: [:show, :edit, :update, :destroy]
   before_action :fetch_resources, only: [:index]
@@ -63,10 +64,10 @@ class TextPropsController < ApplicationController
   end
 
   def fetch_resources
-    @text_props = TextProp.search(search_params[:text_prop]).pagination_by_params(params)
+    @text_props = TextProp.accessible_by(current_ability).search(search_params[:text_prop]).pagination_by_params(params)
   end
 
   def fetch_resource
-    @text_prop = TextProp.find(params[:id])
+    @text_prop = TextProp.accessible_by(current_ability).find(params[:id])
   end
 end

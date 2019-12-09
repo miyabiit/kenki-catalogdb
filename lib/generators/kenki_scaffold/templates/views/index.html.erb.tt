@@ -1,6 +1,8 @@
 <%%= render 'shared/notice' %>
 
+<%% if can? :create, <%= @resource_name.camelize %> %>
 <%%= link_to "新規#{<%= @resource_name.camelize %>.model_name.human}", new_<%= @resource_name %>_path, class: 'float-right btn btn-primary' %>
+<% end %>
 <h1><%%= <%= @resource_name.camelize %>.model_name.human %></h1>
 
 <%%= paginate @<%= @resource_name.pluralize %> %>
@@ -23,12 +25,16 @@
         <td><%%= <%= @resource_name %>.<%= attr_name %> %></td>
       <% end %>
         <td>
+          <%% if can? :update, <%= @resource_name.camelize %> %>
           <%%= link_to edit_<%= @resource_name %>_path(<%= @resource_name %>) do %>
             編集
           <%% end %>
+          <%% end %>
           &nbsp;
+          <%% if can? :destroy, <%= @resource_name.camelize %> %>
           <%%= link_to <%= @resource_name %>, method: :delete, data: { confirm: '削除してもよろしいですか？' } do %>
             削除
+          <%% end %>
           <%% end %>
         </td>
       </tr>

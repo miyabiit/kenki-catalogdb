@@ -1,6 +1,8 @@
 <%= render 'shared/notice' %>
 
+<% if can? :create, Staff %>
 <%= link_to "新規#{Staff.model_name.human}", new_staff_path, class: 'float-right btn btn-primary' %>
+<% end %>
 <h1><%= Staff.model_name.human %></h1>
 
 <br>
@@ -44,12 +46,16 @@
         <td><%= staff.name %></td>
         <td><%= staff.staff_role %></td>
         <td>
+          <% if can? :update, Staff %>
           <%= link_to edit_staff_path(staff) do %>
             編集
           <% end %>
+          <% end %>
           &nbsp;
+          <% if can? :destroy, Staff %>
           <%= link_to staff, method: :delete, data: { confirm: '削除してもよろしいですか？' } do %>
             削除
+          <% end %>
           <% end %>
         </td>
       </tr>

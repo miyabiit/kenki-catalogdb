@@ -1,6 +1,8 @@
 <%= render 'shared/notice' %>
 
+<% if can? :create, TextProp %>
 <%= link_to "新規#{TextProp.model_name.human}", new_text_prop_path, class: 'float-right btn btn-primary' %>
+<% end %>
 <h1><%= TextProp.model_name.human %></h1>
 
 <br>
@@ -32,12 +34,16 @@
         <td><%= text_prop.name %></td>
         <td><%= text_prop.text_content %></td>
         <td>
+          <% if can? :update, TextProp %>
           <%= link_to edit_text_prop_path(text_prop) do %>
             編集
           <% end %>
+          <% end %>
           &nbsp;
+          <% if can? :destroy, TextProp %>
           <%= link_to text_prop, method: :delete, data: { confirm: '削除してもよろしいですか？' } do %>
             削除
+          <% end %>
           <% end %>
         </td>
       </tr>

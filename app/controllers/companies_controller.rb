@@ -1,5 +1,6 @@
 class CompaniesController < ApplicationController
   before_action :require_login
+  authorize_resource
 
   before_action :fetch_company, only: [:show, :edit, :update, :destroy]
   before_action :fetch_companies, only: [:index]
@@ -75,10 +76,16 @@ class CompaniesController < ApplicationController
   end
 
   def fetch_company
-    @company = Company.find(params[:id])
+    @company = Company.accessible_by(current_ability).find(params[:id])
   end
 
   def fetch_companies
-    @companies = Company.search(search_params[:company]).pagination_by_params(params)
+    @companies = Company.accessible_by(current_ability).search(search_params[:company]).pagination_by_params(params)
+  end
+
+  private
+
+  def not_authenticated
+    redirect_to '/admin_sessions/sign_in'
   end
 end

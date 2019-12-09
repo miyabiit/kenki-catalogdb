@@ -1,5 +1,6 @@
 class <%= @resource_name.pluralize.camelize %>Controller < ApplicationController
   before_action :require_login
+  authorize_resource
 
   before_action :fetch_resource, only: [:show, :edit, :update, :destroy]
   before_action :fetch_resources, only: [:index]
@@ -63,10 +64,10 @@ class <%= @resource_name.pluralize.camelize %>Controller < ApplicationController
   end
 
   def fetch_resources
-    @<%= @resource_name.pluralize %> = <%= @resource_name.camelize %>.search(search_params[:<%= @resource_name %>]).pagination_by_params(params)
+    @<%= @resource_name.pluralize %> = <%= @resource_name.camelize %>.accessible_by(current_ability).search(search_params[:<%= @resource_name %>]).pagination_by_params(params)
   end
 
   def fetch_resource
-    @<%= @resource_name %> = <%= @resource_name.camelize %>.find(params[:id])
+    @<%= @resource_name %> = <%= @resource_name.camelize %>.accessible_by(current_ability).find(params[:id])
   end
 end

@@ -5,6 +5,15 @@ class User < ApplicationRecord
     self.name.presence || self.login_name
   end
 
+  def role_name
+    case self
+    when Administrator
+      :admin
+    else
+      self.staff_role == 'write' ? :manager : :staff
+    end
+  end
+
 
   class << self
     def form_attribute_names

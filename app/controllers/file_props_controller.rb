@@ -1,5 +1,6 @@
 class FilePropsController < ApplicationController
   before_action :require_login
+  authorize_resource
 
   before_action :fetch_resource, only: [:show, :edit, :update, :destroy]
   before_action :fetch_resources, only: [:index]
@@ -63,10 +64,10 @@ class FilePropsController < ApplicationController
   end
 
   def fetch_resources
-    @file_props = FileProp.search(search_params[:file_prop]).pagination_by_params(params)
+    @file_props = FileProp.accessible_by(current_ability).search(search_params[:file_prop]).pagination_by_params(params)
   end
 
   def fetch_resource
-    @file_prop = FileProp.find(params[:id])
+    @file_prop = FileProp.accessible_by(current_ability).find(params[:id])
   end
 end

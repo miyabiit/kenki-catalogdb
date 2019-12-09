@@ -1,5 +1,6 @@
 class AdminSessionsController < ApplicationController
   layout 'plane'
+  skip_authorization_check
 
   def new
   end
@@ -16,6 +17,6 @@ class AdminSessionsController < ApplicationController
 
   def destroy
     logout
-    redirect_to 'admin_sessions/sign_in'
+    redirect_to '/admin_sessions/sign_in'
   end
 end

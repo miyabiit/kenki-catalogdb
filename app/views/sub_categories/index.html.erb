@@ -1,6 +1,8 @@
 <%= render 'shared/notice' %>
 
+<% if can? :create, SubCategory %>
 <%= link_to "新規#{SubCategory.model_name.human}", new_sub_category_path, class: 'float-right btn btn-primary' %>
+<% end %>
 <h1><%= SubCategory.model_name.human %></h1>
 
 <br>
@@ -34,12 +36,16 @@
         <td><%= sub_category.name %></td>
       
         <td>
+          <% if can? :update, SubCategory %>
           <%= link_to edit_sub_category_path(sub_category) do %>
             編集
           <% end %>
+          <% end %>
           &nbsp;
+          <% if can? :destroy, SubCategory %>
           <%= link_to sub_category, method: :delete, data: { confirm: '削除してもよろしいですか？' } do %>
             削除
+          <% end %>
           <% end %>
         </td>
       </tr>

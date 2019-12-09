@@ -1,6 +1,8 @@
 <%= render 'shared/notice' %>
 
+<% if can? :create, FileProp %>
 <%= link_to "新規#{FileProp.model_name.human}", new_file_prop_path, class: 'float-right btn btn-primary' %>
+<% end %>
 <h1><%= FileProp.model_name.human %></h1>
 
 <br>
@@ -35,12 +37,16 @@
         <td><%= file_prop.name %></td>
         <td><%= link_to file_prop.file.attachment.blob.filename.to_s, rails_blob_path(file_prop.file) if file_prop.file.attachment %></td>
         <td>
+          <% if can? :update, FileProp %>
           <%= link_to edit_file_prop_path(file_prop) do %>
             編集
           <% end %>
+          <% end %>
           &nbsp;
+          <% if can? :destroy, FileProp %>
           <%= link_to file_prop, method: :delete, data: { confirm: '削除してもよろしいですか？' } do %>
             削除
+          <% end %>
           <% end %>
         </td>
       </tr>

@@ -1,6 +1,8 @@
 <%= render 'shared/notice' %>
 
+<% if can? :create, Company %>
 <%= link_to "新規#{Company.model_name.human}", new_company_path, class: 'float-right btn btn-primary' %>
+<% end %>
 <h1><%= Company.model_name.human %></h1>
 
 <br>
@@ -35,12 +37,16 @@
         <td><%= company.uid %></td>
         <td><%= company.name %></td>
         <td>
+          <% if can? :update, Company %>
           <%= link_to edit_company_path(company) do %>
             編集
           <% end %>
+          <% end %>
           &nbsp;
+          <% if can? :destroy, Company %>
           <%= link_to company, method: :delete, data: { confirm: '削除してもよろしいですか？' } do %>
             削除
+          <% end %>
           <% end %>
         </td>
       </tr>

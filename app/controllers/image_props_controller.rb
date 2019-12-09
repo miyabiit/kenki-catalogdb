@@ -1,5 +1,6 @@
 class ImagePropsController < ApplicationController
   before_action :require_login
+  authorize_resource
 
   before_action :fetch_resource, only: [:show, :edit, :update, :destroy]
   before_action :fetch_resources, only: [:index]
@@ -63,10 +64,10 @@ class ImagePropsController < ApplicationController
   end
 
   def fetch_resources
-    @image_props = ImageProp.search(search_params[:image_prop]).pagination_by_params(params)
+    @image_props = ImageProp.accessible_by(current_ability).search(search_params[:image_prop]).pagination_by_params(params)
   end
 
   def fetch_resource
-    @image_prop = ImageProp.find(params[:id])
+    @image_prop = ImageProp.accessible_by(current_ability).find(params[:id])
   end
 end

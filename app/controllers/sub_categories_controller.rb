@@ -1,5 +1,6 @@
 class SubCategoriesController < ApplicationController
   before_action :require_login
+  authorize_resource
 
   before_action :fetch_resource, only: [:show, :edit, :update, :destroy]
   before_action :fetch_resources, only: [:index]
@@ -63,10 +64,10 @@ class SubCategoriesController < ApplicationController
   end
 
   def fetch_resources
-    @sub_categories = SubCategory.search(search_params[:sub_category]).pagination_by_params(params)
+    @sub_categories = SubCategory.accessible_by(current_ability).search(search_params[:sub_category]).pagination_by_params(params)
   end
 
   def fetch_resource
-    @sub_category = SubCategory.find(params[:id])
+    @sub_category = SubCategory.accessible_by(current_ability).find(params[:id])
   end
 end

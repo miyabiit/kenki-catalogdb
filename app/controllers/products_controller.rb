@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :require_login
+  authorize_resource
 
   before_action :fetch_resource, only: [:show, :edit, :update, :destroy]
   before_action :fetch_resources, only: [:index]
@@ -63,10 +64,10 @@ class ProductsController < ApplicationController
   end
 
   def fetch_resources
-    @products = Product.search(search_params[:product]).pagination_by_params(params)
+    @products = Product.accessible_by(current_ability).search(search_params[:product]).pagination_by_params(params)
   end
 
   def fetch_resource
-    @product = Product.find(params[:id])
+    @product = Product.accessible_by(current_ability).find(params[:id])
   end
 end

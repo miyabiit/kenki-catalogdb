@@ -1,6 +1,8 @@
 <%= render 'shared/notice' %>
 
+<% if can? :create, Product %>
 <%= link_to "新規#{Product.model_name.human}", new_product_path, class: 'float-right btn btn-primary' %>
+<% end %>
 <h1><%= Product.model_name.human %></h1>
 
 
@@ -47,12 +49,16 @@
         <td><%= product.description_a %></td>
         <td><%= product.description_b %></td>
         <td>
+          <% if can? :update, Product %>
           <%= link_to edit_product_path(product) do %>
             編集
           <% end %>
+          <% end %>
           &nbsp;
+          <% if can? :destroy, Product %>
           <%= link_to product, method: :delete, data: { confirm: '削除してもよろしいですか？' } do %>
             削除
+          <% end %>
           <% end %>
         </td>
       </tr>

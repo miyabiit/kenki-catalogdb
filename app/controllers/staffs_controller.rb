@@ -1,5 +1,6 @@
 class StaffsController < ApplicationController
   before_action :require_login
+  authorize_resource
 
   before_action :fetch_resource, only: [:show, :edit, :update, :destroy]
   before_action :fetch_resources, only: [:index]
@@ -63,10 +64,10 @@ class StaffsController < ApplicationController
   end
 
   def fetch_resources
-    @staffs = Staff.search(search_params[:staff]).pagination_by_params(params)
+    @staffs = Staff.accessible_by(current_ability).search(search_params[:staff]).pagination_by_params(params)
   end
 
   def fetch_resource
-    @staff = Staff.find(params[:id])
+    @staff = Staff.accessible_by(current_ability).find(params[:id])
   end
 end
