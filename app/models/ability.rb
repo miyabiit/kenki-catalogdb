@@ -20,25 +20,25 @@ class Ability
   end
 
   def staff_ability
-    can [:read], Staff, company_id: @user.company.id
-    can [:read], Category, company_id: @user.company.id
-    can [:read], Company, id: @user.company.id
-    can [:read], FileProp
-    can [:read], ImageProp
-    can [:read], TextProp
+    can [:read], Staff, company_id: @user.company_id
+    can [:read], Category, company_id: @user.company_id
+    can [:read], Company, id: @user.company_id
+    can [:read], FileProp, company_id: @user.company_id
+    can [:read], ImageProp, company_id: @user.company_id
+    can [:read], TextProp, company_id: @user.company_id
     can [:read], Product
-    can [:read], SubCategory
+    can [:read], SubCategory, company_id: @user.company_id
   end
 
   def manager_ability
-    can :manage, Staff, company_id: @user.company.id
-    can :manage, Category, company_id: @user.company.id
-    can :read, Company, id: @user.company.id
-    # TODO: 権限が強すぎるのでおそらく修正が必要
-    can :manage, FileProp
-    can :manage, ImageProp
-    can :manage, TextProp
-    can :manage, Product
+    can :manage, Staff, company_id: @user.company_id
+    can :manage, Category, company_id: @user.company_id
+    can :read, Company, id: @user.company_id
+    can :manage, FileProp, company_id: @user.company_id
+    can :manage, ImageProp, company_id: @user.company_id
+    can :manage, TextProp, company_id: @user.company_id
+    can [:read], Product
+    can :manage, Product, company_id: @user.company_id
     can [:read, :create, :update], SubCategory
   end
 

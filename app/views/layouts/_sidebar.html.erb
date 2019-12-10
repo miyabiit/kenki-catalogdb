@@ -10,6 +10,7 @@
       <a href="/staffs" class="kenki-toc-link">ユーザー</a>
     </div>
   <% end -%>
+  <% if current_user && current_user.is_a?(Staff) -%>
     <div class="kenki-toc-item">
       <a href="/categories" class="kenki-toc-link">分類</a>
     </div>
@@ -29,5 +30,6 @@
         </li>
       </ul>
     </div>
+  <% end -%>
   </nav>
 </div>

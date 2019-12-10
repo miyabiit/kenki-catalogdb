@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   check_authorization
 
+  before_action :set_current_user
+
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |format|
       format.json { head :forbidden, content_type: 'text/html' }
@@ -15,4 +17,7 @@ class ApplicationController < ActionController::Base
     redirect_to '/sessions/sign_in'
   end
 
+  def set_current_user
+    Current.user = current_user
+  end
 end

@@ -1,5 +1,8 @@
 class Product < ApplicationRecord
+  include CompanyTraceable
+
   belongs_to :category
+  belongs_to :company, optional: true
 
   has_many :product_sub_categories, dependent: :destroy
   has_many :sub_categories, through: :product_sub_categories
