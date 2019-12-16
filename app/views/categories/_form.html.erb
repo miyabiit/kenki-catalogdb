@@ -1,20 +1,37 @@
 <%= simple_form_for category do |f| %>
   <%= f.button :submit, class: 'float-right btn btn-primary' %>
-  <%= link_to '<戻る', categories_path, class: 'btn btn-outline-primary', style: 'margin-bottom: 10px' %>
+  <%= hidden_field_tag :back_url, @back_url if @back_url %>
+  <%= hidden_field_tag :complete_url, @complete_url if @complete_url %>
+  <%= link_to '<戻る', @back_url || categories_path, class: 'btn btn-outline-primary', style: 'margin-bottom: 10px' %>
     <h3><%= title %></h3>
   <div class="clearfix">
     <%= render('shared/validation_alert', model: category) if category.errors.any? %>
     <%= f.input :id, wrapper: :horizontal_plaintext unless f.object.new_record? %>
     
+    <%- if f.object.category %>
+      <div class="form-group row integer optional category_category_id">
+        <label class="col-sm-3 col-form-label integer optional" for="category_category_id">親分類</label>
+        <%= f.hidden_field :category_id, value: f.object.category.id %>
+        <div class="col-sm-9">
+          <input readonly="readonly" class="form-control-plaintext" step="1" value="<%= f.object.category.name %>" name="category[category_id]" id="category_category_id" disabled>
+        </div>
+      </div>
+    <%- else  %>
       <%= f.association :category, collection: Category.accessible_by(current_ability) %>
-    
+    <%- end %>
+    <%- if f.object.company %>
+      <div class="form-group row integer optional category_company_id">
+        <label class="col-sm-3 col-form-label integer optional" for="category_company_id">会社</label>
+        <%= f.hidden_field :company_id, value: f.object.company.id %>
+        <div class="col-sm-9">
+          <input readonly="readonly" class="form-control-plaintext" step="1" value="<%= f.object.company.name %>" name="category[company_id]" id="category_company_id" disabled>
+        </div>
+      </div>
+    <%- else  %>
       <%= f.association :company, collection: Company.accessible_by(current_ability) %>
-    
-      <%= f.input :name %>
-    
-      <%= f.input :position %>
-    
-      <%= f.input :last %>
-    
+    <%- end %>
+    <%= f.input :name %>
+    <%= f.input :position %>
+    <%= f.input :last %>
   </div>
 <% end %>

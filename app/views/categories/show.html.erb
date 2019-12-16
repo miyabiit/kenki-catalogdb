@@ -1,32 +1,76 @@
-<%= link_to '<戻る', categories_path %>
-<h2><%= Category.model_name.human %>詳細</h2>
+<%= link_to '<一覧へ戻る', categories_path %>
+<h2>
+  <%= Category.model_name.human %>詳細
+</h2>
 <%= render 'shared/notice' %>
 <table class="table">
   <tr>
     <th><%= Category.human_attribute_name :id %></th>
-    <td><%= @category.id %></td>
-  </tr>
-  <tr>
     <th><%= Category.human_attribute_name :category %></th>
-    <td><%= link_to @category.category.name, @category.category if @category.category %></td>
-  </tr>
-  <tr>
-    <th><%= Category.human_attribute_name :company_id %></th>
-    <td><%= link_to @category.company.name, @category.company %></td>
-  </tr>
-  <tr>
     <th><%= Category.human_attribute_name :name %></th>
-    <td><%= @category.name %></td>
-  </tr>
-  <tr>
     <th><%= Category.human_attribute_name :position %></th>
-    <td><%= @category.position %></td>
+    <th><%= Category.human_attribute_name :last %></th>
+    <th></th>
   </tr>
   <tr>
-    <th><%= Category.human_attribute_name :last %></th>
+    <td><%= @category.id %></td>
+    <td><%= link_to @category.category.name, @category.category if @category.category %></td>
+    <td><%= @category.name %></td>
+    <td><%= @category.position %></td>
     <td><%= @category.last %></td>
+    <td>
+      <% if can? :update, Category %>
+        <div class="float-right">
+          <%= link_to '編集', edit_category_path(@category, back_url: category_path(@category), complete_url: category_path(@category)), class: 'btn btn-primary' %>
+        </div>
+      <% end %>
+    </td>
   </tr>
 </table>
 
-<br/>
-<%= link_to '編集', edit_category_path(@category), class: 'btn btn-primary' %>
+<hr/>
+<h4 style="padding-bottom: 6px;">
+  子分類
+  <% if can? :create, Category %>
+  <div class="float-right">
+    <%= link_to '子分類を追加', add_child_category_path(@category), class: 'btn btn-primary' %>
+  </div>
+  <% end %>
+</h4>
+
+<% if @category.categories.exists? -%>
+<table class="table">
+  <tr>
+    <th><%= Category.human_attribute_name :id %></th>
+    <th><%= Category.human_attribute_name :name %></th>
+    <th><%= Category.human_attribute_name :position %></th>
+    <th><%= Category.human_attribute_name :last %></th>
+    <th></th>
+  </tr>
+  <% @category.categories.each do |category| -%>
+  <tr>
+    <td><%= category.id %></td>
+    <td><%= link_to category.name, category %></td>
+    <td><%= category.position %></td>
+    <td><%= category.last %></td>
+    <td>
+      <div class="float-right">
+      <% if can? :update, Category %>
+      <%= link_to edit_child_category_path(category) do %>
+        編集
+      <% end %>
+      <% end %>
+      &nbsp;
+      <% if can? :destroy, Category %>
+      <%= link_to category_path(category, complete_url: category_path(@category)), method: :delete, data: { confirm: '削除してもよろしいですか？' } do %>
+        削除
+      <% end %>
+      <% end %>
+      </div>
+    </td>
+  </tr>
+  <% end -%>
+</table>
+<% else -%>
+  子分類がありません
+<% end -%>

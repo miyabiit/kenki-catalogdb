@@ -16,7 +16,12 @@ Rails.application.routes.draw do
   end
 
   resources :companies
-  resources :categories
+  resources :categories do
+    member do
+      get :add_child
+      get :edit_child
+    end
+  end
   resources :sub_categories
   resources :products
   resources :staffs
