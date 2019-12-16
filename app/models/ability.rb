@@ -31,14 +31,13 @@ class Ability
   end
 
   def manager_ability
-    can :manage, Staff, company_id: @user.company_id
+    can :read, Staff, company_id: @user.company_id
     can :manage, Category, company_id: @user.company_id
     can :read, Company, id: @user.company_id
     can :manage, FileProp, company_id: @user.company_id
     can :manage, ImageProp, company_id: @user.company_id
     can :manage, TextProp, company_id: @user.company_id
-    can [:read], Product
-    can :manage, Product, company_id: @user.company_id
+    can :manage, Product
     can [:read, :create, :update], SubCategory
   end
 

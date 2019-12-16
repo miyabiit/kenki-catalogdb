@@ -11,10 +11,6 @@
     <td><%= @product.product_code %></td>
   </tr>
   <tr>
-    <th><%= Project.human_attribute_name :category_id %></th>
-    <td><%= @product.category_id %></td>
-  </tr>
-  <tr>
     <th><%= Project.human_attribute_name :title %></th>
     <td><%= @product.title %></td>
   </tr>
@@ -69,18 +65,6 @@
   <tr>
     <th><%= Project.human_attribute_name :description_b %></th>
     <td><%= @product.description_b %></td>
-  </tr>
-  <tr>
-    <th><%= Project.human_attribute_name :video_url %></th>
-    <td><%= @product.video_url %></td>
-  </tr>
-  <tr>
-    <th><%= Project.human_attribute_name :video_comment %></th>
-    <td><%= @product.video_comment %></td>
-  </tr>
-  <tr>
-    <th><%= Project.human_attribute_name :video_license_memo %></th>
-    <td><%= @product.video_license_memo %></td>
   </tr>
 </table>
 

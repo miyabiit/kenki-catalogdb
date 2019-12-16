@@ -16,11 +16,6 @@
     <div class="col">
       <%= f.text_field :title, placeholder: 'ページタイトル', class: 'form-control' %>
     </div>
-    <div class="col">
-      <div class="form-group row">
-        <%= f.select :category_id, Category.where(last: true).all.map { |c| [c.name, c.id] }, {include_blank: '-全最終カテゴリ-'}, class: 'form-control' %>
-      </div>
-    </div>
   </div>
 <% end %>
 <br>
@@ -31,7 +26,6 @@
     <tr>
       <th><%= Product.human_attribute_name :id %></th>
       <th><%= Product.human_attribute_name :product_code %></th>
-      <th><%= Product.human_attribute_name :category %></th>
       <th><%= Product.human_attribute_name :title %></th>
       <th><%= Product.human_attribute_name :description_a %></th>
       <th><%= Product.human_attribute_name :description_b %></th>
@@ -44,7 +38,6 @@
       <tr>
         <td><%= product.id %></td>
         <td><%= product.product_code %></td>
-        <td><%= link_to product.category.name, product.category %></td>
         <td><%= product.title %></td>
         <td><%= product.description_a %></td>
         <td><%= product.description_b %></td>

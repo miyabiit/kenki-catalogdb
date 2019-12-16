@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_10_045655) do
+ActiveRecord::Schema.define(version: 2019_12_16_065401) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -64,7 +64,6 @@ ActiveRecord::Schema.define(version: 2019_12_10_045655) do
 
   create_table "products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "product_code", null: false
-    t.bigint "category_id", null: false
     t.string "title", null: false
     t.boolean "netis", default: false
     t.date "netis_limit_date"
@@ -79,14 +78,8 @@ ActiveRecord::Schema.define(version: 2019_12_10_045655) do
     t.boolean "checking_souken", default: false
     t.text "description_a"
     t.text "description_b"
-    t.string "video_url"
-    t.text "video_comment"
-    t.text "video_license_memo"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "company_id", null: false
-    t.index ["category_id"], name: "index_products_on_category_id"
-    t.index ["company_id"], name: "index_products_on_company_id"
     t.index ["product_code"], name: "index_products_on_product_code", unique: true
   end
 
@@ -137,7 +130,6 @@ ActiveRecord::Schema.define(version: 2019_12_10_045655) do
   add_foreign_key "categories", "companies"
   add_foreign_key "product_sub_categories", "products"
   add_foreign_key "product_sub_categories", "sub_categories"
-  add_foreign_key "products", "categories"
   add_foreign_key "stored_prop_sub_categories", "stored_props"
   add_foreign_key "stored_prop_sub_categories", "sub_categories"
   add_foreign_key "users", "companies"
