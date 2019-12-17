@@ -1,0 +1,49 @@
+class <%= @resource_name.pluralize.camelize %>Controller < APIController
+  before_action :api_require_login
+  api_authorize_resource
+
+  before_action :fetch_resource, only: [:show, :edit, :update, :destroy]
+  before_action :fetch_resources, only: [:index]
+
+  def index
+    render_json_resources @<%= @resource_name.pluralize %>
+  end
+
+  def show
+    render json: @<%= @resource_name %>
+  end
+
+  def create
+    @<%= @resource_name %> = <%= @resource_name.camelize %>.new(form_params)
+    @<%= @resource_name %>.save!
+    render json: @<%= @resource_name %>
+  end
+
+  def update
+    @<%= @resource_name %>.update_attributes!(form_params)
+    render json: @<%= @resource_name %>
+  end
+
+  def destroy
+    @<%= @resource_name %>.destroy!
+    head :ok
+  end
+
+  private
+
+  def form_params
+    api_params(params, <%= @resource_name.camelize %>.form_attribute_names)
+  end
+
+  def search_params
+    params.permit(<%= @resource_name %>: <%= @resource_name.camelize %>.search_attribute_names)
+  end
+
+  def fetch_resources
+    @<%= @resource_name.pluralize %> = <%= @resource_name.camelize %>.accessible_by(current_ability).search(search_params[:<%= @resource_name %>]).pagination_by_params(params)
+  end
+
+  def fetch_resource
+    @<%= @resource_name %> = <%= @resource_name.camelize %>.accessible_by(current_ability).find(params[:id])
+  end
+end
