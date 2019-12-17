@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   post 'admin_sessions/sign_in', to: 'admin_sessions#create'
   delete 'admin_sessions/sign_out', to: 'admin_sessions#destroy'
 
+  get 'api_test', to: 'api_test#index'
+
   resources :tests, only: [] do
     collection do
       get :test
