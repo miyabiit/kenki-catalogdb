@@ -52,6 +52,13 @@ main {
 }
 
 .kenki-toc-item {
+  &.active {
+    border-left: solid 3px;
+    border-color: white;
+    .kenki-toc-link {
+      color: white;
+    }
+  }
 }
 
 .kenki-toc-link {
@@ -60,6 +67,11 @@ main {
   font-weight: 600;
   font-size: $font-size-l;
   color: $sub-color;
+  &.active {
+    color: white;
+    border-left: solid 3px;
+    border-color: white;
+  }
 }
 
 .kenki-sub-nav {

@@ -1,32 +1,32 @@
 <div class="col-12 col-md-3 col-xl-2 kenki-sidebar">
   <nav class="kenki-links collapse" id="kenki-docs-nav" style="">
   <% if can? :create, Company  -%>
-    <div class="kenki-toc-item">
+    <div class="kenki-toc-item <%= 'active' if controller.controller_name == 'companies' %>">
       <a href="/companies" class="kenki-toc-link">会社</a>
     </div>
   <% end -%>
   <% if can? :create, Staff -%>
-    <div class="kenki-toc-item">
+    <div class="kenki-toc-item <%= 'active' if controller.controller_name == 'staffs' %>">
       <a href="/staffs" class="kenki-toc-link">ユーザー</a>
     </div>
   <% end -%>
   <% if current_user && current_user.is_a?(Staff) -%>
-    <div class="kenki-toc-item">
+    <div class="kenki-toc-item <%= 'active' if controller.controller_name == 'categories' %>">
       <a href="/categories" class="kenki-toc-link">分類</a>
     </div>
-    <div class="kenki-toc-item">
+    <div class="kenki-toc-item <%= 'active' if controller.controller_name == 'sub_categories' %>">
       <a href="/sub_categories" class="kenki-toc-link">サブカテゴリ</a>
     </div>
-    <div class="kenki-toc-item">
+    <div class="kenki-toc-item <%= 'active' if controller.controller_name == 'products' %>">
       <a href="/products" class="kenki-toc-link">商品</a>
     </div>
     <div class="kenki-toc-item">
       <div class="kenki-toc-text">属性</div>
       <ul class="nav kenki-sub-nav">
         <li>
-          <a href="/text_props" class="kenki-toc-link">URL</a>
-          <a href="/image_props" class="kenki-toc-link">画像</a>
-          <a href="/file_props" class="kenki-toc-link">ファイル</a>
+          <a href="/text_props" class="kenki-toc-link <%= 'active' if controller.controller_name == 'text_props' %>">URL</a>
+          <a href="/image_props" class="kenki-toc-link <%= 'active' if controller.controller_name == 'image_props' %>">画像</a>
+          <a href="/file_props" class="kenki-toc-link <%= 'active' if controller.controller_name == 'file_props' %>">ファイル</a>
         </li>
       </ul>
     </div>
