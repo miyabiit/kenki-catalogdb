@@ -1,7 +1,7 @@
 class ApiTestController < ApplicationController
   skip_authorization_check
 
-  layout 'plane'
+  layout 'header_nav_only'
 
   def index
   end
