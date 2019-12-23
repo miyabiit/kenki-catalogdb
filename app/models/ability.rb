@@ -27,6 +27,7 @@ class Ability
     can [:read], ImageProp, company_id: @user.company_id
     can [:read], TextProp, company_id: @user.company_id
     can [:read], Product
+    can [:read], StockProduct
     can [:read], SubCategory, company_id: @user.company_id
   end
 
@@ -38,6 +39,8 @@ class Ability
     can :manage, ImageProp, company_id: @user.company_id
     can :manage, TextProp, company_id: @user.company_id
     can :manage, Product
+    can [:read], StockProduct
+    can :manage, StockProduct, company_id: @user.company_id
     can [:read, :create, :update], SubCategory
   end
 
@@ -49,6 +52,7 @@ class Ability
     can :manage, ImageProp
     can :manage, TextProp
     can :manage, Product
+    can :manage, StockProduct
     can [:read, :create, :update], SubCategory
   end
 end

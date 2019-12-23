@@ -2,7 +2,7 @@
 
 <%% if can? :create, <%= @resource_name.camelize %> %>
 <%%= link_to "新規#{<%= @resource_name.camelize %>.model_name.human}", new_<%= @resource_name %>_path, class: 'float-right btn btn-primary' %>
-<% end %>
+<%% end %>
 <h1><%%= <%= @resource_name.camelize %>.model_name.human %></h1>
 
 <%%= paginate @<%= @resource_name.pluralize %> %>

@@ -1,0 +1,132 @@
+<%= link_to '<戻る', stock_products_path %>
+<h2><%= StockProduct.model_name.human %>詳細</h2>
+<%= render 'shared/notice' %>
+<table class="table">
+  <tr>
+    <th><%= StockProduct.human_attribute_name :id %></th>
+    <td><%= @stock_product.id %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :product_id %></th>
+    <td><%= @stock_product.product_id %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :company_id %></th>
+    <td><%= @stock_product.company_id %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :category_id %></th>
+    <td><%= @stock_product.category_id %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :video_url %></th>
+    <td><%= @stock_product.video_url %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :video_comment %></th>
+    <td><%= @stock_product.video_comment %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :video_license %></th>
+    <td><%= @stock_product.video_license %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :video_license_valid %></th>
+    <td><%= @stock_product.video_license_valid %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :video_published %></th>
+    <td><%= @stock_product.video_published %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :video_charterable %></th>
+    <td><%= @stock_product.video_charterable %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :spec %></th>
+    <td><%= @stock_product.spec %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :spec_comment %></th>
+    <td><%= @stock_product.spec_comment %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :staff_comment %></th>
+    <td><%= @stock_product.staff_comment %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :staff_comment_published %></th>
+    <td><%= @stock_product.staff_comment_published %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :staff_comment_charterable %></th>
+    <td><%= @stock_product.staff_comment_charterable %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :price_info %></th>
+    <td><%= @stock_product.price_info %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :price_info_published %></th>
+    <td><%= @stock_product.price_info_published %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :price_info_charterable %></th>
+    <td><%= @stock_product.price_info_charterable %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :faq %></th>
+    <td><%= @stock_product.faq %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :faq_published %></th>
+    <td><%= @stock_product.faq_published %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :faq_charterable %></th>
+    <td><%= @stock_product.faq_charterable %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :description %></th>
+    <td><%= @stock_product.description %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :description_published %></th>
+    <td><%= @stock_product.description_published %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :description_charterable %></th>
+    <td><%= @stock_product.description_charterable %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :address_info %></th>
+    <td><%= @stock_product.address_info %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :address_info_published %></th>
+    <td><%= @stock_product.address_info_published %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :address_info_charterable %></th>
+    <td><%= @stock_product.address_info_charterable %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :company_memo %></th>
+    <td><%= @stock_product.company_memo %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :private_memo %></th>
+    <td><%= @stock_product.private_memo %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :meta_description %></th>
+    <td><%= @stock_product.meta_description %></td>
+  </tr>
+  <tr>
+    <th><%= StockProduct.human_attribute_name :meta_keywords %></th>
+    <td><%= @stock_product.meta_keywords %></td>
+  </tr>
+</table>
+
+<br/>
+<%= link_to '編集', edit_stock_product_path(@stock_product), class: 'btn btn-primary' %>
