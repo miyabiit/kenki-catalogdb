@@ -25,12 +25,16 @@ Rails.application.routes.draw do
     end
   end
   resources :sub_categories
-  resources :products
+  resources :products do
+    resources :stock_products
+  end
   resources :staffs
 
   resources :text_props
   resources :image_props
   resources :file_props
+
+  resources :stock_products
 
   root to: 'tests#test'
 

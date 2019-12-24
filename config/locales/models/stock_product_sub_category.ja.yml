@@ -1,10 +1,10 @@
 ja:
   activerecord:
     models:
-      product_sub_category: "プロダクトサブカテゴリ"
+      stock_product_sub_category: "サブカテゴリ"
     attributes:
-      product_sub_category:
-        id: "プロダクトサブカテゴリID"
+      stock_product_sub_category:
+        id: "ID"
         sub_category: 'サブカテゴリ'
         sub_category_id: 'サブカテゴリID'
         created_at: "作成日時"

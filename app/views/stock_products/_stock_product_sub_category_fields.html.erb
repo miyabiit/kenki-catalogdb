@@ -1,0 +1,6 @@
+<div class="nested-fields form-group row">
+  <%= f.association :sub_category, collection: SubCategory.accessible_by(current_ability), wrapper_html: {class: 'col-md-10'} %>
+  <div class="col-md-2">
+    <%= link_to_remove_association "削除", f, class: 'btn btn-danger' %>
+  </div>
+</div>

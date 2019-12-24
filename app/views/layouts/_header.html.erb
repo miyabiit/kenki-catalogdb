@@ -3,7 +3,7 @@
   <ul class="nav navbar-nav justify-content-end ml-md-auto d-none d-md-flex">
     <li class="nav-item">
       <span style="color: white; margin-right: 10px;">
-        <%= current_user.display_name %>
+        <%= current_user.display_name if current_user %>
       </span>
       <% if current_user %>
         <% if current_user.is_a? Administrator %>

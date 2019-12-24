@@ -10,6 +10,8 @@ class Category < ApplicationRecord
 
   validate :validate_same_company
 
+  scope :lasts, -> { where(last: true) }
+
   private
 
   def validate_same_company

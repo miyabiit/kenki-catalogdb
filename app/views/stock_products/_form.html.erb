@@ -2,69 +2,51 @@
   <%= f.button :submit, class: 'float-right btn btn-primary' %>
   <%= link_to '<戻る', stock_products_path, class: 'btn btn-outline-primary', style: 'margin-bottom: 10px' %>
     <h3><%= title %></h3>
+
+  <%= render "product", product: @product if @product %>
+
   <div class="clearfix">
     <%= render('shared/validation_alert', model: stock_product) if stock_product.errors.any? %>
-    <%= f.input :id, wrapper: :horizontal_plaintext unless f.object.new_record? %>
-  
-    <%= f.input :product_id %>
-  
-    <%= f.input :company_id %>
-  
-    <%= f.input :category_id %>
-  
+<%#    <%= f.input :id, wrapper: :horizontal_plaintext unless f.object.new_record? +|%>
+    <%= f.hidden_field :product_id, value: params[:product_id] if params[:product_id].present? && stock_product.new_record? %>
+    <%= f.association :category, collection: Category.accessible_by(current_ability).lasts %>
+    <h5>サブカテゴリ</h5>
+    <div id="product_sub_categories">
+      <%= f.simple_fields_for :stock_product_sub_categories do |stock_product_sub_category| %>
+        <%= render 'stock_product_sub_category_fields', f: stock_product_sub_category %>
+      <% end %>
+      <div class="links">
+        <%= link_to_add_association 'サブカテゴリ追加', f, :stock_product_sub_categories, class: 'btn btn-secondary' %>
+      </div>
+    </div>
+    <br>
     <%= f.input :video_url %>
-  
     <%= f.input :video_comment %>
-  
     <%= f.input :video_license %>
-  
     <%= f.input :video_license_valid %>
-  
     <%= f.input :video_published %>
-  
     <%= f.input :video_charterable %>
-  
     <%= f.input :spec %>
-  
     <%= f.input :spec_comment %>
-  
     <%= f.input :staff_comment %>
-  
     <%= f.input :staff_comment_published %>
-  
     <%= f.input :staff_comment_charterable %>
-  
     <%= f.input :price_info %>
-  
     <%= f.input :price_info_published %>
-  
     <%= f.input :price_info_charterable %>
-  
     <%= f.input :faq %>
-  
     <%= f.input :faq_published %>
-  
     <%= f.input :faq_charterable %>
-  
     <%= f.input :description %>
-  
     <%= f.input :description_published %>
-  
     <%= f.input :description_charterable %>
-  
     <%= f.input :address_info %>
-  
     <%= f.input :address_info_published %>
-  
     <%= f.input :address_info_charterable %>
-  
     <%= f.input :company_memo %>
-  
     <%= f.input :private_memo %>
-  
     <%= f.input :meta_description %>
-  
     <%= f.input :meta_keywords %>
-  
+    <%= f.input :charterable%>
   </div>
 <% end %>

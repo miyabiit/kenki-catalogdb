@@ -2,6 +2,7 @@ class StockProductsController < ApplicationController
   before_action :require_login
   authorize_resource
 
+  before_action :fetch_parent
   before_action :fetch_resource, only: [:show, :edit, :update, :destroy]
   before_action :fetch_resources, only: [:index]
 
@@ -17,10 +18,12 @@ class StockProductsController < ApplicationController
   end
 
   def edit
+    @product = @stock_product.product
   end
 
   def create
     @stock_product = StockProduct.new(form_params)
+    @stock_product.product = @product if @product
 
     respond_to do |format|
       if @stock_product.save
@@ -64,10 +67,18 @@ class StockProductsController < ApplicationController
   end
 
   def fetch_resources
-    @stock_products = StockProduct.accessible_by(current_ability).search(search_params[:stock_product]).pagination_by_params(params)
+    @stock_products = StockProduct.joins(:product).includes(:product).accessible_by(current_ability)
+    if params[:product_code_or_title].present?
+      @stock_products = @stock_products.product_code_or_title(params[:product_code_or_title])
+    end
+    @stock_products = @stock_products.search(search_params[:stock_product]).pagination_by_params(params)
   end
 
   def fetch_resource
-    @stock_product = StockProduct.accessible_by(current_ability).find(params[:id])
+    @stock_product = StockProduct.includes(:product).accessible_by(current_ability).find(params[:id])
+  end
+
+  def fetch_parent
+    @product = Product.accessible_by(current_ability).find(params[:product_id]) if params[:product_id].present?
   end
 end

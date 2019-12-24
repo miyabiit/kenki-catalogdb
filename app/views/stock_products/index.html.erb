@@ -1,76 +1,32 @@
 <%= render 'shared/notice' %>
 
-<% if can? :create, StockProduct %>
-<%= link_to "新規#{StockProduct.model_name.human}", new_stock_product_path, class: 'float-right btn btn-primary' %>
-<% end %>
+<%#<% if can? :create, StockProduct +|%>
+<%#<%= link_to "新規#{StockProduct.model_name.human}", products_path, class: 'float-right btn btn-primary' +|%>
+<%#<% end +|%>
 <h1><%= StockProduct.model_name.human %></h1>
+
+<br>
+<%= form_for @stock_product, method: :get do |f| %>
+  <%= f.submit '検索', class: 'float-right btn btn-primary'  %>
+  <div class="row col-md-10">
+    <div class="col">
+      <%= text_field_tag :product_code_or_title, params[:product_code_or_title], placeholder: '商品コード ページタイトル', class: 'form-control' %>
+    </div>
+    <div class="col">
+      <%= f.select :category_id, Category.accessible_by(current_ability).lasts.map { |c| [c.name, c.id] }, { include_blank: '-全最終カテゴリ-' }, class: 'form-control' %>
+    </div>
+  </div>
+<% end %>
+<br>
 
 <%= paginate @stock_products %>
 <table class="table">
   <thead>
     <tr>
-      <th><%= StockProduct.human_attribute_name :id %></th>
-    
-      <th><%= StockProduct.human_attribute_name :product_id %></th>
-    
-      <th><%= StockProduct.human_attribute_name :company_id %></th>
-    
-      <th><%= StockProduct.human_attribute_name :category_id %></th>
-    
-      <th><%= StockProduct.human_attribute_name :video_url %></th>
-    
-      <th><%= StockProduct.human_attribute_name :video_comment %></th>
-    
-      <th><%= StockProduct.human_attribute_name :video_license %></th>
-    
-      <th><%= StockProduct.human_attribute_name :video_license_valid %></th>
-    
-      <th><%= StockProduct.human_attribute_name :video_published %></th>
-    
-      <th><%= StockProduct.human_attribute_name :video_charterable %></th>
-    
-      <th><%= StockProduct.human_attribute_name :spec %></th>
-    
-      <th><%= StockProduct.human_attribute_name :spec_comment %></th>
-    
-      <th><%= StockProduct.human_attribute_name :staff_comment %></th>
-    
-      <th><%= StockProduct.human_attribute_name :staff_comment_published %></th>
-    
-      <th><%= StockProduct.human_attribute_name :staff_comment_charterable %></th>
-    
-      <th><%= StockProduct.human_attribute_name :price_info %></th>
-    
-      <th><%= StockProduct.human_attribute_name :price_info_published %></th>
-    
-      <th><%= StockProduct.human_attribute_name :price_info_charterable %></th>
-    
-      <th><%= StockProduct.human_attribute_name :faq %></th>
-    
-      <th><%= StockProduct.human_attribute_name :faq_published %></th>
-    
-      <th><%= StockProduct.human_attribute_name :faq_charterable %></th>
-    
-      <th><%= StockProduct.human_attribute_name :description %></th>
-    
-      <th><%= StockProduct.human_attribute_name :description_published %></th>
-    
-      <th><%= StockProduct.human_attribute_name :description_charterable %></th>
-    
-      <th><%= StockProduct.human_attribute_name :address_info %></th>
-    
-      <th><%= StockProduct.human_attribute_name :address_info_published %></th>
-    
-      <th><%= StockProduct.human_attribute_name :address_info_charterable %></th>
-    
-      <th><%= StockProduct.human_attribute_name :company_memo %></th>
-    
-      <th><%= StockProduct.human_attribute_name :private_memo %></th>
-    
-      <th><%= StockProduct.human_attribute_name :meta_description %></th>
-    
-      <th><%= StockProduct.human_attribute_name :meta_keywords %></th>
-    
+      <th><%= Product.human_attribute_name :id %></th>
+      <th><%= Product.human_attribute_name :product_code %></th>
+      <th><%= Product.human_attribute_name :title %></th>
+      <th><%= StockProduct.human_attribute_name :category %></th>
       <th></th>
     </tr>
   </thead>
@@ -78,68 +34,10 @@
   <tbody>
     <% @stock_products.each do |stock_product| %>
       <tr>
-        <td><%= stock_product.id %></td>
-      
-        <td><%= stock_product.product_id %></td>
-      
-        <td><%= stock_product.company_id %></td>
-      
-        <td><%= stock_product.category_id %></td>
-      
-        <td><%= stock_product.video_url %></td>
-      
-        <td><%= stock_product.video_comment %></td>
-      
-        <td><%= stock_product.video_license %></td>
-      
-        <td><%= stock_product.video_license_valid %></td>
-      
-        <td><%= stock_product.video_published %></td>
-      
-        <td><%= stock_product.video_charterable %></td>
-      
-        <td><%= stock_product.spec %></td>
-      
-        <td><%= stock_product.spec_comment %></td>
-      
-        <td><%= stock_product.staff_comment %></td>
-      
-        <td><%= stock_product.staff_comment_published %></td>
-      
-        <td><%= stock_product.staff_comment_charterable %></td>
-      
-        <td><%= stock_product.price_info %></td>
-      
-        <td><%= stock_product.price_info_published %></td>
-      
-        <td><%= stock_product.price_info_charterable %></td>
-      
-        <td><%= stock_product.faq %></td>
-      
-        <td><%= stock_product.faq_published %></td>
-      
-        <td><%= stock_product.faq_charterable %></td>
-      
-        <td><%= stock_product.description %></td>
-      
-        <td><%= stock_product.description_published %></td>
-      
-        <td><%= stock_product.description_charterable %></td>
-      
-        <td><%= stock_product.address_info %></td>
-      
-        <td><%= stock_product.address_info_published %></td>
-      
-        <td><%= stock_product.address_info_charterable %></td>
-      
-        <td><%= stock_product.company_memo %></td>
-      
-        <td><%= stock_product.private_memo %></td>
-      
-        <td><%= stock_product.meta_description %></td>
-      
-        <td><%= stock_product.meta_keywords %></td>
-      
+        <td><%= stock_product.product.id %></td>
+        <td><%= stock_product.product.product_code %></td>
+        <td><%= stock_product.product.title %></td>
+        <td><%= stock_product.category&.name %></td>
         <td>
           <% if can? :update, StockProduct %>
           <%= link_to edit_stock_product_path(stock_product) do %>

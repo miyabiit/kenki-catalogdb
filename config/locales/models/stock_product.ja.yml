@@ -38,6 +38,7 @@ ja:
         private_memo: "非公開メモ"
         meta_description: "メタデータ:description"
         meta_keywords: "メタデータ:keywords"
+        charterable: "他社公開商品対象"
         created_at: "作成日時"
         updated_at: "更新日時"
 

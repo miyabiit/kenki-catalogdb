@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_17_025835) do
+ActiveRecord::Schema.define(version: 2019_12_24_091122) do
 
   create_table "access_tokens", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -60,16 +60,6 @@ ActiveRecord::Schema.define(version: 2019_12_17_025835) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "product_sub_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.bigint "product_id", null: false
-    t.bigint "sub_category_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["product_id", "sub_category_id"], name: "index_product_sub_categories_on_product_id_and_sub_category_id", unique: true
-    t.index ["product_id"], name: "index_product_sub_categories_on_product_id"
-    t.index ["sub_category_id"], name: "index_product_sub_categories_on_sub_category_id"
-  end
-
   create_table "products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "product_code", null: false
     t.string "title", null: false
@@ -89,6 +79,67 @@ ActiveRecord::Schema.define(version: 2019_12_17_025835) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["product_code"], name: "index_products_on_product_code", unique: true
+  end
+
+  create_table "stock_product_stored_props", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "stock_product_id", null: false
+    t.string "stored_prop_type", null: false
+    t.bigint "stored_prop_id", null: false
+    t.boolean "published", default: false
+    t.boolean "charterable", default: false
+    t.index ["stock_product_id", "stored_prop_type", "stored_prop_id"], name: "idx_uniq_on_stock_product_stored_props", unique: true
+    t.index ["stock_product_id"], name: "index_stock_product_stored_props_on_stock_product_id"
+  end
+
+  create_table "stock_product_sub_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "stock_product_id", null: false
+    t.bigint "sub_category_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["stock_product_id", "sub_category_id"], name: "idx_uniq_keys_on_stock_product_sub_categories", unique: true
+    t.index ["stock_product_id"], name: "index_stock_product_sub_categories_on_stock_product_id"
+    t.index ["sub_category_id"], name: "index_stock_product_sub_categories_on_sub_category_id"
+  end
+
+  create_table "stock_products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.bigint "company_id", null: false
+    t.bigint "category_id"
+    t.string "video_url"
+    t.text "video_comment"
+    t.text "video_license"
+    t.boolean "video_license_valid", default: false
+    t.boolean "video_published", default: false
+    t.boolean "video_charterable", default: false
+    t.text "spec"
+    t.text "spec_comment"
+    t.text "staff_comment"
+    t.boolean "staff_comment_published", default: false
+    t.boolean "staff_comment_charterable", default: false
+    t.text "price_info"
+    t.boolean "price_info_published", default: false
+    t.boolean "price_info_charterable", default: false
+    t.text "faq"
+    t.boolean "faq_published", default: false
+    t.boolean "faq_charterable", default: false
+    t.text "description"
+    t.boolean "description_published", default: false
+    t.boolean "description_charterable", default: false
+    t.text "address_info"
+    t.boolean "address_info_published", default: false
+    t.boolean "address_info_charterable", default: false
+    t.text "company_memo"
+    t.text "private_memo"
+    t.text "meta_description"
+    t.text "meta_keywords"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.boolean "charterable", default: false
+    t.bigint "stock_product_id"
+    t.index ["category_id"], name: "index_stock_products_on_category_id"
+    t.index ["company_id"], name: "index_stock_products_on_company_id"
+    t.index ["product_id"], name: "index_stock_products_on_product_id"
+    t.index ["stock_product_id"], name: "index_stock_products_on_stock_product_id"
   end
 
   create_table "stored_prop_sub_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -137,8 +188,12 @@ ActiveRecord::Schema.define(version: 2019_12_17_025835) do
   add_foreign_key "access_tokens", "users"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "categories", "companies"
-  add_foreign_key "product_sub_categories", "products"
-  add_foreign_key "product_sub_categories", "sub_categories"
+  add_foreign_key "stock_product_stored_props", "stock_products"
+  add_foreign_key "stock_product_sub_categories", "stock_products"
+  add_foreign_key "stock_product_sub_categories", "sub_categories"
+  add_foreign_key "stock_products", "companies"
+  add_foreign_key "stock_products", "products"
+  add_foreign_key "stock_products", "stock_products"
   add_foreign_key "stored_prop_sub_categories", "stored_props"
   add_foreign_key "stored_prop_sub_categories", "sub_categories"
   add_foreign_key "users", "companies"

@@ -1,4 +1,11 @@
 ja:
+  activerecord:
+    errors:
+      messages:
+        record_invalid: 'バリデーションに失敗しました: %{errors}'
+        restrict_dependent_destroy:
+          has_one: "%{record}が存在しているので削除できません"
+          has_many: "%{record}が存在しているので削除できません"
   date:
     abbr_day_names:
     - 日
@@ -124,6 +131,10 @@ ja:
       not_a_date: は日付ではありません。
       invalid_expression: "は不正な式です。(%{detail})"
       invalid_identifier: は半角英数字及び"_"のみ入力してください。
+      model_invalid: 'バリデーションに失敗しました: %{errors}'
+      other_than: は%{count}以外の値にしてください
+      present: は入力しないでください
+      required: を入力してください
     template:
       body: 次の項目を確認してください。
       header:

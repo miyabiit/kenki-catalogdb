@@ -53,6 +53,11 @@
             削除
           <% end %>
           <% end %>
+          <% if can? :create, StockProduct %>
+          <%= link_to new_product_stock_product_path(product) do %>
+            新規自社在庫
+          <% end %>
+          <% end %>
         </td>
       </tr>
     <% end %>
