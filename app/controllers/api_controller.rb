@@ -1,4 +1,4 @@
-class APIController < ActionController::Base
+class ApiController < ActionController::Base
   include ApiParamsConverter
 
   # check_authorization
