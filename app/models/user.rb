@@ -31,7 +31,7 @@ class User < ApplicationRecord
   end
 
   def as_json(options = {})
-    super(options.merge(except: [:crypted_password, :salt]))
+    super(options.merge(except: [:remember_me_token_expires_at, :remember_me_token, :crypted_password, :salt]))
   end
 
   class << self

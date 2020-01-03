@@ -12,6 +12,10 @@ class Category < ApplicationRecord
 
   scope :lasts, -> { where(last: true) }
 
+  def as_json(options = {})
+    super(options.merge(include: {company: {only: [:id, :name]}}))
+  end
+
   private
 
   def validate_same_company

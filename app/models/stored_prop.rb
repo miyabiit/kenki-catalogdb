@@ -7,5 +7,9 @@ class StoredProp < ApplicationRecord
   has_many :sub_categories, through: :stored_prop_sub_categories
 
   validates :name, presence: true, length: { maximum: 50 }
+
+  def as_json(options = {})
+    super(options.merge(include: {company: {only: [:id, :name]}}))
+  end
 end
 

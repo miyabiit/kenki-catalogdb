@@ -36,6 +36,17 @@ Rails.application.routes.draw do
 
   resources :stock_products
 
+  namespace :api do
+    resources :companies
+    resources :categories
+    resources :staffs
+    resources :sub_categories
+    resources :file_props
+    resources :text_props
+    resources :image_props
+    resources :products
+  end
+
   root to: 'tests#test'
 
   # suppress routing error

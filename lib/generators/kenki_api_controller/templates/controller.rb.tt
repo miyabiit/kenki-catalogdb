@@ -1,4 +1,4 @@
-class <%= @resource_name.pluralize.camelize %>Controller < ApiController
+class Api::<%= @resource_name.pluralize.camelize %>Controller < ApiController
   before_action :api_require_login
   api_authorize_resource
 
