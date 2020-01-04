@@ -43,14 +43,12 @@ class ApiController < ActionController::Base
   end
 
   def api_require_login
-    # 一時的に無効
-    #require_token
+    require_token
   end
 
   class << self
     def api_authorize_resource
-      # 一時的に無効
-      #authorize_resource
+      authorize_resource
     end
   end
 end

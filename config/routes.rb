@@ -45,6 +45,7 @@ Rails.application.routes.draw do
     resources :text_props
     resources :image_props
     resources :products
+    resources :tokens, only: [:create]
   end
 
   root to: 'tests#test'
