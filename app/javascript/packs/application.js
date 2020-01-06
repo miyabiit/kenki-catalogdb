@@ -12,9 +12,11 @@ import 'bootstrap'
 import '@fortawesome/fontawesome-free/js/all'
 import '../src/application.scss'
 import jQuery from 'jquery'
+import Vue from 'vue/dist/vue.min.js'
 
 window.jQuery = jQuery
 window.$ = jQuery
+window.Vue = Vue
 
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
