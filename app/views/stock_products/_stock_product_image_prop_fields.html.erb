@@ -1,5 +1,13 @@
 <div class="nested-fields form-group row">
-  <%= f.association :stored_prop, collection: ImageProp.accessible_by(current_ability), wrapper_html: {class: 'col-md-10'}, label: '画像' %>
+  <div class="col-md-6">
+    <%= f.collection_select :stored_prop, ImageProp.accessible_by(current_ability), :id, :name, {prompt: ''}, class: 'form-control' %>
+  </div>
+  <div class="col-md-2">
+    <%= f.input :published %>
+  </div>
+  <div class="col-md-2">
+    <%= f.input :charterable %>
+  </div>
   <div class="col-md-2">
     <%= link_to_remove_association "削除", f, class: 'btn btn-danger' %>
   </div>

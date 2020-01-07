@@ -1,0 +1,16 @@
+ja:
+  activerecord:
+    models:
+      stock_product_stored_prop: "自社在庫商品属性"
+    attributes:
+      stock_product_stored_prop:
+        id: "自社在庫商品属性ID"
+        stock_product_id: "自社在庫商品ID"
+        stock_product: "自社在庫商品"
+        stored_prop_id: "属性ID"
+        stored_prop: "属性"
+        published: "公開"
+        charterable: "提供"
+        created_at: "作成日時"
+        updated_at: "更新日時"
+
