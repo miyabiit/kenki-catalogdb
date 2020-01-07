@@ -1,0 +1,6 @@
+<div class="nested-fields form-group row">
+  <%= f.association :stored_prop, collection: TextProp.accessible_by(current_ability), wrapper_html: {class: 'col-md-10'}, label: 'URL' %>
+  <div class="col-md-2">
+    <%= link_to_remove_association "削除", f, class: 'btn btn-danger' %>
+  </div>
+</div>

@@ -1,3 +1,4 @@
+<%#<%= render 'stored_props_modal' +|%>
 <%= simple_form_for stock_product do |f| %>
   <%= f.button :submit, class: 'float-right btn btn-primary' %>
   <%= link_to '<戻る', stock_products_path, class: 'btn btn-outline-primary', style: 'margin-bottom: 10px' %>
@@ -43,6 +44,38 @@
     <%= f.input :address_info %>
     <%= f.input :address_info_published %>
     <%= f.input :address_info_charterable %>
+
+    <h5>関連リンク</h5>
+    <div id="product_text_props">
+      <%= f.simple_fields_for :stock_product_text_props do |stock_product_text_prop| %>
+        <%= render 'stock_product_text_prop_fields', f: stock_product_text_prop %>
+      <% end %>
+      <div class="links">
+        <%= link_to_add_association '関連リンク追加', f, :stock_product_text_props, class: 'btn btn-secondary' %>
+      </div>
+    </div>
+    <br>
+    <h5>ダウンロードファイル</h5>
+    <div id="product_file_props">
+      <%= f.simple_fields_for :stock_product_file_props do |stock_product_file_prop| %>
+        <%= render 'stock_product_file_prop_fields', f: stock_product_file_prop %>
+      <% end %>
+      <div class="links">
+        <%= link_to_add_association 'ダウンロードファイル追加', f, :stock_product_file_props, class: 'btn btn-secondary' %>
+      </div>
+    </div>
+    <br>
+    <h5>画像ファイル</h5>
+    <div id="product_image_props">
+      <%= f.simple_fields_for :stock_product_image_props do |stock_product_image_prop| %>
+        <%= render 'stock_product_image_prop_fields', f: stock_product_image_prop %>
+      <% end %>
+      <div class="links">
+        <%= link_to_add_association '画像ファイル追加', f, :stock_product_image_props, class: 'btn btn-secondary' %>
+      </div>
+    </div>
+    <br>
+
     <%= f.input :company_memo %>
     <%= f.input :private_memo %>
     <%= f.input :meta_description %>
