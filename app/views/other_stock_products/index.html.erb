@@ -1,0 +1,51 @@
+<%= render 'shared/notice' %>
+
+<h1>他社在庫商品</h1>
+
+<br>
+<%= form_for @stock_product, url: {controller: "other_stock_products"}, method: :get do |f| %>
+  <%= f.submit '検索', class: 'float-right btn btn-primary'  %>
+  <div class="row col-md-10">
+    <div class="col">
+      <%= text_field_tag :product_code_or_title, params[:product_code_or_title], placeholder: '商品コード ページタイトル', class: 'form-control' %>
+    </div>
+    <div class="col">
+      <%= f.select :company_id, Company.where.not(id: current_user.company_id).map { |c| [c.name, c.id] }, { include_blank: '-自社以外すべて-' }, class: 'form-control' %>
+    </div>
+  </div>
+<% end %>
+<br>
+
+<%= paginate @stock_products %>
+<table class="table">
+  <thead>
+    <tr>
+      <th><%= Product.human_attribute_name :id %></th>
+      <th><%= Product.human_attribute_name :product_code %></th>
+      <th><%= Product.human_attribute_name :title %></th>
+      <th><%= Product.human_attribute_name :description_a %></th>
+      <th><%= Product.human_attribute_name :description_b %></th>
+      <th><%= Company.human_attribute_name :name %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @stock_products.each do |stock_product| %>
+      <tr>
+        <td><%= stock_product.product.id %></td>
+        <td><%= stock_product.product.product_code %></td>
+        <td><%= stock_product.product.title %></td>
+        <td><%= stock_product.description_a %></td>
+        <td><%= stock_product.description_b %></td>
+        <td><%= stock_product.company&.name %></td>
+        <td>
+          <%= link_to '#' do %>
+            他社在庫
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @stock_products %>

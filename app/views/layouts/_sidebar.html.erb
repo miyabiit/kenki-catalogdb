@@ -23,6 +23,12 @@
     <div class="kenki-toc-item <%= 'active' if controller.controller_name == 'stock_products' %>">
       <a href="/stock_products" class="kenki-toc-link">自社在庫</a>
     </div>
+    <div class="kenki-toc-item <%= 'active' if controller.controller_name == 'other_stock_products' %>">
+      <a href="/other_stock_products" class="kenki-toc-link">他社在庫</a>
+    </div>
+    <div class="kenki-toc-item <%= 'active' if controller.controller_name == 'chartered_stock_products' %>">
+      <a href="/chartered_stock_products" class="kenki-toc-link">チャーター</a>
+    </div>
     <div class="kenki-toc-item">
       <div class="kenki-toc-text">属性</div>
       <ul class="nav kenki-sub-nav">

@@ -1,0 +1,55 @@
+<%= render 'shared/notice' %>
+
+<h1>チャーター商品</h1>
+
+<br>
+<%= form_for @stock_product, url: {controller: "chartered_stock_products"}, method: :get do |f| %>
+  <%= f.submit '検索', class: 'float-right btn btn-primary'  %>
+  <div class="row col-md-10">
+    <div class="col">
+      <%= text_field_tag :product_code_or_title, params[:product_code_or_title], placeholder: '商品コード ページタイトル', class: 'form-control' %>
+    </div>
+    <div class="col">
+      <%= f.select :category_id, Category.accessible_by(current_ability).lasts.map { |c| [c.name, c.id] }, { include_blank: '-全最終カテゴリ-' }, class: 'form-control' %>
+    </div>
+  </div>
+<% end %>
+<br>
+
+<%= paginate @stock_products %>
+<table class="table">
+  <thead>
+    <tr>
+      <th><%= Product.human_attribute_name :id %></th>
+      <th><%= Product.human_attribute_name :product_code %></th>
+      <th><%= Product.human_attribute_name :title %></th>
+      <th><%= StockProduct.human_attribute_name :category %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @stock_products.each do |stock_product| %>
+      <tr>
+        <td><%= stock_product.product.id %></td>
+        <td><%= stock_product.product.product_code %></td>
+        <td><%= stock_product.product.title %></td>
+        <td><%= stock_product.category&.name %></td>
+        <td>
+          <% if can? :update, StockProduct %>
+          <%= link_to edit_stock_product_path(stock_product) do %>
+            編集
+          <% end %>
+          <% end %>
+          &nbsp;
+          <% if can? :destroy, StockProduct %>
+          <%= link_to stock_product, method: :delete, data: { confirm: '削除してもよろしいですか？' } do %>
+            削除
+          <% end %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= paginate @stock_products %>

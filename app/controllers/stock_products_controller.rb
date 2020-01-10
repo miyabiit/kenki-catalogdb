@@ -67,7 +67,7 @@ class StockProductsController < ApplicationController
   end
 
   def fetch_resources
-    @stock_products = StockProduct.joins(:product).includes(:product).accessible_by(current_ability)
+    @stock_products = StockProduct.joins(:product).includes(:product).accessible_by(current_ability).where(stock_product_id: nil)
     if params[:product_code_or_title].present?
       @stock_products = @stock_products.product_code_or_title(params[:product_code_or_title])
     end
@@ -75,7 +75,7 @@ class StockProductsController < ApplicationController
   end
 
   def fetch_resource
-    @stock_product = StockProduct.includes(:product).accessible_by(current_ability).find(params[:id])
+    @stock_product = StockProduct.includes(:product).accessible_by(current_ability).where(stock_product_id: nil).find(params[:id])
   end
 
   def fetch_parent

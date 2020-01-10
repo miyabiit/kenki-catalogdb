@@ -34,7 +34,11 @@ Rails.application.routes.draw do
   resources :image_props
   resources :file_props
 
-  resources :stock_products
+  resources :stock_products do
+    resources :chartered_stock_products
+  end
+  resources :other_stock_products, only: [:index, :show]
+  resources :chartered_stock_products
 
   namespace :api do
     resources :companies
