@@ -36,12 +36,12 @@
         <td><%= stock_product.product.id %></td>
         <td><%= stock_product.product.product_code %></td>
         <td><%= stock_product.product.title %></td>
-        <td><%= stock_product.description_a %></td>
-        <td><%= stock_product.description_b %></td>
+        <td><%= stock_product.product.description_a %></td>
+        <td><%= stock_product.product.description_b %></td>
         <td><%= stock_product.company&.name %></td>
         <td>
-          <%= link_to '#' do %>
-            他社在庫
+          <%= link_to new_stock_product_chartered_stock_product_path(stock_product_id: stock_product.id) do %>
+            チャーターする
           <% end %>
         </td>
       </tr>

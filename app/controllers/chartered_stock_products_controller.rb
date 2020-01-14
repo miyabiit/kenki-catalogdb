@@ -16,12 +16,10 @@ class CharteredStockProductsController < ApplicationController
 
   def new
     @stock_product = StockProduct.new(stock_product: @source)
-    render 'stock_products/new'
   end
 
   def edit
     @product = @stock_product.product
-    render 'stock_products/edit'
   end
 
   def create
