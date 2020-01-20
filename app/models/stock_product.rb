@@ -13,6 +13,9 @@ class StockProduct < ApplicationRecord
   has_many :stock_product_text_props, -> { where(stored_prop_type: 'TextProp') }, class_name: 'StockProductStoredProp', inverse_of: :stock_product
   has_many :stock_product_file_props, -> { where(stored_prop_type: 'FileProp') }, class_name: 'StockProductStoredProp', inverse_of: :stock_product
   has_many :stock_product_image_props, -> { where(stored_prop_type: 'ImageProp') }, class_name: 'StockProductStoredProp', inverse_of: :stock_product
+  has_many :text_props, through: :stock_product_text_props, source: 'stored_prop', source_type: 'TextProp'
+  has_many :file_props, through: :stock_product_file_props, class_name: 'FileProp', source: 'stored_prop', source_type: 'FileProp'
+  has_many :image_props, through: :stock_product_image_props, class_name: 'ImageProp', source: 'stored_prop', source_type: 'ImageProp'
 
   accepts_nested_attributes_for :stock_product_sub_categories, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :stock_product_text_props, allow_destroy: true, reject_if: :all_blank
@@ -64,6 +67,23 @@ class StockProduct < ApplicationRecord
 
 
     attrs
+  end
+
+  def as_json(options = {})
+    super(options.merge(
+      include: [
+        :product,
+        {
+          company: { only: [:id, :name] },
+          stock_product: { only: [:id] },
+          category: { only: [:id, :name] },
+          sub_categories: { only: [:id, :name] },
+          text_props: { only: [:id, :name, :text_content] },
+          file_props: { methods: [:url], only: [:id, :name, :file_url] },
+          image_props: { methods: [:url], only: [:id, :name, :image_url] },
+        }
+      ]
+    ))
   end
 
   class << self
