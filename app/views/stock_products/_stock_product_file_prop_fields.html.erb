@@ -1,6 +1,6 @@
 <div class="nested-fields form-group row">
   <div class="col-md-6">
-    <%= f.collection_select :stored_prop, FileProp.accessible_by(current_ability), :id, :name, {prompt: ''}, class: 'form-control' %>
+    <%= f.collection_select :stored_prop_id, FileProp.accessible_by(current_ability), :id, :name, {prompt: ''}, class: 'form-control' %>
   </div>
   <div class="col-md-2">
     <%= f.input :published %>

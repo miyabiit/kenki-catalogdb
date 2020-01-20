@@ -15,7 +15,8 @@ class CharteredStockProductsController < ApplicationController
   end
 
   def new
-    @stock_product = StockProduct.new(stock_product: @source)
+    @stock_product = StockProduct.new(product: @source.product, stock_product: @source)
+    @stock_product.attributes = @source.charterable_attributes
   end
 
   def edit
@@ -28,13 +29,14 @@ class CharteredStockProductsController < ApplicationController
       @stock_product.errors.add :base, 'チャーター元が未設定です'
     end
     @stock_product.stock_product = @source
+    @stock_product.product = @source.product
 
     respond_to do |format|
       if @stock_product.save
         format.html { redirect_to chartered_stock_products_url, notice: "チャーター商品##{@stock_product.id} を作成しました" }
         format.json { render 'stock_products/show', status: :created, location: @stock_product }
       else
-        format.html { render 'stock_products/new' }
+        format.html { render 'chartered_stock_products/new' }
         format.json { render json: @stock_product.errors, status: :unprocessable_entity }
       end
     end
@@ -46,7 +48,7 @@ class CharteredStockProductsController < ApplicationController
         format.html { redirect_to chartered_stock_products_url, notice: "チャーター商品##{@stock_product.id} を更新しました" }
         format.json { render 'stock_products/show', status: :ok, location: @stock_product }
       else
-        format.html { render 'stock_products/edit' }
+        format.html { render 'chartered_stock_products/edit' }
         format.json { render json: @stock_product.errors, status: :unprocessable_entity }
       end
     end

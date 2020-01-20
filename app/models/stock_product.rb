@@ -9,10 +9,10 @@ class StockProduct < ApplicationRecord
   has_many :stock_product_sub_categories, dependent: :destroy
   has_many :sub_categories, through: :stock_product_sub_categories 
 
-  has_many :stock_product_stored_props, dependent: :destroy
-  has_many :stock_product_text_props, -> { where(stored_prop_type: 'TextProp') }, class_name: 'StockProductStoredProp'
-  has_many :stock_product_file_props, -> { where(stored_prop_type: 'FileProp') }, class_name: 'StockProductStoredProp'
-  has_many :stock_product_image_props, -> { where(stored_prop_type: 'ImageProp') }, class_name: 'StockProductStoredProp'
+  has_many :stock_product_stored_props, dependent: :destroy, inverse_of: :stock_product
+  has_many :stock_product_text_props, -> { where(stored_prop_type: 'TextProp') }, class_name: 'StockProductStoredProp', inverse_of: :stock_product
+  has_many :stock_product_file_props, -> { where(stored_prop_type: 'FileProp') }, class_name: 'StockProductStoredProp', inverse_of: :stock_product
+  has_many :stock_product_image_props, -> { where(stored_prop_type: 'ImageProp') }, class_name: 'StockProductStoredProp', inverse_of: :stock_product
 
   accepts_nested_attributes_for :stock_product_sub_categories, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :stock_product_text_props, allow_destroy: true, reject_if: :all_blank
@@ -32,7 +32,67 @@ class StockProduct < ApplicationRecord
     where("(#{code_cond}) OR (#{title_cond})")
   }
 
+  def charterable_attributes
+    # TODO: chaterable = true のものだけ返すようにする
+    attrs = {}
+
+    attrr.update({video_url: video_url, video_comment: video_comment, video_license_valid: video_license_valid, video_published: video_published, video_charterable: video_charterable}) if video_charterable?
+    attrs.update({staff_comment: staff_comment, staff_comment_published: staff_comment_published, staff_comment_charterable: staff_comment_charterable}) if staff_comment_charterable?
+    attrs.update({price_info: price_info, price_info_published: price_info_published, price_info_charterable: price_info_charterable}) if price_info_charterable?
+    attrs.update({faq: faq, faq_published: faq_published, faq_charterable: faq_charterable}) if faq_charterable?
+    attrs.update({description: description, description_published: description_published, description_charterable: description_charterable}) if description_charterable?
+    attrs.update({address_info: address_info, address_info_published: address_info_published, address_info_charterable: address_info_charterable}) if address_info_charterable?
+
+    # TODO: 属性のコピー
+#     t_props = []
+#     stock_product_text_props.each do |prop|
+#       t_props << {stored_prop: prop.stored_prop, published: prop.published, charterable: prop.charterable} if prop.charterable
+#     end
+#     attrs.update({stock_product_text_props_attributes: t_props})
+
+#     i_props = []
+#     stock_product_image_props.each do |prop|
+#       i_props << {stored_prop: prop.stored_prop, published: prop.published, charterable: prop.charterable} if prop.charterable
+#     end
+#     attrs.update({stock_product_image_props_attributes: i_props})
+
+#     f_props = []
+#     stock_product_file_props.each do |prop|
+#       f_props << {stored_prop: prop.stored_prop, published: prop.published, charterable: prop.charterable} if prop.charterable
+#     end
+#     attrs.update({stock_product_file_props_attributes: f_props})
+
+
+    attrs
+  end
+
   class << self
+    def charterable_attribute_names
+      [
+        :video_url,
+        :video_comment,
+        :video_license,
+        :video_license_valid,
+        :video_published,
+        :video_charterable,
+        :staff_comment,
+        :staff_comment_published,
+        :staff_comment_charterable,
+        :price_info,
+        :price_info_published,
+        :price_info_charterable,
+        :faq,
+        :faq_published,
+        :faq_charterable,
+        :description,
+        :description_published,
+        :description_charterable,
+        :address_info,
+        :address_info_published,
+        :address_info_charterable
+      ]
+    end
+
     def form_attribute_names
       super + [
         {stock_product_sub_categories_attributes: [:id, :sub_category_id, :_destroy]},

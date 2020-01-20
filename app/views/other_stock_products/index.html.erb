@@ -40,8 +40,10 @@
         <td><%= stock_product.product.description_b %></td>
         <td><%= stock_product.company&.name %></td>
         <td>
-          <%= link_to new_stock_product_chartered_stock_product_path(stock_product_id: stock_product.id) do %>
-            チャーターする
+          <% if stock_product.charterable && stock_product.stock_product_id.blank? %>
+            <%= link_to new_stock_product_chartered_stock_product_path(stock_product_id: stock_product.id) do %>
+              チャーターする
+            <% end %>
           <% end %>
         </td>
       </tr>

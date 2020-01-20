@@ -37,13 +37,13 @@
         <td><%= stock_product.category&.name %></td>
         <td>
           <% if can? :update, StockProduct %>
-          <%= link_to edit_stock_product_path(stock_product) do %>
+          <%= link_to edit_chartered_stock_product_path(stock_product) do %>
             編集
           <% end %>
           <% end %>
           &nbsp;
           <% if can? :destroy, StockProduct %>
-          <%= link_to stock_product, method: :delete, data: { confirm: '削除してもよろしいですか？' } do %>
+          <%= link_to chartered_stock_product_path(stock_product), method: :delete, data: { confirm: '削除してもよろしいですか？' } do %>
             削除
           <% end %>
           <% end %>

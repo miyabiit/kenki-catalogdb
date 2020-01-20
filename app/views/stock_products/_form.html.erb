@@ -1,5 +1,5 @@
 <%#<%= render 'stored_props_modal' +|%>
-<%= simple_form_for stock_product do |f| %>
+<%= simple_form_for stock_product, url: url do |f| %>
   <%= f.button :submit, class: 'float-right btn btn-primary' %>
   <%= link_to '<戻る', stock_products_path, class: 'btn btn-outline-primary', style: 'margin-bottom: 10px' %>
     <h3><%= title %></h3>
@@ -21,29 +21,29 @@
       </div>
     </div>
     <br>
-    <%= f.input :video_url %>
-    <%= f.input :video_comment %>
-    <%= f.input :video_license %>
-    <%= f.input :video_license_valid %>
-    <%= f.input :video_published %>
-    <%= f.input :video_charterable %>
+    <%= input_unless_charted f, :video_url, base_name: 'video' %>
+    <%= input_unless_charted f, :video_comment, base_name: 'video' %>
+    <%= input_unless_charted f, :video_license, base_name: 'video' %>
+    <%= input_unless_charted f, :video_license_valid, base_name: 'video' %>
+    <%= input_unless_charted f, :video_published %>
+    <%= input_unless_charted f, :video_charterable %>
     <%= f.input :spec %>
     <%= f.input :spec_comment %>
-    <%= f.input :staff_comment %>
-    <%= f.input :staff_comment_published %>
-    <%= f.input :staff_comment_charterable %>
-    <%= f.input :price_info %>
-    <%= f.input :price_info_published %>
-    <%= f.input :price_info_charterable %>
-    <%= f.input :faq %>
-    <%= f.input :faq_published %>
-    <%= f.input :faq_charterable %>
-    <%= f.input :description %>
-    <%= f.input :description_published %>
-    <%= f.input :description_charterable %>
-    <%= f.input :address_info %>
-    <%= f.input :address_info_published %>
-    <%= f.input :address_info_charterable %>
+    <%= input_unless_charted f, :staff_comment %>
+    <%= input_unless_charted f, :staff_comment_published %>
+    <%= input_unless_charted f, :staff_comment_charterable %>
+    <%= input_unless_charted f, :price_info %>
+    <%= input_unless_charted f, :price_info_published %>
+    <%= input_unless_charted f, :price_info_charterable %>
+    <%= input_unless_charted f, :faq %>
+    <%= input_unless_charted f, :faq_published %>
+    <%= input_unless_charted f, :faq_charterable %>
+    <%= input_unless_charted f, :description %>
+    <%= input_unless_charted f, :description_published %>
+    <%= input_unless_charted f, :description_charterable %>
+    <%= input_unless_charted f, :address_info %>
+    <%= input_unless_charted f, :address_info_published %>
+    <%= input_unless_charted f, :address_info_charterable %>
 
     <h5>関連リンク</h5>
     <div id="product_text_props">
@@ -80,6 +80,6 @@
     <%= f.input :private_memo %>
     <%= f.input :meta_description %>
     <%= f.input :meta_keywords %>
-    <%= f.input :charterable%>
+    <%= f.input :charterable unless f.object.stock_product %>
   </div>
 <% end %>
