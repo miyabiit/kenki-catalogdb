@@ -1,0 +1,85 @@
+<%#<%= render 'stored_props_modal' +|%>
+<%= simple_form_for stock_product, url: url do |f| %>
+  <%= f.button :submit, class: 'float-right btn btn-primary' %>
+  <%= link_to '<戻る', stock_products_path, class: 'btn btn-outline-primary', style: 'margin-bottom: 10px' %>
+    <h3><%= title %></h3>
+
+  <%= render "stock_products/product", product: @product if @product %>
+
+  <div class="clearfix">
+    <%= render('shared/validation_alert', model: stock_product) if stock_product.errors.any? %>
+<%#    <%= f.input :id, wrapper: :horizontal_plaintext unless f.object.new_record? +|%>
+    <%= f.hidden_field :product_id, value: params[:product_id] if params[:product_id].present? && stock_product.new_record? %>
+    <%= f.association :category, collection: Category.accessible_by(current_ability).lasts %>
+    <h5>サブカテゴリ</h5>
+    <div id="product_sub_categories">
+      <%= f.simple_fields_for :stock_product_sub_categories do |stock_product_sub_category| %>
+        <%= render 'stock_products/stock_product_sub_category_fields', f: stock_product_sub_category %>
+      <% end %>
+      <div class="links">
+        <%= link_to_add_association 'サブカテゴリ追加', f, :stock_product_sub_categories, partial: 'stock_products/stock_product_sub_category_fields', class: 'btn btn-secondary' %>
+      </div>
+    </div>
+    <br>
+    <%= input_unless_charted f, :video_url, base_name: 'video' %>
+    <%= input_unless_charted f, :video_comment, base_name: 'video' %>
+    <%= input_unless_charted f, :video_license, base_name: 'video' %>
+    <%= input_unless_charted f, :video_license_valid, base_name: 'video' %>
+    <%= input_unless_charted f, :video_published %>
+    <%= input_unless_charted f, :video_charterable %>
+    <%= f.input :spec %>
+    <%= f.input :spec_comment %>
+    <%= input_unless_charted f, :staff_comment %>
+    <%= input_unless_charted f, :staff_comment_published %>
+    <%= input_unless_charted f, :staff_comment_charterable %>
+    <%= input_unless_charted f, :price_info %>
+    <%= input_unless_charted f, :price_info_published %>
+    <%= input_unless_charted f, :price_info_charterable %>
+    <%= input_unless_charted f, :faq %>
+    <%= input_unless_charted f, :faq_published %>
+    <%= input_unless_charted f, :faq_charterable %>
+    <%= input_unless_charted f, :description %>
+    <%= input_unless_charted f, :description_published %>
+    <%= input_unless_charted f, :description_charterable %>
+    <%= input_unless_charted f, :address_info %>
+    <%= input_unless_charted f, :address_info_published %>
+    <%= input_unless_charted f, :address_info_charterable %>
+
+    <h5>関連リンク</h5>
+    <div id="product_text_props">
+      <%= f.simple_fields_for :stock_product_text_props do |stock_product_text_prop| %>
+        <%= render 'stock_products/stock_product_text_prop_fields', f: stock_product_text_prop %>
+      <% end %>
+      <div class="links">
+        <%= link_to_add_association '関連リンク追加', f, :stock_product_text_props, partial: 'stock_products/stock_product_text_prop_fields', class: 'btn btn-secondary' %>
+      </div>
+    </div>
+    <br>
+    <h5>ダウンロードファイル</h5>
+    <div id="product_file_props">
+      <%= f.simple_fields_for :stock_product_file_props do |stock_product_file_prop| %>
+        <%= render 'stock_products/stock_product_file_prop_fields', f: stock_product_file_prop %>
+      <% end %>
+      <div class="links">
+        <%= link_to_add_association 'ダウンロードファイル追加', f, :stock_product_file_props, partial: 'stock_products/stock_product_file_prop_fields', class: 'btn btn-secondary' %>
+      </div>
+    </div>
+    <br>
+    <h5>画像ファイル</h5>
+    <div id="product_image_props">
+      <%= f.simple_fields_for :stock_product_image_props do |stock_product_image_prop| %>
+        <%= render 'stock_products/stock_product_image_prop_fields', f: stock_product_image_prop %>
+      <% end %>
+      <div class="links">
+        <%= link_to_add_association '画像ファイル追加', f, :stock_product_image_props, partial: 'stock_products/stock_product_image_prop_fields', class: 'btn btn-secondary' %>
+      </div>
+    </div>
+    <br>
+
+    <%= f.input :company_memo %>
+    <%= f.input :private_memo %>
+    <%= f.input :meta_description %>
+    <%= f.input :meta_keywords %>
+    <%= f.input :charterable unless f.object.stock_product %>
+  </div>
+<% end %>

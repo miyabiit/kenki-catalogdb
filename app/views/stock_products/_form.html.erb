@@ -1,4 +1,5 @@
 <%#<%= render 'stored_props_modal' +|%>
+<div id="app">
 <%= simple_form_for stock_product, url: url do |f| %>
   <%= f.button :submit, class: 'float-right btn btn-primary' %>
   <%= link_to '<戻る', stock_products_path, class: 'btn btn-outline-primary', style: 'margin-bottom: 10px' %>
@@ -46,12 +47,58 @@
     <%= input_unless_charted f, :address_info_charterable %>
 
     <h5>関連リンク</h5>
-    <div id="product_text_props">
-      <%= f.simple_fields_for :stock_product_text_props do |stock_product_text_prop| %>
-        <%= render 'stock_products/stock_product_text_prop_fields', f: stock_product_text_prop %>
-      <% end %>
+    <div>
+      <div class="form-group row" v-for="(sptp, index) in stock_product_text_props" v-show="!sptp._destroy">
+        <div class="col-md-3">
+          <div class="form-group row string required form-group-valid">
+            <label for="stock_product_stock_product_text_props_attributes_{{index}}_stored_prop_attributes_name" class="col-sm-3 col-form-label string required">
+              タイトル <abbr title="required">
+                *</abbr>
+            </label>
+            <div class="col-sm-9">
+              <input type="text" v-model="sptp.stored_prop.name" name="stock_product[stock_product_text_props_attributes][{{index}}][stored_prop_attributes][name]" id="stock_product_stock_product_text_props_attributes_{{index}}_stored_prop_attributes_name" class="form-control is-valid string required" :readonly="sptp.charterable">
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group row text required stock_product_stock_product_text_props_stored_prop_text_content form-group-valid">
+            <label for="stock_product_stock_product_text_props_attributes_{{index}}_stored_prop_attributes_text_content" class="col-sm-3 col-form-label text required">
+              URL <abbr title="required">
+                *</abbr>
+            </label>
+            <div class="col-sm-9">
+              <textarea name="stock_product[stock_product_text_props_attributes][{{index}}][stored_prop_attributes][text_content]" id="stock_product_stock_product_text_props_attributes_{{index}}_stored_prop_attributes_text_content" class="form-control is-valid text required" v-model="sptp.stored_prop.url" :readonly="sptp.charterable"> </textarea>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <fieldset class="form-group boolean optional stock_product_stock_product_text_props_published">
+            <div class="form-check">
+              <input name="stock_product[stock_product_text_props_attributes][{{index}}][published]" type="hidden" value="0">
+              <input type="checkbox" v-model="sptp.published" name="stock_product[stock_product_text_props_attributes][{{index}}][published]" id="stock_product_stock_product_text_props_attributes_{{index}}_published" class="form-check-input boolean optional">
+              <label for="stock_product_stock_product_text_props_attributes_{{index}}_published" class="form-check-label boolean optional">
+                公開</label>
+            </div>
+          </fieldset>
+        </div>
+        <div class="col-md-2">
+          <fieldset class="form-group boolean optional stock_product_stock_product_text_props_charterable">
+            <div class="form-check">
+              <input name="stock_product[stock_product_text_props_attributes][{{index}}][charterable]" type="hidden" value="0">
+              <input type="checkbox" v-model="sptp.charterable" name="stock_product[stock_product_text_props_attributes][{{index}}][charterable]" id="stock_product_stock_product_text_props_attributes_{{index}}_charterable" class="form-check-input boolean optional" :readonly="sptp.charterable">
+              <label for="stock_product_stock_product_text_props_attributes_{{index}}_charterable" class="form-check-label boolean optional">
+                提供</label>
+            </div>
+          </fieldset>
+        </div>
+        <div class="col-md-2">
+          <input v-model="sptp._destroy" type="hidden" name="stock_product[stock_product_text_props_attributes][{{index}}][_destroy]" id="stock_product_stock_product_text_props_attributes_{{index}}__destroy">
+          <a href="javascript:void(0);" class="btn btn-danger dynamic" @click="removeTextProp(sptp, index)">削除</a>
+        </div>
+        <input v-model="sptp.id" name="stock_product[stock_product_text_props_attributes][{{index}}][id]" type="hidden">
+      </div>
       <div class="links">
-        <%= link_to_add_association '関連リンク追加', f, :stock_product_text_props, partial: 'stock_products/stock_product_text_prop_fields', class: 'btn btn-secondary' %>
+        <a href="javascript:void(0);" class="btn btn-secondary" @click="addTextProp">関連リンク追加</a>
       </div>
     </div>
     <br>
@@ -83,3 +130,53 @@
     <%= f.input :charterable unless f.object.stock_product %>
   </div>
 <% end %>
+</div>
+
+<script>
+
+var app = new Vue({
+  el: '#app',
+  data() {
+    data = {
+      stock_product_text_props: <%= raw @stock_product.stock_product_text_props.to_json %>,
+      stock_product_file_props: <%= raw @stock_product.stock_product_file_props.to_json %>,
+      stock_product_image_props: <%= raw @stock_product.stock_product_image_props.to_json %>,
+    }
+
+    data.stock_product_text_props.forEach(function(tp) {
+      tp._destroy = false
+    })
+    data.stock_product_file_props.forEach(function(fp) {
+      fp._destroy = false
+    })
+    data.stock_product_image_props.forEach(function(fp) {
+      fp._destroy = false
+    })
+
+    return data
+  },
+  methods: {
+    addTextProp() {
+      this.stock_product_text_props.push(
+        {
+          id: null,
+          published: false,
+          charterable: false,
+          stored_prop: {
+            id: null,
+            name: '',
+            text_content: ''
+          }
+        }
+      )
+    },
+    removeTextProp(stock_product_text_prop, index) {
+      if (stock_product_text_prop.id) {
+        stock_product_text_prop._destroy = true
+      } else {
+        this.stock_product_text_props.splice(index, 1)
+      }
+    }
+  }
+})
+</script>

@@ -16,11 +16,15 @@ class StockProduct < ApplicationRecord
   has_many :text_props, through: :stock_product_text_props, source: 'stored_prop', source_type: 'TextProp'
   has_many :file_props, through: :stock_product_file_props, class_name: 'FileProp', source: 'stored_prop', source_type: 'FileProp'
   has_many :image_props, through: :stock_product_image_props, class_name: 'ImageProp', source: 'stored_prop', source_type: 'ImageProp'
+  has_many :stored_props, through: :stock_product_stored_props
 
   accepts_nested_attributes_for :stock_product_sub_categories, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :stock_product_text_props, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :stock_product_file_props, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :stock_product_image_props, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :text_props, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :file_props, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :image_props, allow_destroy: true, reject_if: :all_blank
 
   validates :video_url, allow_blank: true, length: { maximum: 50 }
   validates :video_comment, :video_license, :spec, :spec_comment, :staff_comment, :price_info, :faq, :description, :address_info, :company_memo, :private_memo, :meta_description, :meta_keywords, allow_blank: true, length: { maximum: 2000 }
@@ -35,38 +39,42 @@ class StockProduct < ApplicationRecord
     where("(#{code_cond}) OR (#{title_cond})")
   }
 
-  def charterable_attributes
-    # TODO: chaterable = true のものだけ返すようにする
+  def charter_from(source)
+    self.product = source.product
+    self.stock_product = source
+
     attrs = {}
+    attrr.update({video_url: source.video_url, video_comment: source.video_comment, video_license_valid: source.video_license_valid, video_published: source.video_published, video_charterable: source.video_charterable}) if source.video_charterable?
+    attrs.update({staff_comment: source.staff_comment, staff_comment_published: source.staff_comment_published, staff_comment_charterable: source.staff_comment_charterable}) if source.staff_comment_charterable?
+    attrs.update({price_info: source.price_info, price_info_published: source.price_info_published, price_info_charterable: source.price_info_charterable}) if source.price_info_charterable?
+    attrs.update({faq: source.faq, faq_published: source.faq_published, faq_charterable: source.faq_charterable}) if source.faq_charterable?
+    attrs.update({description: source.description, description_published: source.description_published, description_charterable: source.description_charterable}) if source.description_charterable?
+    attrs.update({address_info: source.address_info, address_info_published: source.address_info_published, address_info_charterable: source.address_info_charterable}) if source.address_info_charterable?
+    self.attributes = attrs
 
-    attrr.update({video_url: video_url, video_comment: video_comment, video_license_valid: video_license_valid, video_published: video_published, video_charterable: video_charterable}) if video_charterable?
-    attrs.update({staff_comment: staff_comment, staff_comment_published: staff_comment_published, staff_comment_charterable: staff_comment_charterable}) if staff_comment_charterable?
-    attrs.update({price_info: price_info, price_info_published: price_info_published, price_info_charterable: price_info_charterable}) if price_info_charterable?
-    attrs.update({faq: faq, faq_published: faq_published, faq_charterable: faq_charterable}) if faq_charterable?
-    attrs.update({description: description, description_published: description_published, description_charterable: description_charterable}) if description_charterable?
-    attrs.update({address_info: address_info, address_info_published: address_info_published, address_info_charterable: address_info_charterable}) if address_info_charterable?
-
-    # TODO: 属性のコピー
-#     t_props = []
-#     stock_product_text_props.each do |prop|
-#       t_props << {stored_prop: prop.stored_prop, published: prop.published, charterable: prop.charterable} if prop.charterable
-#     end
-#     attrs.update({stock_product_text_props_attributes: t_props})
-
-#     i_props = []
-#     stock_product_image_props.each do |prop|
-#       i_props << {stored_prop: prop.stored_prop, published: prop.published, charterable: prop.charterable} if prop.charterable
-#     end
-#     attrs.update({stock_product_image_props_attributes: i_props})
-
-#     f_props = []
-#     stock_product_file_props.each do |prop|
-#       f_props << {stored_prop: prop.stored_prop, published: prop.published, charterable: prop.charterable} if prop.charterable
-#     end
-#     attrs.update({stock_product_file_props_attributes: f_props})
-
-
-    attrs
+    source.stock_product_text_props.each do |text_prop|
+      if text_prop.charterable?
+        tp = TextProp.new(name: text_prop.stored_prop.name, text_content: text_prop.stored_prop.text_content)
+        self.text_props << tp
+        self.stock_product_text_props.last.attributes = { charterable: true, published: text_prop.published? }
+      end
+    end
+    source.stock_product_image_props.each do |image_prop|
+      if image_prop.charterable?
+        ip = ImageProp.new(name: image_prop.stored_prop.name)
+        ip.image.attach(image_prop.stored_prop.image.blob)
+        self.image_props << ip
+        self.stock_product_image_props.last.attributes = { charterable: true, published: image_prop.published? }
+      end
+    end
+    source.stock_product_file_props.each do |file_prop|
+      if file_prop.charterable?
+        fp = FileProp.new(name: file_prop.stored_prop.name)
+        fp.file.attach(file_prop.stored_prop.file.blob)
+        self.file_props << fp
+        self.stock_product_file_props.last.attributes = { charterable: true, published: file_prop.published? }
+      end
+    end
   end
 
   def as_json(options = {})
@@ -87,38 +95,15 @@ class StockProduct < ApplicationRecord
   end
 
   class << self
-    def charterable_attribute_names
-      [
-        :video_url,
-        :video_comment,
-        :video_license,
-        :video_license_valid,
-        :video_published,
-        :video_charterable,
-        :staff_comment,
-        :staff_comment_published,
-        :staff_comment_charterable,
-        :price_info,
-        :price_info_published,
-        :price_info_charterable,
-        :faq,
-        :faq_published,
-        :faq_charterable,
-        :description,
-        :description_published,
-        :description_charterable,
-        :address_info,
-        :address_info_published,
-        :address_info_charterable
-      ]
-    end
-
     def form_attribute_names
       super + [
         {stock_product_sub_categories_attributes: [:id, :sub_category_id, :_destroy]},
         {stock_product_text_props_attributes: [:id, :stored_prop_id, :published, :charterable, :_destroy]},
         {stock_product_file_props_attributes: [:id, :stored_prop_id, :published, :charterable, :_destroy]},
         {stock_product_image_props_attributes: [:id, :stored_prop_id, :published, :charterable, :_destroy]},
+        {text_props_attributes: [:id, :name, :text_content, :_destroy]},
+        {file_props_attributes: [:id, :name, :file, :_destroy]},
+        {image_props_attributes: [:id, :name, :image, :_destroy]},
       ]
     end
   end

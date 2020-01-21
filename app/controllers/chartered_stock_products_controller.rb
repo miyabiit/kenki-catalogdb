@@ -15,8 +15,8 @@ class CharteredStockProductsController < ApplicationController
   end
 
   def new
-    @stock_product = StockProduct.new(product: @source.product, stock_product: @source)
-    @stock_product.attributes = @source.charterable_attributes
+    @stock_product = StockProduct.new
+    @stock_product.charter_from(@source)
   end
 
   def edit

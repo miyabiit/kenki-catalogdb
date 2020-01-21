@@ -1,7 +1,16 @@
 <div class="nested-fields form-group row">
-  <div class="col-md-6">
-    <%= f.collection_select :stored_prop_id, TextProp.accessible_by(current_ability), :id, :name, {prompt: ''}, class: 'form-control' %>
-  </div>
+<%= f.simple_fields_for :stored_prop do |stored_prop_f|  %>
+  <%= render 'stock_products/text_prop_fields', f: stored_prop_f %>
+<%#  <div class="col-md-3">%>
+<%#    <%= stored_prop_f.input :name +|%>
+<%#  </div>%>
+<%#  <div class="col-md-3">%>
+<%#    <%= stored_prop_f.input :text_content +|%>
+<%#  </div>%>
+<% end %>
+<%#  <div class="col-md-6">%>
+<%#    <%= f.collection_select :stored_prop_id, TextProp.accessible_by(current_ability), :id, :name, {prompt: ''}, class: 'form-control' +|%>
+<%#  </div>%>
   <div class="col-md-2">
     <%= f.input :published %>
   </div>
