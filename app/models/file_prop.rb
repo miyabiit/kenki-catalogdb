@@ -5,8 +5,12 @@ class FileProp < StoredProp
     Rails.application.routes.url_helpers.rails_blob_path(file, only_path: true)
   end
 
+  def file_name
+    file.attachment.blob.filename.to_s
+  end
+
   def as_json(options = {})
-    super(options.merge(methods: [:url], only: [:id, :name]))
+    super(options.merge(methods: [:url, :file_name], only: [:id, :name]))
   end
 
   class << self

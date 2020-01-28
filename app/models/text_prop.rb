@@ -4,4 +4,8 @@ class TextProp < StoredProp
   def url
     text_content
   end
+
+  def file_name
+    ''
+  end
 end

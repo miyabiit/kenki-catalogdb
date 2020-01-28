@@ -5,6 +5,10 @@ class ImageProp < StoredProp
     Rails.application.routes.url_helpers.rails_blob_path(image, only_path: true)
   end
 
+  def file_name
+    image.attachment.blob.filename.to_s
+  end
+
   def as_json(options = {})
     super(options.merge(methods: [:url], only: [:id, :name]))
   end

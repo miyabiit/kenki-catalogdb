@@ -7,7 +7,7 @@ class StockProductStoredProp < ApplicationRecord
     super(options.merge(
       include: [
         stored_prop: {
-          methods: [:url]
+          methods: [:url, :file_name]
         }
       ]
     ))
