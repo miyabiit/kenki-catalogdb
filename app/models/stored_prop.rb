@@ -1,6 +1,7 @@
 class StoredProp < ApplicationRecord
   include CompanyTraceable
 
+  belongs_to :source, optional: true, class_name: 'StoredProp'
   belongs_to :company, optional: true
 
   has_many :stored_prop_sub_categories, dependent: :destroy

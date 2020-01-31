@@ -1,6 +1,6 @@
 <%#<%= render 'stored_props_modal' +|%>
 <div id="app">
-<%= simple_form_for stock_product, url: url do |f| %>
+<%= simple_form_for stock_product, url: url, html: { multipart: true } do |f| %>
   <%= f.button :submit, class: 'float-right btn btn-primary' %>
   <%= link_to '<戻る', stock_products_path, class: 'btn btn-outline-primary', style: 'margin-bottom: 10px' %>
     <h3><%= title %></h3>
@@ -50,15 +50,17 @@
     <div>
       <div class="form-group row" v-for="(sptp, index) in stock_product_text_props" v-show="!sptp._destroy">
         <div class="col-md-4">
-          <input type="text" placeholder="タイトル" v-model="sptp.stored_prop.name" :name="`stock_product[stock_product_text_props_attributes][${index}][stored_prop_attributes][name]`" class="form-control is-valid string required" :readonly="charter && sptp.charterable">
+          <input type="text" placeholder="タイトル" v-model="sptp.stored_prop.name" :name="`stock_product[stock_product_text_props_attributes][${index}][stored_prop_attributes][name]`" class="form-control string required" :readonly="charter && sptp.charterable" required>
         </div>
         <div class="col-md-4">
-          <textarea placeholder="URL" :name="`stock_product[stock_product_text_props_attributes][${index}][stored_prop_attributes][text_content]`" class="form-control is-valid text required" v-model="sptp.stored_prop.url" :readonly="charter && sptp.charterable"> </textarea>
+          <textarea placeholder="URL" :name="`stock_product[stock_product_text_props_attributes][${index}][stored_prop_attributes][text_content]`" class="form-control text required" v-model="sptp.stored_prop.url" :readonly="charter && sptp.charterable" required> </textarea>
+          <input type="hidden" :name="`stock_product[stock_product_text_props_attributes][${index}][stored_prop_attributes][source_id]`" v-model="sptp.stored_prop.source_id">
+          <input type="hidden" :name="`stock_product[stock_product_text_props_attributes][${index}][stored_prop_attributes][id]`" v-model="sptp.stored_prop.id">
         </div>
         <div class="col-md-2">
           <fieldset class="form-group boolean optional stock_product_stock_product_text_props_published">
             <div class="form-check">
-              <input name="stock_product[stock_product_text_props_attributes][{{index}}][published]" type="hidden" value="0">
+              <input :name="`stock_product[stock_product_text_props_attributes][${index}][published]`" type="hidden" value="0">
               <input type="checkbox" v-model="sptp.published" :name="`stock_product[stock_product_text_props_attributes][${index}][published]`" :id="`stock_product_stock_product_text_props_attributes_${index}_published`" class="form-check-input boolean optional">
               <label :for="`stock_product_stock_product_text_props_attributes_${index}_published`" class="form-check-label boolean optional">
                 公開</label>
@@ -66,19 +68,19 @@
           </fieldset>
           <fieldset class="form-group boolean optional stock_product_stock_product_text_props_charterable">
             <div v-if="sptp.charterable || !charter" class="form-check">
-              <input name="stock_product[stock_product_text_props_attributes][{{index}}][charterable]" type="hidden" value="0">
-              <input type="checkbox" v-model="sptp.charterable" :name="`stock_product[stock_product_text_props_attributes][${index}][charterable]`" :id="`stock_product_stock_product_text_props_attributes_${index}_charterable`" class="form-check-input boolean optional" :disabled="sptp.charterable">
+              <input :name="`stock_product[stock_product_text_props_attributes][${index}][charterable]`" type="hidden" value="0" :disabled="!!sptp.stored_prop.source_id">
+              <input type="checkbox" v-model="sptp.charterable" :name="`stock_product[stock_product_text_props_attributes][${index}][charterable]`" :id="`stock_product_stock_product_text_props_attributes_${index}_charterable`" class="form-check-input boolean optional" :disabled="!!sptp.stored_prop.source_id">
               <label :for="`stock_product_stock_product_text_props_attributes_${index}_charterable`" class="form-check-label boolean optional">
                 提供</label>
-              <input v-model="sptp.charterable" v-if="sptp.charterable" :name="`stock_product[stock_product_text_props_attributes][${index}][id]`" type="hidden">
             </div>
           </fieldset>
         </div>
         <div class="col-md-2">
           <input v-model="sptp._destroy" type="hidden" :name="`stock_product[stock_product_text_props_attributes][${index}][_destroy]`" :id="`stock_product_stock_product_text_props_attributes_${index}__destroy`">
-          <a href="javascript:void(0);" class="btn btn-danger dynamic" @click="removeTextProp(sptp, index)">削除</a>
+          <a v-show="!sptp.stored_prop.source_id" href="javascript:void(0);" class="btn btn-danger dynamic" @click="removeTextProp(sptp, index)">削除</a>
         </div>
         <input v-model="sptp.id" :name="`stock_product[stock_product_text_props_attributes][${index}][id]`" type="hidden">
+        <input value="TextProp" :name="`stock_product[stock_product_text_props_attributes][${index}][stored_prop_type]`" type="hidden">
       </div>
       <div class="links">
         <a href="javascript:void(0);" class="btn btn-secondary" @click="addTextProp">関連リンク追加</a>
@@ -89,12 +91,14 @@
     <div>
       <div class="form-group row" v-for="(spfp, index) in stock_product_file_props" v-show="!spfp._destroy">
         <div class="col-md-4">
-          <input type="text" placeholder="タイトル" v-model="spfp.stored_prop.name" :name="`stock_product[stock_product_file_props_attributes][${index}][stored_prop_attributes][name]`" :id="`stock_product_stock_product_file_props_attributes_${index}_stored_prop_attributes_name`" class="form-control is-valid string required" :readonly="charter && spfp.charterable">
+          <input type="text" placeholder="タイトル" v-model="spfp.stored_prop.name" :name="`stock_product[stock_product_file_props_attributes][${index}][stored_prop_attributes][name]`" :id="`stock_product_stock_product_file_props_attributes_${index}_stored_prop_attributes_name`" class="form-control string required" :readonly="charter && spfp.charterable" required>
         </div>
         <div class="col-md-4">
           <div>{{ displayFileName(spfp) }}</div>
           <button v-show="!charter || !spfp.charterable" type="button" class="btn btn-primary" @click="uploadFile(spfp, index)">アップロード</button>
-          <input :id="`file_prop_file_${index}`" v-model="spfp.stored_prop.file" class="form-control-file file optional" type="file" :name="`stock_product[stock_product_file_props_attributes][${index}][file]`" style="display: none;" @change="onFileChange($event, spfp, index)">
+          <input :id="`file_prop_file_${index}`" v-model="spfp.stored_prop.file" class="form-control-file file optional" type="file" :name="`stock_product[stock_product_file_props_attributes][${index}][stored_prop_attributes][file]`" style="display: none;" @change="onFileChange($event, spfp, index)" :disabled="!!spfp.stored_prop.source_id" required>
+          <input type="hidden" :name="`stock_product[stock_product_file_props_attributes][${index}][stored_prop_attributes][source_id]`" v-model="spfp.stored_prop.source_id">
+          <input type="hidden" :name="`stock_product[stock_product_file_props_attributes][${index}][stored_prop_attributes][id]`" v-model="spfp.stored_prop.id">
         </div>
         <div class="col-md-2">
           <fieldset class="form-group boolean optional stock_product_stock_product_file_props_published">
@@ -107,19 +111,19 @@
           </fieldset>
           <fieldset class="form-group boolean optional stock_product_stock_product_file_props_charterable">
             <div v-if="spfp.charterable || !charter" class="form-check">
-              <input :name="`stock_product[stock_product_file_props_attributes][${index}][charterable]`" type="hidden" value="0">
-              <input type="checkbox" v-model="spfp.charterable" :name="`stock_product[stock_product_file_props_attributes][${index}][charterable]`" :id="`stock_product_stock_product_file_props_attributes_${index}_charterable`" class="form-check-input boolean optional" :disabled="spfp.charterable">
+              <input :name="`stock_product[stock_product_file_props_attributes][${index}][charterable]`" type="hidden" value="0" :disabled="!!spfp.stored_prop.source_id">
+              <input type="checkbox" v-model="spfp.charterable" :name="`stock_product[stock_product_file_props_attributes][${index}][charterable]`" :id="`stock_product_stock_product_file_props_attributes_${index}_charterable`" class="form-check-input boolean optional" :disabled="!!spfp.stored_prop.source_id">
               <label :for="`stock_product_stock_product_file_props_attributes_${index}_charterable`" class="form-check-label boolean optional">
                 提供</label>
-              <input v-model="spfp.charterable" v-if="spfp.charterable" :name="`stock_product[stock_product_file_props_attributes][${index}][id]`" type="hidden">
             </div>
           </fieldset>
         </div>
         <div class="col-md-2">
           <input v-model="spfp._destroy" type="hidden" :name="`stock_product[stock_product_file_props_attributes][${index}][_destroy]`" :id="`stock_product_stock_product_file_props_attributes_${index}__destroy`">
-          <a href="javascript:void(0);" class="btn btn-danger dynamic" @click="removeFileProp(spfp, index)">削除</a>
+          <a v-show="!spfp.stored_prop.source_id" href="javascript:void(0);" class="btn btn-danger dynamic" @click="removeFileProp(spfp, index)">削除</a>
         </div>
         <input v-model="spfp.id" :name="`stock_product[stock_product_file_props_attributes][${index}][id]`" type="hidden">
+        <input value="FileProp" :name="`stock_product[stock_product_file_props_attributes][${index}][stored_prop_type]`" type="hidden">
       </div>
       <div class="links">
         <a href="javascript:void(0);" class="btn btn-secondary" @click="addFileProp">ダウンロードファイル追加</a>
@@ -130,12 +134,14 @@
     <div>
       <div class="form-group row" v-for="(spip, index) in stock_product_image_props" v-show="!spip._destroy">
         <div class="col-md-4">
-          <input type="text" placeholder="タイトル" v-model="spip.stored_prop.name" :name="`stock_product[stock_product_image_props_attributes][${index}][stored_prop_attributes][name]`" :id="`stock_product_stock_product_image_props_attributes_${index}_stored_prop_attributes_name`" class="form-control is-valid string required" :readonly="charter && spip.charterable">
+          <input type="text" placeholder="タイトル" v-model="spip.stored_prop.name" :name="`stock_product[stock_product_image_props_attributes][${index}][stored_prop_attributes][name]`" :id="`stock_product_stock_product_image_props_attributes_${index}_stored_prop_attributes_name`" class="form-control string required" :readonly="charter && spip.charterable" required>
         </div>
         <div class="col-md-4">
           <div>{{ displayFileName(spip) }}</div>
           <button v-show="!charter || !spip.charterable" type="button" class="btn btn-primary" @click="uploadImage(spip, index)">アップロード</button>
-          <input :id="`image_prop_image_${index}`" v-model="spip.stored_prop.image" class="form-control-file file optional" type="file" :name="`stock_product[stock_product_image_props_attributes][${index}][image]`" style="display: none;" @change="onFileChange($event, spip, index)">
+          <input :id="`image_prop_image_${index}`" v-model="spip.stored_prop.image" class="form-control-file file optional" type="file" :name="`stock_product[stock_product_image_props_attributes][${index}][stored_prop_attributes][image]`" style="display: none;" @change="onFileChange($event, spip, index)" :disabled="!!spip.stored_prop.source_id" required>
+          <input type="hidden" :name="`stock_product[stock_product_image_props_attributes][${index}][stored_prop_attributes][source_id]`" v-model="spip.stored_prop.source_id">
+          <input type="hidden" :name="`stock_product[stock_product_image_props_attributes][${index}][stored_prop_attributes][id]`" v-model="spip.stored_prop.id">
         </div>
         <div class="col-md-2">
           <fieldset class="form-group boolean optional stock_product_stock_product_image_props_published">
@@ -148,19 +154,16 @@
           </fieldset>
           <fieldset class="form-group boolean optional stock_product_stock_product_image_props_charterable">
             <div v-if="spip.charterable || !charter" class="form-check">
-              <input :name="`stock_product[stock_product_image_props_attributes][${index}][charterable]`" type="hidden" value="0">
-              <input type="checkbox" v-model="spip.charterable" :name="`stock_product[stock_product_image_props_attributes][${index}][charterable]`" :id="`stock_product_stock_product_image_props_attributes_${index}_charterable`" class="form-check-input boolean optional" :disabled="spip.charterable">
-              <label :for="`stock_product_stock_product_image_props_attributes_${index}_charterable`" class="form-check-label boolean optional">
-                提供</label>
-              <input v-model="spip.charterable" v-if="spip.charterable" :name="`stock_product[stock_product_image_props_attributes][${index}][id]`" type="hidden">
+              <input :name="`stock_product[stock_product_image_props_attributes][${index}][charterable]`" type="hidden" value="0" :disabled="!!spip.stored_prop.source_id"> <input type="checkbox" v-model="spip.charterable" :name="`stock_product[stock_product_image_props_attributes][${index}][charterable]`" :id="`stock_product_stock_product_image_props_attributes_${index}_charterable`" class="form-check-input boolean optional" :disabled="!!spip.stored_prop.source_id"> <label :for="`stock_product_stock_product_image_props_attributes_${index}_charterable`" class="form-check-label boolean optional">提供</label>
             </div>
           </fieldset>
         </div>
         <div class="col-md-2">
           <input v-model="spip._destroy" type="hidden" :name="`stock_product[stock_product_image_props_attributes][${index}][_destroy]`" :id="`stock_product_stock_product_image_props_attributes_${index}__destroy`">
-          <a href="javascript:void(0);" class="btn btn-danger dynamic" @click="removeImageProp(spip, index)">削除</a>
+          <a v-show="!spip.stored_prop.source_id" href="javascript:void(0);" class="btn btn-danger dynamic" @click="removeImageProp(spip, index)">削除</a>
         </div>
         <input v-model="spip.id" :name="`stock_product[stock_product_image_props_attributes][${index}][id]`" type="hidden">
+        <input value="ImageProp" :name="`stock_product[stock_product_image_props_attributes][${index}][stored_prop_type]`" type="hidden">
       </div>
       <div class="links">
         <a href="javascript:void(0);" class="btn btn-secondary" @click="addImageProp">画像追加</a>

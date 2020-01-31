@@ -3,10 +3,12 @@ ja:
     models:
       file_prop: "ファイル属性"
     attributes:
-      file_prop:
+      file_prop: &file_prop_attrs
         id: "ファイル属性ID"
         name: "タイトル"
         file: "ファイル"
         created_at: "作成日時"
         updated_at: "更新日時"
+      stock_product_file_props/stored_prop: *file_prop_attrs
+      stock_product/stock_product_file_props/stored_prop: *file_prop_attrs
 

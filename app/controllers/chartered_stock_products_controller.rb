@@ -24,12 +24,11 @@ class CharteredStockProductsController < ApplicationController
   end
 
   def create
-    @stock_product = StockProduct.new(form_params)
+    @stock_product = StockProduct.new
     unless @source
       @stock_product.errors.add :base, 'チャーター元が未設定です'
     end
-    @stock_product.stock_product = @source
-    @stock_product.product = @source.product
+    @stock_product.charter_from(@source, form_params.to_h)
 
     respond_to do |format|
       if @stock_product.save
@@ -48,6 +47,7 @@ class CharteredStockProductsController < ApplicationController
         format.html { redirect_to chartered_stock_products_url, notice: "チャーター商品##{@stock_product.id} を更新しました" }
         format.json { render 'stock_products/show', status: :ok, location: @stock_product }
       else
+        Rails.logger.debug @stock_product.errors.inspect
         format.html { render 'chartered_stock_products/edit' }
         format.json { render json: @stock_product.errors, status: :unprocessable_entity }
       end

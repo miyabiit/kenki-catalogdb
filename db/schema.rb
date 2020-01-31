@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_24_091122) do
+ActiveRecord::Schema.define(version: 2020_01_31_020145) do
 
   create_table "access_tokens", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -159,7 +159,9 @@ ActiveRecord::Schema.define(version: 2019_12_24_091122) do
     t.string "type", default: "TextProp"
     t.text "text_content"
     t.bigint "company_id", null: false
+    t.bigint "source_id"
     t.index ["company_id"], name: "index_stored_props_on_company_id"
+    t.index ["source_id"], name: "index_stored_props_on_source_id"
   end
 
   create_table "sub_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
