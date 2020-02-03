@@ -135,6 +135,8 @@ ja:
       other_than: は%{count}以外の値にしてください
       present: は入力しないでください
       required: を入力してください
+      file_too_large: ファイルサイズが大き過ぎます
+      file_invalid_format: ファイル形式が正しくありません
     template:
       body: 次の項目を確認してください。
       header:

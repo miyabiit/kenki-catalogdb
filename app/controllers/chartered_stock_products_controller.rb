@@ -11,7 +11,7 @@ class CharteredStockProductsController < ApplicationController
   end
 
   def show
-    render 'stock_products/show'
+    render 'chartered_stock_products/edit'
   end
 
   def new

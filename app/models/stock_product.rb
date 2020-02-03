@@ -73,7 +73,7 @@ class StockProduct < ApplicationRecord
       end
     end
 
-    attrs.update({video_url: source.video_url, video_comment: source.video_comment, video_license_valid: source.video_license_valid, video_published: source.video_published, video_charterable: source.video_charterable}) if source.video_charterable?
+    attrs.update({video_url: source.video_url, video_comment: source.video_comment, video_license: source.video_license, video_license_valid: source.video_license_valid, video_published: source.video_published, video_charterable: source.video_charterable}) if source.video_charterable?
     attrs.update({staff_comment: source.staff_comment, staff_comment_published: source.staff_comment_published, staff_comment_charterable: source.staff_comment_charterable}) if source.staff_comment_charterable?
     attrs.update({price_info: source.price_info, price_info_published: source.price_info_published, price_info_charterable: source.price_info_charterable}) if source.price_info_charterable?
     attrs.update({faq: source.faq, faq_published: source.faq_published, faq_charterable: source.faq_charterable}) if source.faq_charterable?
