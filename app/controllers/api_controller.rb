@@ -25,7 +25,7 @@ class ApiController < ActionController::Base
   end
 
   def set_current_user
-    Current.user = current_user
+    Current.user ||= current_user
   end
 
   def not_authenticated
@@ -40,6 +40,7 @@ class ApiController < ActionController::Base
       return
     end
     auto_login(user)
+    set_current_user
   end
 
   def api_require_login
