@@ -35,33 +35,35 @@ class ImportCsv < Thor
 
   desc 'stock_products_with_dependencies [category_csv_file_name] [product_csv_file_name] [stock_product_csv_file_name] [company_id] ', 'import stock_products'
   def stock_products_with_dependencies(category_csv_file_name, product_csv_file_name, stock_product_csv_file_name, company_id)
-    @company_id = company_id&.to_i
-    csv = CSV.read(category_csv_file_name, headers: true)
-    rows = csv.map {|row| row }
-    # add root categories
-    @category_tag_to_id = {}
-    rows.each do |row|
-      if row['parent_tag'].blank?
-        create_category(rows, nil, row)
+    ActiveRecord::Base.transaction do
+      @company_id = company_id&.to_i
+      csv = CSV.read(category_csv_file_name, headers: true)
+      rows = csv.map {|row| row }
+      # add root categories
+      @category_tag_to_id = {}
+      rows.each do |row|
+        if row['parent_tag'].blank?
+          create_category(rows, nil, row)
+        end
       end
-    end
 
-    product_csv = CSV.read(product_csv_file_name, headers: true)
-    stock_product_csv = CSV.read(stock_product_csv_file_name, headers: true)
-    product_csv.each do |product_row|
-      attrs = product_row.to_h  
-      attrs.delete 'product_tag'
-      product = Product.new(attrs)
-      puts product.inspect
-      product.save!
-      stock_product_csv.each do |stock_product_row|
-        if stock_product_row['product_tag'] == product_row['product_tag']
-          stock_product_attrs = stock_product_row.to_h  
-          stock_product_attrs.delete 'product_tag'
-          stock_product_attrs.delete 'category_tag'
-          stock_product = StockProduct.new(stock_product_attrs.merge(product_id: product.id, company_id: @company_id, category_id: @category_tag_to_id[stock_product_row['category_tag']]))
-          puts stock_product.inspect
-          stock_product.save!
+      product_csv = CSV.read(product_csv_file_name, headers: true)
+      stock_product_csv = CSV.read(stock_product_csv_file_name, headers: true)
+      product_csv.each do |product_row|
+        attrs = product_row.to_h  
+        attrs.delete 'product_tag'
+        product = Product.new(attrs)
+        puts product.inspect
+        product.save!
+        stock_product_csv.each do |stock_product_row|
+          if stock_product_row['product_tag'] == product_row['product_tag']
+            stock_product_attrs = stock_product_row.to_h  
+            stock_product_attrs.delete 'product_tag'
+            stock_product_attrs.delete 'category_tag'
+            stock_product = StockProduct.new(stock_product_attrs.merge(product_id: product.id, company_id: @company_id, category_id: @category_tag_to_id[stock_product_row['category_tag']]))
+            puts stock_product.inspect
+            stock_product.save!
+          end
         end
       end
     end
