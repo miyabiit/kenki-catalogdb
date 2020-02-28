@@ -73,7 +73,7 @@ class CharteredStockProductsController < ApplicationController
   end
 
   def fetch_resources
-    @stock_products = StockProduct.joins(:product).includes(:product).accessible_by(current_ability).where.not(stock_product_id: nil)
+    @stock_products = StockProduct.joins(:product).includes(:product).accessible_by(current_ability).where(company_id: current_user.company_id).where.not(stock_product_id: nil)
     if params[:product_code_or_title].present?
       @stock_products = @stock_products.product_code_or_title(params[:product_code_or_title])
     end
