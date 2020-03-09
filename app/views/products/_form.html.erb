@@ -6,6 +6,7 @@
     <%= render('shared/validation_alert', model: product) if product.errors.any? %>
     <%= f.input :id, wrapper: :horizontal_plaintext unless f.object.new_record? %>
       <%= f.input :product_code %>
+      <%= f.input :product_name %>
       <%= f.input :title %>
       <%= f.input :netis %>
       <%= f.input :netis_limit_date %>

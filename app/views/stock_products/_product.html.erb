@@ -8,6 +8,10 @@
     <td><%= product.product_code %></td>
   </tr>
   <tr>
+    <th><%= Product.human_attribute_name :product_name %></th>
+    <td><%= product.product_name %></td>
+  </tr>
+  <tr>
     <th><%= Product.human_attribute_name :title %></th>
     <td><%= product.title %></td>
   </tr>

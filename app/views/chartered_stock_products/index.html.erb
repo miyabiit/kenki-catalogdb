@@ -7,7 +7,7 @@
   <%= f.submit '検索', class: 'float-right btn btn-primary'  %>
   <div class="row col-md-10">
     <div class="col">
-      <%= text_field_tag :product_code_or_title, params[:product_code_or_title], placeholder: '商品コード ページタイトル', class: 'form-control' %>
+      <%= text_field_tag :product_name_or_title, params[:product_name_or_title], placeholder: '商品コード ページタイトル', class: 'form-control' %>
     </div>
     <div class="col">
       <%= f.select :category_id, Category.accessible_by(current_ability).lasts.map { |c| [c.name, c.id] }, { include_blank: '-全最終カテゴリ-' }, class: 'form-control' %>
@@ -21,7 +21,7 @@
   <thead>
     <tr>
       <th><%= Product.human_attribute_name :id %></th>
-      <th><%= Product.human_attribute_name :product_code %></th>
+      <th><%= Product.human_attribute_name :product_name %></th>
       <th><%= Product.human_attribute_name :title %></th>
       <th><%= StockProduct.human_attribute_name :category %></th>
       <th></th>
@@ -32,7 +32,7 @@
     <% @stock_products.each do |stock_product| %>
       <tr>
         <td><%= stock_product.product.id %></td>
-        <td><%= stock_product.product.product_code %></td>
+        <td><%= stock_product.product.product_name %></td>
         <td><%= stock_product.product.title %></td>
         <td><%= stock_product.category&.name %></td>
         <td>

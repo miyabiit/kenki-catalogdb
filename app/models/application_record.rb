@@ -79,7 +79,7 @@ class ApplicationRecord < ActiveRecord::Base
               q = q.where(["#{context_table_name}.#{key} LIKE ?", "%#{value}%"])
             end
           else
-            value.present?
+            q = q.where(Hash[key, value]) if value.present?
           end
         elsif key =~ /_on\z/ && attribute_names.include?(key.gsub(/_on\z/, '_at'))
           if value.present?
@@ -88,7 +88,7 @@ class ApplicationRecord < ActiveRecord::Base
             q = q.where(real_key => (target_time.beginning_of_day .. target_time.end_of_day))
           end
         else
-          q = q.where(Hash[key, value])
+          q = q.where(Hash[key, value]) if value.present?
         end
       end
       q

@@ -32,9 +32,9 @@ class StockProduct < ApplicationRecord
   scope :owns, -> { where(stock_product: nil) }
   scope :others, -> { where.not(stock_product: nil) }
 
-  scope :product_code_or_title, -> (code_or_title) {
+  scope :product_name_or_title, -> (code_or_title) {
     conds = code_or_title.split(/\s+/).map { |c| "%#{sanitize_sql_like(c)}%" }
-    code_cond = conds.map{ |c| sanitize_sql_for_conditions(["products.product_code LIKE ?", c]) }.join(' OR ')
+    code_cond = conds.map{ |c| sanitize_sql_for_conditions(["products.product_name LIKE ?", c]) }.join(' OR ')
     title_cond = conds.map{ |c| sanitize_sql_for_conditions(["products.title LIKE ?", c]) }.join(' OR ')
     where("(#{code_cond}) OR (#{title_cond})")
   }

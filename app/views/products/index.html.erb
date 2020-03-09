@@ -11,7 +11,7 @@
   <%= f.submit '検索', class: 'float-right btn btn-primary'  %>
   <div class="row col-md-10">
     <div class="col">
-      <%= f.text_field :product_code, placeholder: '商品コード', class: 'form-control' %>
+      <%= f.text_field :product_name, placeholder: '商品コード', class: 'form-control' %>
     </div>
     <div class="col">
       <%= f.text_field :title, placeholder: 'ページタイトル', class: 'form-control' %>
@@ -25,7 +25,7 @@
   <thead>
     <tr>
       <th><%= Product.human_attribute_name :id %></th>
-      <th><%= Product.human_attribute_name :product_code %></th>
+      <th><%= Product.human_attribute_name :product_name %></th>
       <th><%= Product.human_attribute_name :title %></th>
       <th><%= Product.human_attribute_name :description_a %></th>
       <th><%= Product.human_attribute_name :description_b %></th>
@@ -37,7 +37,7 @@
     <% @products.each do |product| %>
       <tr>
         <td><%= product.id %></td>
-        <td><%= product.product_code %></td>
+        <td><%= product.product_name %></td>
         <td><%= product.title %></td>
         <td><%= product.description_a %></td>
         <td><%= product.description_b %></td>
