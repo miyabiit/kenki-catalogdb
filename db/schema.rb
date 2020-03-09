@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_27_121414) do
+ActiveRecord::Schema.define(version: 2020_03_09_030235) do
 
   create_table "access_tokens", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 2020_02_27_121414) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["category_id"], name: "index_categories_on_category_id"
+    t.index ["company_id", "name"], name: "index_categories_on_company_id_and_name", unique: true
     t.index ["company_id"], name: "index_categories_on_company_id"
   end
 
@@ -61,7 +62,7 @@ ActiveRecord::Schema.define(version: 2020_02_27_121414) do
   end
 
   create_table "products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "product_code", null: false
+    t.string "product_name", null: false
     t.string "title", null: false
     t.boolean "netis", default: false
     t.date "netis_limit_date"
@@ -78,6 +79,7 @@ ActiveRecord::Schema.define(version: 2020_02_27_121414) do
     t.text "description_b"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "product_code", null: false
   end
 
   create_table "stock_product_stored_props", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
