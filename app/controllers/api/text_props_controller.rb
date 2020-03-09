@@ -40,7 +40,7 @@ class Api::TextPropsController < ApiController
   end
 
   def fetch_resources
-    @text_props = TextProp.accessible_by(current_ability).search(search_params[:text_prop]).pagination_by_params(params)
+    @text_props = TextProp.accessible_by(current_ability).search(params[:text_prop]).pagination_by_params(params)
   end
 
   def fetch_resource

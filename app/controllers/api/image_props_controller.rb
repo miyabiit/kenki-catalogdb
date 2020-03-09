@@ -40,7 +40,7 @@ class Api::ImagePropsController < ApiController
   end
 
   def fetch_resources
-    @image_props = ImageProp.accessible_by(current_ability).search(search_params[:image_prop]).pagination_by_params(params)
+    @image_props = ImageProp.accessible_by(current_ability).search(params[:image_prop]).pagination_by_params(params)
   end
 
   def fetch_resource

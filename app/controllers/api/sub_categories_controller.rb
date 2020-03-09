@@ -40,7 +40,7 @@ class Api::SubCategoriesController < ApiController
   end
 
   def fetch_resources
-    @sub_categories = SubCategory.accessible_by(current_ability).search(search_params[:sub_category]).pagination_by_params(params)
+    @sub_categories = SubCategory.accessible_by(current_ability).search(params[:sub_category]).pagination_by_params(params)
   end
 
   def fetch_resource

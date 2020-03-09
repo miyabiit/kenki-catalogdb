@@ -25,7 +25,7 @@ class ApplicationRecord < ActiveRecord::Base
     end
 
     def search_attribute_names
-      attribute_names_without_timestamps
+      attribute_names_without_timestamps + %w[$or $like $gt $lt $lte $gte $eq $ne $in].map {|op| Hash[op.to_sym, {}] }
     end
 
     def search(params)
@@ -37,11 +37,25 @@ class ApplicationRecord < ActiveRecord::Base
       context_table_name = self.table_name
       params = params.select do |key, value|
         if key[0] == '$'
-          case key
+          case key.to_s
           when '$or'
-            next unless value.is_a? Array
-            value.each do |v|
-              q = q.or(parse_search_param(q, v, context_key))
+            case value
+            when Array
+              value.each_with_index do |v, i|
+                if i == 0
+                  q = parse_search_param(q, v, context_key)
+                else
+                  q = q.or(parse_search_param(all, v, context_key))
+                end
+              end
+            when Hash, ActionController::Parameters
+              value.to_h.each_with_index do |(k, v), i|
+                if i == 0
+                  q = parse_search_param(q, Hash[k, v], context_key)
+                else
+                  q = q.or(parse_search_param(all, Hash[k, v], context_key))
+                end
+              end
             end
           when '$like'
             next unless value.is_a? String
@@ -66,11 +80,13 @@ class ApplicationRecord < ActiveRecord::Base
         elsif value.is_a? Hash
           if value.present?
             operator_hash, relation_attr_hash = value.partition {|k, v| k[0] == '$'}.map(&:to_h)
-            ref_klass = key.singularize.camelize.constantize
-            ref_q = ref_klass.search(relation_attr_hash).where("#{ref_klass.table_name}.#{context_table_name.singularize}_id = #{context_table_name}.id")
-            q = q.where("EXISTS(#{ref_q.to_sql})")
+            unless attribute_names.include?(key)
+              ref_klass = key.singularize.camelize.constantize
+              ref_q = ref_klass.search(relation_attr_hash).where("#{ref_klass.table_name}.#{context_table_name.singularize}_id = #{context_table_name}.id")
+              q = q.where("EXISTS(#{ref_q.to_sql})")
+            end
             operator_hash.each do |k, v|
-              q = parse_search_param(q, v, key)
+              q = parse_search_param(q, Hash[k, v], key)
             end
           end
         elsif attribute_names.include?(key)

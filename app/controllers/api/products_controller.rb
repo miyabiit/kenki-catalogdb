@@ -40,7 +40,7 @@ class Api::ProductsController < ApiController
   end
 
   def fetch_resources
-    @products = Product.accessible_by(current_ability).search(search_params[:product]).pagination_by_params(params)
+    @products = Product.accessible_by(current_ability).search(params[:product]).pagination_by_params(params)
   end
 
   def fetch_resource

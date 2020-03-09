@@ -40,7 +40,7 @@ class Api::StaffsController < ApiController
   end
 
   def fetch_resources
-    @staffs = Staff.accessible_by(current_ability).search(search_params[:staff]).pagination_by_params(params)
+    @staffs = Staff.accessible_by(current_ability).search(params[:staff]).pagination_by_params(params)
   end
 
   def fetch_resource

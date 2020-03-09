@@ -40,7 +40,7 @@ class Api::CategoriesController < ApiController
   end
 
   def fetch_resources
-    @categories = Category.accessible_by(current_ability).search(search_params[:category]).pagination_by_params(params)
+    @categories = Category.accessible_by(current_ability).search(params[:category]).pagination_by_params(params)
   end
 
   def fetch_resource

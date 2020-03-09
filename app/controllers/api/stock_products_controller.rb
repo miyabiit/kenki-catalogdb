@@ -44,7 +44,7 @@ class Api::StockProductsController < ApiController
     if params[:product_name_or_title].present?
       @stock_products = @stock_products.product_name_or_title(params[:product_name_or_title])
     end
-    @stock_products = @stock_products.search(search_params[:stock_product]).pagination_by_params(params)
+    @stock_products = @stock_products.search(params[:stock_product]).pagination_by_params(params)
   end
 
   def fetch_resource

@@ -40,7 +40,7 @@ class Api::FilePropsController < ApiController
   end
 
   def fetch_resources
-    @file_props = FileProp.accessible_by(current_ability).search(search_params[:file_prop]).pagination_by_params(params)
+    @file_props = FileProp.accessible_by(current_ability).search(params[:file_prop]).pagination_by_params(params)
   end
 
   def fetch_resource

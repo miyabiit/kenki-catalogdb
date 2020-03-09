@@ -40,7 +40,7 @@ class Api::CompaniesController < ApiController
   end
 
   def fetch_resources
-    @companies = Company.accessible_by(current_ability).search(search_params[:company]).pagination_by_params(params)
+    @companies = Company.accessible_by(current_ability).search(params[:company]).pagination_by_params(params)
   end
 
   def fetch_resource
