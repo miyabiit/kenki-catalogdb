@@ -5,7 +5,8 @@ ja:
     attributes:
       product:
         id: "商品ID"
-        product_code: "商品コード"
+        product_code: "商品キー"
+        product_name: "商品コード"
         category: "最終カテゴリ"
         category_id: "最終カテゴリID"
         title: "ページタイトル"
