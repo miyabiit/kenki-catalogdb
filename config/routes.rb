@@ -81,11 +81,7 @@ Rails.application.routes.draw do
         post :search, action: :index
       end
     end
-    resources :tokens, only: [:create] do
-      collection do
-        post :search, action: :index
-      end
-    end
+    resources :tokens, only: [:create]
     resources :stock_products do
       collection do
         post :search, action: :index
