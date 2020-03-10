@@ -41,17 +41,61 @@ Rails.application.routes.draw do
   resources :chartered_stock_products
 
   namespace :api do
-    resources :companies
-    resources :categories
-    resources :staffs
-    resources :sub_categories
-    resources :file_props
-    resources :text_props
-    resources :image_props
-    resources :products
-    resources :tokens, only: [:create]
-    resources :stock_products
-    resources :chartered_stock_products
+    resources :companies do
+      collection do
+        post :search, action: :index
+      end
+    end
+    resources :categories do
+      collection do
+        post :search, action: :index
+      end
+    end
+    resources :staffs do
+      collection do
+        post :search, action: :index
+      end
+    end
+    resources :sub_categories do
+      collection do
+        post :search, action: :index
+      end
+    end
+    resources :file_props do
+      collection do
+        post :search, action: :index
+      end
+    end
+    resources :text_props do
+      collection do
+        post :search, action: :index
+      end
+    end
+    resources :image_props do
+      collection do
+        post :search, action: :index
+      end
+    end
+    resources :products do
+      collection do
+        post :search, action: :index
+      end
+    end
+    resources :tokens, only: [:create] do
+      collection do
+        post :search, action: :index
+      end
+    end
+    resources :stock_products do
+      collection do
+        post :search, action: :index
+      end
+    end
+    resources :chartered_stock_products do
+      collection do
+        post :search, action: :index
+      end
+    end
   end
 
   root to: 'tests#test'
