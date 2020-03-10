@@ -39,7 +39,7 @@ class User < ApplicationRecord
       super - [:crypted_password, :salt] + [:password]
     end
 
-    def search__attribute_names
+    def search_attribute_names
       [:login_name, :name, :staff_role]
     end
 

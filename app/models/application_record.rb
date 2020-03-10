@@ -25,7 +25,7 @@ class ApplicationRecord < ActiveRecord::Base
     end
 
     def search_attribute_names
-      attribute_names_without_timestamps + %w[$or $like $gt $lt $lte $gte $eq $ne $in].map {|op| Hash[op.to_sym, {}] }
+      attribute_names_without_timestamps
     end
 
     def search(params)
@@ -33,6 +33,13 @@ class ApplicationRecord < ActiveRecord::Base
       parse_search_param(all, params, nil)
     end
 
+    def searchable_attr?(attr_name)
+      attribute_names.include?(attr_name.to_s) && search_attribute_names.include?(attr_name.to_sym)
+    end
+
+    # TODO:複雑なthroughへの対応
+    # TODO:foreign_key 指定時の対処
+    # TODO:polymorphic relationへの対処
     def parse_search_param(q, params, context_key)
       context_table_name = self.table_name
       params = params.select do |key, value|
@@ -79,17 +86,32 @@ class ApplicationRecord < ActiveRecord::Base
           end
         elsif value.is_a? Hash
           if value.present?
-            operator_hash, relation_attr_hash = value.partition {|k, v| k[0] == '$'}.map(&:to_h)
-            unless attribute_names.include?(key)
-              ref_klass = key.singularize.camelize.constantize
-              ref_q = ref_klass.search(relation_attr_hash).where("#{ref_klass.table_name}.#{context_table_name.singularize}_id = #{context_table_name}.id")
-              q = q.where("EXISTS(#{ref_q.to_sql})")
-            end
-            operator_hash.each do |k, v|
-              q = parse_search_param(q, Hash[k, v], key)
+            if searchable_attr?(key)
+              value.select {|k, v| k[0] == '$'}.each do |k, v|
+                q = parse_search_param(q, Hash[k, v], key)
+              end
+            else
+              relation_klass = reflect_on_association(key)
+              case relation_klass
+              when ActiveRecord::Reflection::BelongsToReflection
+                ref_klass = relation_klass.klass
+                ref_q = ref_klass.search(value).where("#{context_table_name}.#{ref_klass.table_name.singularize}_id = #{ref_klass.table_name}.id")
+                q = q.where("EXISTS(#{ref_q.to_sql})")
+              when ActiveRecord::Reflection::HasManyReflection
+                ref_klass = relation_klass.klass
+                ref_q = ref_klass.search(value).where("#{ref_klass.table_name}.#{context_table_name.singularize}_id = #{context_table_name}.id")
+                q = q.where("EXISTS(#{ref_q.to_sql})")
+              when ActiveRecord::Reflection::ThroughReflection
+                ref_klass = relation_klass.klass
+                through_relation = relation_klass.through_reflection
+                if through_reflection.is_a? ActiveRecord::Reflection::HasManyReflection
+                  ref_q = ref_klass.search(value).where("#{through_reflection.table_name}.#{context_table_name.singularize}_id = #{context_table_name}.id AND #{through_reflection.table_name}.#{relation_klass.table_name.singularize}_id = #{relation_klass.table_name}.id")
+                  q = q.where("EXISTS(#{ref_q.to_sql})")
+                end
+              end
             end
           end
-        elsif attribute_names.include?(key)
+        elsif searchable_attr?(key)
           if self.column_for_attribute(key).type == :string && value.present?
             if value.present?
               q = q.where(["#{context_table_name}.#{key} LIKE ?", "%#{value}%"])
@@ -97,14 +119,12 @@ class ApplicationRecord < ActiveRecord::Base
           else
             q = q.where(Hash[key, value]) if value.present?
           end
-        elsif key =~ /_on\z/ && attribute_names.include?(key.gsub(/_on\z/, '_at'))
+        elsif key =~ /_on\z/ && searchable_attr?(key.gsub(/_on\z/, '_at'))
           if value.present?
             real_key = key.gsub(/_on\z/, '_at')
             target_time = Time.parse(value)
             q = q.where(real_key => (target_time.beginning_of_day .. target_time.end_of_day))
           end
-        else
-          q = q.where(Hash[key, value]) if value.present?
         end
       end
       q
