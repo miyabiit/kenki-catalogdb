@@ -105,8 +105,8 @@ class ApplicationRecord < ActiveRecord::Base
               when ActiveRecord::Reflection::ThroughReflection
                 ref_klass = relation_klass.klass
                 through_relation = relation_klass.through_reflection
-                if through_reflection.is_a? ActiveRecord::Reflection::HasManyReflection
-                  ref_q = ref_klass.search(value).where("#{through_reflection.table_name}.#{context_table_name.singularize}_id = #{context_table_name}.id AND #{through_reflection.table_name}.#{relation_klass.table_name.singularize}_id = #{relation_klass.table_name}.id")
+                if through_relation.is_a? ActiveRecord::Reflection::HasManyReflection
+                  ref_q = ref_klass.left_joins(through_relation.table_name.to_sym).search(value).where("#{through_relation.table_name}.#{context_table_name.singularize}_id = #{context_table_name}.id")
                   q = q.where("EXISTS(#{ref_q.to_sql})")
                 end
               end

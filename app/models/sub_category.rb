@@ -3,6 +3,8 @@ class SubCategory < ApplicationRecord
 
   belongs_to :company, optional: true
 
+  has_many :stock_product_sub_categories, dependent: :destroy
+
   validates :name, presence: true, length: { maximum: 50 }
   validates :name, uniqueness: { scope: :company_id, case_sensitive: true }
 
