@@ -43,8 +43,9 @@ class ApplicationRecord < ActiveRecord::Base
     def parse_search_param(q, params, context_key)
       context_table_name = self.table_name
       params = params.select do |key, value|
+        key = key.to_s
         if key[0] == '$'
-          case key.to_s
+          case key
           when '$or'
             case value
             when Array

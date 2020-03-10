@@ -5,6 +5,6 @@ class Company < ApplicationRecord
   has_many :stored_props, dependent: :destroy
 
   validates :uid, :name, presence: true, length: { maximum: 50 }
-  validates :uid, uniqueness: true
+  validates :uid, uniqueness: { case_sensitive: true }
 end
 

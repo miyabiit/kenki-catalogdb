@@ -45,6 +45,7 @@ group :development, :test do
   # API documentation
   gem 'raddocs'
   gem 'rspec_api_documentation'
+  gem 'database_cleaner'
 end
 
 group :development do
