@@ -52,6 +52,9 @@ class ImportCsv < Thor
       product_csv.each do |product_row|
         attrs = product_row.to_h  
         attrs.delete 'product_tag'
+        attrs.delete 'product_code'
+        attrs['product_code'] = product_row['product_tag']
+        attrs['product_name'] = product_row['product_code']
         product = Product.new(attrs)
         puts product.inspect
         product.save!
