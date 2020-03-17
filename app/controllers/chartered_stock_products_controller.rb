@@ -16,6 +16,7 @@ class CharteredStockProductsController < ApplicationController
 
   def new
     @stock_product = StockProduct.new
+    @product = @source.product
     @stock_product.charter_from(@source)
   end
 
