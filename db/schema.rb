@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_09_030235) do
+ActiveRecord::Schema.define(version: 2020_03_23_021714) do
 
   create_table "access_tokens", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -80,6 +80,9 @@ ActiveRecord::Schema.define(version: 2020_03_09_030235) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "product_code", null: false
+    t.string "manufacture_name"
+    t.string "product_model_name"
+    t.string "product_short_name"
   end
 
   create_table "stock_product_stored_props", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

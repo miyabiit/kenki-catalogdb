@@ -12,6 +12,18 @@
     <td><%= product.product_name %></td>
   </tr>
   <tr>
+    <th><%= Product.human_attribute_name :product_short_name %></th>
+    <td><%= product.product_short_name %></td>
+  </tr>
+  <tr>
+    <th><%= Product.human_attribute_name :product_model_name %></th>
+    <td><%= product.product_model_name %></td>
+  </tr>
+  <tr>
+    <th><%= Product.human_attribute_name :manufacture_name %></th>
+    <td><%= product.manufacture_name %></td>
+  </tr>
+  <tr>
     <th><%= Product.human_attribute_name :title %></th>
     <td><%= product.title %></td>
   </tr>
