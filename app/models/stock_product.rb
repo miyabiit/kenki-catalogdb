@@ -27,7 +27,7 @@ class StockProduct < ApplicationRecord
   accepts_nested_attributes_for :image_props, allow_destroy: true, reject_if: :all_blank
 
   validates :video_url, allow_blank: true, length: { maximum: 50 }
-  validates :video_comment, :video_license, :spec, :spec_comment, :staff_comment, :price_info, :faq, :description, :address_info, :company_memo, :private_memo, :meta_description, :meta_keywords, allow_blank: true, length: { maximum: 2000 }
+  validates :video_comment, :video_license, :spec, :spec_comment, :staff_comment, :price_info, :faq, :description, :address_info, :company_memo, :private_memo, :meta_description, :meta_keywords, allow_blank: true, length: { maximum: 3000 }
 
   scope :owns, -> { where(stock_product: nil) }
   scope :others, -> { where.not(stock_product: nil) }
