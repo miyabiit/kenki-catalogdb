@@ -35,6 +35,7 @@ gem 'cocoon'
 gem 'dotenv-rails'
 gem 'cancancan'
 gem 'acts_as_list'
+gem 'rack-cors'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
