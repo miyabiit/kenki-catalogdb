@@ -64,3 +64,8 @@ role :db, ["ec2-user@#{ENV['STAGING_SERVER_IP']}"]
 #     auth_methods: %w(publickey password)
 #     # password: "please use keys"
 #   }
+
+set :nginx_use_ssl, true
+set :nginx_ssl_certificate, '/etc/letsencrypt/live/test.kenki-db.com/fullchain.pem'
+set :nginx_ssl_certificate_key, '/etc/letsencrypt/live/test.kenki-db.com/privkey.pem'
+
