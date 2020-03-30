@@ -7,6 +7,10 @@ class FileProp < StoredProp
 
   validate :validate_file
 
+  def has_changes_to_save?
+    super || attachment_changes.any?
+  end
+
   def url
     if source_id.present? && file.blank?
       return Rails.application.routes.url_helpers.rails_blob_path(source.file, only_path: true)

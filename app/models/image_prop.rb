@@ -7,6 +7,10 @@ class ImageProp < StoredProp
 
   validate :validate_image
 
+  def has_changes_to_save?
+    super || attachment_changes.any?
+  end
+
   def url
     if source_id.present? && image.blank?
       return Rails.application.routes.url_helpers.rails_blob_path(source.image, only_path: true)
