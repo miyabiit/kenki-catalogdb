@@ -85,7 +85,7 @@
           </div>
         </fieldset>
         <fieldset class="form-group boolean optional">
-          <div v-if="spsp.stored_prop.source_id || spsp.charterable" class="form-check">
+          <div v-if="!charter || spsp.stored_prop.source_id || spsp.charterable" class="form-check">
             <input :name="`stock_product[stock_product_${collection_name}_attributes][${index}][charterable]`" type="hidden" value="0" :disabled="!!spsp.stored_prop.source_id">
             <input type="checkbox" v-model="spsp.charterable" :name="`stock_product[stock_product_${collection_name}_attributes][${index}][charterable]`" :id="`stock_product_stock_product_${collection_name}_attributes_${index}_charterable`" class="form-check-input boolean optional" :disabled="!!spsp.stored_prop.source_id">
             <label :for="`stock_product_stock_product_${collection_name}_attributes_${index}_charterable`" class="form-check-label boolean optional">
@@ -122,7 +122,7 @@
     <template v-slot:default="slotProp">
       <div>{{ displayFileName(slotProp.spsp) }}</div>
       <button v-show="!slotProp.spsp.stored_prop.source_id" type="button" class="btn btn-primary" @click="uploadFile(slotProp.spsp, slotProp.index)">アップロード</button>
-      <input :id="`file_prop_file_${slotProp.index}`" v-model="slotProp.spsp.stored_prop.file" class="form-control-file file optional" type="file" :name="`stock_product[stock_product_file_props_attributes][${slotProp.index}][stored_prop_attributes][file]`" style="display: none;" @change="onFileChange($event, slotProp.spsp, slotProp.index)" :disabled="!!slotProp.spsp.stored_prop.source_id" required>
+      <input :id="`file_prop_file_${slotProp.index}`" class="form-control-file file optional" type="file" :name="`stock_product[stock_product_file_props_attributes][${slotProp.index}][stored_prop_attributes][file]`" style="display: none;" @change="onFileChange($event, slotProp.spsp, slotProp.index)" :disabled="!!slotProp.spsp.stored_prop.source_id" required>
       <input type="hidden" :name="`stock_product[stock_product_file_props_attributes][${slotProp.index}][stored_prop_attributes][source_id]`" v-model="slotProp.spsp.stored_prop.source_id">
       <input type="hidden" :name="`stock_product[stock_product_file_props_attributes][${slotProp.index}][stored_prop_attributes][id]`" v-model="slotProp.spsp.stored_prop.id">
       <input value="FileProp" :name="`stock_product[stock_product_${collection_name}_attributes][${slotProp.index}][stored_prop_type]`" type="hidden">
@@ -136,7 +136,7 @@
     <template v-slot:default="slotProp">
       <div>{{ displayFileName(slotProp.spsp) }}</div>
       <button v-show="!slotProp.spsp.stored_prop.source_id" type="button" class="btn btn-primary" @click="uploadImage(slotProp.spsp, slotProp.index)">アップロード</button>
-      <input :id="`image_prop_image_${slotProp.index}`" v-model="slotProp.spsp.stored_prop.image" class="form-control-file file optional" type="file" :name="`stock_product[stock_product_image_props_attributes][${slotProp.index}][stored_prop_attributes][image]`" style="display: none;" @change="onFileChange($event, slotProp.spsp, slotProp.index)" :disabled="!!slotProp.spsp.stored_prop.source_id" required>
+      <input :id="`image_prop_image_${slotProp.index}`" class="form-control-file file optional" type="file" :name="`stock_product[stock_product_image_props_attributes][${slotProp.index}][stored_prop_attributes][image]`" style="display: none;" @change="onFileChange($event, slotProp.spsp, slotProp.index)" :disabled="!!slotProp.spsp.stored_prop.source_id" required>
       <input type="hidden" :name="`stock_product[stock_product_image_props_attributes][${slotProp.index}][stored_prop_attributes][source_id]`" v-model="slotProp.spsp.stored_prop.source_id">
       <input type="hidden" :name="`stock_product[stock_product_image_props_attributes][${slotProp.index}][stored_prop_attributes][id]`" v-model="slotProp.spsp.stored_prop.id">
       <input value="ImageProp" :name="`stock_product[stock_product_${collection_name}_attributes][${slotProp.index}][stored_prop_type]`" type="hidden">
