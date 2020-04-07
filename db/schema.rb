@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_23_021714) do
+ActiveRecord::Schema.define(version: 2020_04_07_062501) do
 
   create_table "access_tokens", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 2020_03_23_021714) do
     t.string "manufacture_name"
     t.string "product_model_name"
     t.string "product_short_name"
+    t.index ["product_code"], name: "index_products_on_product_code", unique: true
   end
 
   create_table "stock_product_stored_props", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

@@ -43,6 +43,8 @@ class StockProduct < ApplicationRecord
   before_update :prepare_chartered_props_on_update
   before_save :prepare_prop_types
 
+  attr_accessor :product_code, :category_name
+
   def charter_from(source, attrs={})
     self.product = source.product
     self.stock_product = source

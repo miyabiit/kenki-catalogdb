@@ -12,6 +12,8 @@ class Category < ApplicationRecord
 
   scope :lasts, -> { where(last: true) }
 
+  attr_accessor :parent_category_name
+
   def as_json(options = {})
     super(options.merge(include: {company: {only: [:id, :name]}}))
   end
