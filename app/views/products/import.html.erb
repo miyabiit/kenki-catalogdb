@@ -1,0 +1,43 @@
+<h2>商品CSVインポート</h2>
+<%= render 'shared/notice' %>
+<%= form_tag '/products/import', method: :post, multipart: true do %>
+  <%= link_to '<戻る', products_path, class: 'btn btn-outline-primary', style: 'margin-bottom: 10px' %>
+  <br/>
+  <input type="file" name="csv_file">
+  <div style="margin-top: 4px; font-size: 0.8rem">※既に同じproduct_codeの商品が登録済みの場合は、対象となる商品の更新を行います</div>
+  <br/>
+  <input type="submit" value="インポート" class="btn btn-primary">
+<% end %>
+
+
+<% if @failed_instances.present? %>
+<div style="margin-top: 10px">
+  <h5 style="color: red">下記商品の登録/更新に失敗しました</h5>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>product_code</th>
+        <th>product_name</th>
+        <th>title</th>
+        <th>manufacture_name</th>
+        <th>product_model_name</th>
+        <th>product_short_name</th>
+        <th>[エラー内容]</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @failed_instances.each do |f| %>
+      <tr>
+        <td><%= f.product_code %></td>
+        <td><%= f.product_name %></td>
+        <td><%= f.title %></td>
+        <td><%= f.manufacture_name %></td>
+        <td><%= f.product_model_name %></td>
+        <td><%= f.product_short_name %></td>
+        <td><%= f.errors.full_messages %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<% end %>

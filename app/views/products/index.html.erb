@@ -2,6 +2,7 @@
 
 <% if can? :create, Product %>
 <%= link_to "新規#{Product.model_name.human}", new_product_path, class: 'float-right btn btn-primary' %>
+<%= link_to "#{Product.model_name.human}インポート", import_products_path, style: "margin-right: 10px", class: 'float-right btn btn-primary' %>
 <% end %>
 <h1><%= Product.model_name.human %></h1>
 

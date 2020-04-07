@@ -1,0 +1,36 @@
+<h2>自社在庫CSVインポート</h2>
+<%= render 'shared/notice' %>
+<%= form_tag '/stock_products/import', method: :post, multipart: true do %>
+  <%= link_to '<戻る', stock_products_path, class: 'btn btn-outline-primary', style: 'margin-bottom: 10px' %>
+  <br/>
+  <input type="file" name="csv_file">
+  <br/>
+  <input type="submit" value="インポート" class="btn btn-primary" style="margin-top: 10px">
+<% end %>
+
+
+<% if @failed_instances.present? %>
+<div style="margin-top: 10px">
+  <h5 style="color: red">下記自社在庫の登録に失敗しました</h5>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>product_code</th>
+        <th>category_name</th>
+        <th>spec</th>
+        <th>[エラー内容]</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @failed_instances.each do |f| %>
+      <tr>
+        <td><%= f.product_code %></td>
+        <td><%= f.category_name %></td>
+        <td><%= f.spec %></td>
+        <td><%= f.errors.full_messages %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<% end %>

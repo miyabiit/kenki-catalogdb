@@ -1,8 +1,9 @@
 <%= render 'shared/notice' %>
 
-<%#<% if can? :create, StockProduct +|%>
+<% if can? :create, StockProduct %>
 <%#<%= link_to "新規#{StockProduct.model_name.human}", products_path, class: 'float-right btn btn-primary' +|%>
-<%#<% end +|%>
+<%= link_to "#{StockProduct.model_name.human}インポート", import_stock_products_path, class: 'float-right btn btn-primary' %>
+<% end %>
 <h1><%= StockProduct.model_name.human %></h1>
 
 <br>

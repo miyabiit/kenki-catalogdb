@@ -20,7 +20,7 @@ class ProductImport < ImportBase
 
   private
   def partition_create_or_update(rows)
-    product_codes = rows.map {|row| row['product_code'].strip }
+    product_codes = rows.map {|row| row['product_code']&.strip }.compact
     @products = Product.where(product_code: product_codes).to_a
     saved_names = @products.map(&:product_code)
     rows.partition {|row| !saved_names.include?(row['product_code']) }

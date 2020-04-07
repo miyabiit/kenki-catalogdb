@@ -53,6 +53,22 @@ class ProductsController < ApplicationController
     end
   end
 
+  def import
+  end
+
+  def upload
+    @failed_instances = ProductImport.new.import(params['csv_file'].path)
+    if @failed_instances.present?
+      render action: :import
+    else
+      flash[:notice] = '商品をインポートしました'
+      redirect_to action: :index
+    end
+  rescue ActiveModel::UnknownAttributeError, Encoding::InvalidByteSequenceError, CSV::MalformedCSVError
+    flash.now[:alert] = '不正なCSVファイルです'
+    render action: :import
+  end
+
   private
 
   def form_params

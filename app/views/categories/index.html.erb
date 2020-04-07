@@ -2,6 +2,7 @@
 
 <% if can? :create, Category %>
 <%= link_to "新規#{Category.model_name.human}", new_category_path, class: 'float-right btn btn-primary' %>
+<%= link_to "#{Category.model_name.human}インポート", import_categories_path, style: "margin-right: 10px", class: 'float-right btn btn-primary' %>
 <% end %>
 <h1><%= Category.model_name.human %></h1>
 

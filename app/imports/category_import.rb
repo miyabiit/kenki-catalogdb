@@ -10,7 +10,7 @@ class CategoryImport < ImportBase
     @persisted_categories = build_persisted_categories(update_csv)
     @persisted_categories.each do |c|
       if c.parent_category_name.presence != c.category&.name
-        if  c.parent_category_name.present?
+        if c.parent_category_name.present? && c.parent_category_name != c.name
           c.category = fetch_category_by_name(c.parent_category_name)
           unless c.category
             c.errors.add :parent_category_name, 'は存在しません'
@@ -25,7 +25,7 @@ class CategoryImport < ImportBase
     @new_categories.each do |c|
       next if @failed_instances.any? {|f| f.name == c.name }
       next if c.id
-      if  c.parent_category_name.present?
+      if c.parent_category_name.present? && c.parent_category_name != c.name
         c.category = fetch_category_by_name(c.parent_category_name)
         unless c.category
           c.errors.add :parent_category_name, 'は存在しません'
@@ -42,7 +42,7 @@ class CategoryImport < ImportBase
   private
 
   def partition_create_or_update(rows)
-    names = rows.map {|row| row['name'].strip }
+    names = rows.map {|row| row['name']&.strip }.compact
     @categories = Category.where(company_id: @company_id, name: names).to_a
     saved_names = @categories.map(&:name)
     rows.partition {|row| !saved_names.include?(row['name']) }
@@ -70,7 +70,7 @@ class CategoryImport < ImportBase
     category = @new_categories.find {|c| c.name == name }
     if category
       unless category.id 
-        if category.parent_category_name.present?
+        if category.parent_category_name.present? && category.parent_category_name != category.name
           category.category = fetch_category_by_name(category.parent_category_name)
           unless category.category
             category.errors.add :parent_category_name, 'は存在しません'

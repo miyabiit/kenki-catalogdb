@@ -1,0 +1,39 @@
+<h2>分類CSVインポート</h2>
+<%= render 'shared/notice' %>
+<%= form_tag '/categories/import', method: :post, multipart: true do %>
+  <%= link_to '<戻る', categories_path, class: 'btn btn-outline-primary', style: 'margin-bottom: 10px' %>
+  <br/>
+  <input type="file" name="csv_file">
+  <div style="margin-top: 4px; font-size: 0.8rem">※既に同じnameの分類が登録済みの場合は、対象となる分類の更新を行います</div>
+  <br/>
+  <input type="submit" value="インポート" class="btn btn-primary">
+<% end %>
+
+
+<% if @failed_instances.present? %>
+<div style="margin-top: 10px">
+  <h5 style="color: red">下記分類の登録/更新に失敗しました</h5>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>name</th>
+        <th>position</th>
+        <th>last</th>
+        <th>parent_category_name</th>
+        <th>[エラー内容]</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @failed_instances.each do |f| %>
+      <tr>
+        <td><%= f.name %></td>
+        <td><%= f.position %></td>
+        <td><%= f.last %></td>
+        <td><%= f.parent_category_name %></td>
+        <td><%= f.errors.full_messages %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<% end %>

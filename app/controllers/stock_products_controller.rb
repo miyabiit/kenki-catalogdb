@@ -56,6 +56,22 @@ class StockProductsController < ApplicationController
     end
   end
 
+  def import
+  end
+
+  def upload
+    @failed_instances = StockProductImport.new(current_user.company_id).import(params['csv_file'].path)
+    if @failed_instances.present?
+      render action: :import
+    else
+      flash[:notice] = '自社在庫をインポートしました'
+      redirect_to action: :index
+    end
+  rescue ActiveModel::UnknownAttributeError, Encoding::InvalidByteSequenceError, CSV::MalformedCSVError
+    flash.now[:alert] = '不正なCSVファイルです'
+    render action: :import
+  end
+
   private
 
   def form_params

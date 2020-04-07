@@ -23,10 +23,17 @@ Rails.application.routes.draw do
       get :add_child
       get :edit_child
     end
+    collection do
+      get :import
+      post :import, to: 'categories#upload'
+    end
   end
   resources :sub_categories
   resources :products do
-    resources :stock_products
+    collection do
+      get :import
+      post :import, to: 'products#upload'
+    end
   end
   resources :staffs
 
@@ -36,6 +43,10 @@ Rails.application.routes.draw do
 
   resources :stock_products do
     resources :chartered_stock_products
+    collection do
+      get :import
+      post :import, to: 'stock_products#upload'
+    end
   end
   resources :other_stock_products, only: [:index, :show]
   resources :chartered_stock_products
