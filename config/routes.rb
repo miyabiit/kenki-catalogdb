@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   end
   resources :sub_categories
   resources :products do
+    resources :stock_products
     collection do
       get :import
       post :import, to: 'products#upload'
