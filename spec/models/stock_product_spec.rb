@@ -97,5 +97,22 @@ RSpec.describe StockProduct, type: :model do
         expect(subject.to_a&.map(&:id)).to match_array([matched1.id, matched2.id, matched3.id])
       end
     end
+
+    context 'company id of chartered stockproduct search' do
+      let(:company1) { create :company }
+      let(:company2) { create :company }
+      let!(:unmatched) { create :stock_product, company: company1 }
+      let!(:matched) { create :stock_product, product: create(:product), company: company2, stock_product: unmatched }
+      let(:search_params) {
+        {
+          stock_product: {
+            company_id: company1.id
+          }
+        }
+      }
+      it do
+        expect(subject.to_a&.map(&:id)).to match_array([matched.id])
+      end
+    end
   end
 end
