@@ -97,7 +97,7 @@ class StockProduct < ApplicationRecord
         :product,
         {
           company: { only: [:id, :name] },
-          stock_product: { only: [:id] },
+          stock_product: { only: [:id, :company_id] },
           category: { only: [:id, :name] },
           sub_categories: { only: [:id, :name] },
           text_props: { only: [:id, :name, :text_content] },
