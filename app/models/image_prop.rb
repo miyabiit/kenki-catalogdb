@@ -12,11 +12,12 @@ class ImageProp < StoredProp
   end
 
   def url
+    base_path = Rails.configuration.active_storage_base_path
     if source_id.present? && image.blank?
-      return Rails.application.routes.url_helpers.rails_blob_path(source.image, only_path: true)
+      return base_path + Rails.application.routes.url_helpers.rails_blob_path(source.image, only_path: true)
     end
     return '' if image.blank?
-    Rails.application.routes.url_helpers.rails_blob_path(image, only_path: true)
+    base_path + Rails.application.routes.url_helpers.rails_blob_path(image, only_path: true)
   end
 
   def file_name

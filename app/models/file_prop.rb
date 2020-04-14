@@ -12,11 +12,12 @@ class FileProp < StoredProp
   end
 
   def url
+    base_path = Rails.configuration.active_storage_base_path
     if source_id.present? && file.blank?
-      return Rails.application.routes.url_helpers.rails_blob_path(source.file, only_path: true)
+      return base_path + Rails.application.routes.url_helpers.rails_blob_path(source.file, only_path: true)
     end
     return '' if file.blank?
-    Rails.application.routes.url_helpers.rails_blob_path(file, only_path: true)
+    base_path + Rails.application.routes.url_helpers.rails_blob_path(file, only_path: true)
   end
 
   def file_name
