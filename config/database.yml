@@ -33,6 +33,6 @@ staging:
 production:
   <<: *default
   database: kenki_catalogdb_production
-  username: <%= ENV['PRODUCTION_DATABASE_USER'] %>
-  host: <%= ENV['PRODUCTION_DATABASE_HOST'] %>
-  password: <%= ENV['PRODUCTION_DATABASE_PASSWORD'] %>
+  username: <%= ENV['DATABASE_USER'] %>
+  host: <%= ENV['DATABASE_HOST'] %>
+  password: <%= ENV['DATABASE_PASSWORD'] %>
