@@ -36,6 +36,8 @@ gem 'dotenv-rails'
 gem 'cancancan'
 gem 'acts_as_list'
 gem 'rack-cors'
+gem 'mini_magick'
+gem 'aws-sdk-s3', require: false
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -66,8 +68,6 @@ group :development do
   gem 'capistrano-npm'
   gem 'capistrano-yarn'
   gem 'whenever'
-
-  gem 'rails-erd'
 end
 
 group :test do
