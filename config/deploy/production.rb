@@ -65,3 +65,5 @@ role :db, ["ec2-user@#{ENV['PRODUCTION_SERVER_IP']}"]
 #     auth_methods: %w(publickey password)
 #     # password: "please use keys"
 #   }
+
+set :nginx_downstream_uses_ssl, true
