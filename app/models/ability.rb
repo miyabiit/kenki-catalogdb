@@ -41,7 +41,8 @@ class Ability
     can :manage, Product
     can [:read], StockProduct
     can :manage, StockProduct, company_id: @user.company_id
-    can [:read, :create, :update], SubCategory
+    can [:read], SubCategory
+    can :manage, SubCategory, company_id: @user.company_id
   end
 
   def admin_ability
@@ -53,6 +54,6 @@ class Ability
     can :manage, TextProp
     can :manage, Product
     can :manage, StockProduct
-    can [:read, :create, :update], SubCategory
+    can :manage, SubCategory
   end
 end
