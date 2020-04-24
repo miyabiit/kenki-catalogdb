@@ -1,5 +1,5 @@
 class Company < ApplicationRecord
-  has_many :staffs, dependent: :nullify
+  has_many :staffs, dependent: :destroy
   has_many :sub_categories, dependent: :destroy
   has_many :categories, dependent: :destroy
   has_many :stored_props, dependent: :destroy

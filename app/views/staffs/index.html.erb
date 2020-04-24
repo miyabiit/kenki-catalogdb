@@ -41,7 +41,7 @@
     <% @staffs.each do |staff| %>
       <tr>
         <td><%= staff.id %></td>
-        <td><%= staff.company.name %></td>
+        <td><%= staff.company&.name || '-削除済-' %></td>
         <td><%= staff.login_name %></td>
         <td><%= staff.name %></td>
         <td><%= staff.staff_role %></td>
